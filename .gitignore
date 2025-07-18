@@ -1,3 +1,6 @@
+src/data
+!src/data/.gitkeep
+
 # Logs
 logs
 *.log
