@@ -1,8 +1,8 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { tv } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import { tv } from 'tailwind-variants';
 
-type Props = HTMLAttributes<"div"> & {
+type Props = HTMLAttributes<'div'> & {
   /**
    * Whether the collapsible panel is initially open
    */
@@ -13,24 +13,37 @@ type Props = HTMLAttributes<"div"> & {
   disabled?: boolean;
 };
 
-export const collapsible = tv({ base: "starwind-collapsible" });
+export const collapsible = tv({ base: 'starwind-collapsible' });
 
-const { defaultOpen = false, disabled = false, class: className, ...rest } = Astro.props;
+const {
+  defaultOpen = false,
+  disabled = false,
+  class: className,
+  ...rest
+} = Astro.props;
 
 // Keys owned by the runtime that should not be spread from rest
-const runtimeOwnedKeys = ["id", "data-state", "data-disabled", "class"] as const;
+const runtimeOwnedKeys = [
+  'id',
+  'data-state',
+  'data-disabled',
+  'class',
+] as const;
 const sanitizedRest = Object.fromEntries(
   Object.entries(rest).filter(
-    ([key]) => !runtimeOwnedKeys.includes(key as (typeof runtimeOwnedKeys)[number]),
+    ([key]) =>
+      !runtimeOwnedKeys.includes(key as (typeof runtimeOwnedKeys)[number]),
   ),
 );
 
 // Compute final values, preferring consumer-provided values
 const finalDataState =
-  (rest as Record<string, unknown>)["data-state"] ?? (defaultOpen ? "open" : "closed");
+  (rest as Record<string, unknown>)['data-state'] ??
+  (defaultOpen ? 'open' : 'closed');
 const finalDataDisabled =
-  (rest as Record<string, unknown>)["data-disabled"] ?? (disabled ? "" : undefined);
-const finalId = (rest as Record<string, unknown>)["id"] as string | undefined;
+  (rest as Record<string, unknown>)['data-disabled'] ??
+  (disabled ? '' : undefined);
+const finalId = (rest as Record<string, unknown>)['id'] as string | undefined;
 ---
 
 <div

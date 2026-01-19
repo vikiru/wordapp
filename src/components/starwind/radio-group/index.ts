@@ -1,11 +1,11 @@
-import RadioGroup, { radioGroup } from "./RadioGroup.astro";
+import RadioGroup, { radioGroup } from './RadioGroup.astro';
 import RadioGroupItem, {
   radioControl,
   radioIndicator,
   radioItem,
   radioWrapper,
-} from "./RadioGroupItem.astro";
-import type { RadioGroupChangeEvent } from "./RadioGroupTypes";
+} from './RadioGroupItem.astro';
+import type { RadioGroupChangeEvent } from './RadioGroupTypes';
 
 const RadioGroupVariants = {
   radioGroup,
@@ -15,7 +15,12 @@ const RadioGroupVariants = {
   radioIndicator,
 };
 
-export { RadioGroup, type RadioGroupChangeEvent, RadioGroupItem, RadioGroupVariants };
+export {
+  RadioGroup,
+  type RadioGroupChangeEvent,
+  RadioGroupItem,
+  RadioGroupVariants,
+};
 
 export default {
   Root: RadioGroup,

@@ -1,12 +1,12 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { tv } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import { tv } from 'tailwind-variants';
 
-type Props = HTMLAttributes<"li"> & {
+type Props = HTMLAttributes<'li'> & {
   children: any;
 };
 
-export const paginationItem = tv({ base: "" });
+export const paginationItem = tv({ base: '' });
 
 const { class: className, ...rest } = Astro.props;
 ---

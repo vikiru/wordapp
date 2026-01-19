@@ -37,16 +37,16 @@
 </script>
 */
 
-import Moon from "@tabler/icons/outline/moon.svg";
-import Sun from "@tabler/icons/outline/sun.svg";
-import { tv, type VariantProps } from "tailwind-variants";
+import Moon from '@tabler/icons/outline/moon.svg';
+import Sun from '@tabler/icons/outline/sun.svg';
+import { tv, type VariantProps } from 'tailwind-variants';
 
-import { Toggle, ToggleVariants } from "@/components/starwind/toggle";
+import { Toggle, ToggleVariants } from '@/components/starwind/toggle';
 
 export const themeToggle = tv({
   base: [
-    "starwind-theme-toggle",
-    "group hover:border-muted-foreground hover:bg-transparent data-[state=on]:bg-transparent",
+    'starwind-theme-toggle',
+    'group hover:border-muted-foreground hover:bg-transparent data-[state=on]:bg-transparent',
   ],
 });
 
@@ -62,10 +62,10 @@ type Props = VariantProps<typeof ToggleVariants.toggle> & {
 };
 
 const {
-  class: className = "",
-  variant = "outline",
-  size = "md",
-  ariaLabel = "Toggle theme",
+  class: className = '',
+  variant = 'outline',
+  size = 'md',
+  ariaLabel = 'Toggle theme',
   ...rest
 } = Astro.props as Props;
 ---

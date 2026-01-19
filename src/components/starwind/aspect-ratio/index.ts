@@ -1,4 +1,7 @@
-import AspectRatio, { aspectRatio, aspectRatioWrapper } from "./AspectRatio.astro";
+import AspectRatio, {
+  aspectRatio,
+  aspectRatioWrapper,
+} from './AspectRatio.astro';
 
 const AspectRatioVariants = { aspectRatio, aspectRatioWrapper };
 

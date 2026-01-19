@@ -1,12 +1,12 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { tv } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import { tv } from 'tailwind-variants';
 
 export const prose = tv({
-  base: "sw-prose max-w-[65ch]",
+  base: 'sw-prose max-w-[65ch]',
 });
 
-type Props = HTMLAttributes<"div">;
+type Props = HTMLAttributes<'div'>;
 
 const { class: className, ...rest } = Astro.props;
 ---
