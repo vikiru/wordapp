@@ -16,7 +16,6 @@
     "includes": [
       "src/**/*.ts",
       "src/**/*.tsx",
-      "src/**/*.astro",
       "src/**/*.js",
       "src/**/*.jsx",
       "src/**/*.cjs",
@@ -36,6 +35,8 @@
       "!/**/out/*",
       "!/**/.git/*",
       "!/**/.github/*",
+      "!/**/src/components/starwind/*",
+      "!/**/*.astro",
       "!/**/*.css",
       "!/**/*.html",
       "!/**/*.json",
