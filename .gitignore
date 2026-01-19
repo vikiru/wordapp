@@ -1,5 +1,9 @@
-src/data
+todos.md
+public/data/*.json
+src/data/*.json
 !src/data/.gitkeep
+dist
+build
 
 # Logs
 logs
