@@ -1,11 +1,11 @@
-import Table, { table } from "./Table.astro";
-import TableBody, { tableBody } from "./TableBody.astro";
-import TableCaption, { tableCaption } from "./TableCaption.astro";
-import TableCell, { tableCell } from "./TableCell.astro";
-import TableFoot, { tableFoot } from "./TableFoot.astro";
-import TableHead, { tableHead } from "./TableHead.astro";
-import TableHeader, { tableHeader } from "./TableHeader.astro";
-import TableRow, { tableRow } from "./TableRow.astro";
+import Table, { table } from './Table.astro';
+import TableBody, { tableBody } from './TableBody.astro';
+import TableCaption, { tableCaption } from './TableCaption.astro';
+import TableCell, { tableCell } from './TableCell.astro';
+import TableFoot, { tableFoot } from './TableFoot.astro';
+import TableHead, { tableHead } from './TableHead.astro';
+import TableHeader, { tableHeader } from './TableHeader.astro';
+import TableRow, { tableRow } from './TableRow.astro';
 
 const TableVariants = {
   table,

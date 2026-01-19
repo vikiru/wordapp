@@ -1,10 +1,10 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { tv } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import { tv } from 'tailwind-variants';
 
-type Props = HTMLAttributes<"div">;
+type Props = HTMLAttributes<'div'>;
 
-export const cardDescription = tv({ base: "text-muted-foreground text-base" });
+export const cardDescription = tv({ base: 'text-muted-foreground text-base' });
 
 const { class: className, ...rest } = Astro.props;
 ---

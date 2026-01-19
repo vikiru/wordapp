@@ -1,4 +1,4 @@
-import Image, { image } from "./Image.astro";
+import Image, { image } from './Image.astro';
 
 const ImageVariants = {
   image,

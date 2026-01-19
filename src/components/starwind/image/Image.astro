@@ -1,13 +1,21 @@
 ---
-import type { ComponentProps } from "astro/types";
-import { Image as AstroImage } from "astro:assets";
-import { tv } from "tailwind-variants";
+import { Image as AstroImage } from 'astro:assets';
+import type { ComponentProps } from 'astro/types';
+import { tv } from 'tailwind-variants';
 
-export const image = tv({ base: "starwind-image h-auto w-full" });
+export const image = tv({ base: 'starwind-image h-auto w-full' });
 
-type Props = Partial<ComponentProps<typeof AstroImage>> & { inferSize?: boolean };
+type Props = Partial<ComponentProps<typeof AstroImage>> & {
+  inferSize?: boolean;
+};
 
-const { class: className, src, alt = "", inferSize = true, ...rest } = Astro.props;
+const {
+  class: className,
+  src,
+  alt = '',
+  inferSize = true,
+  ...rest
+} = Astro.props;
 ---
 
 {

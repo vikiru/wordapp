@@ -1,9 +1,9 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-import { ButtonVariants } from "@/components/starwind/button";
+import { ButtonVariants } from '@/components/starwind/button';
 
-type Props = HTMLAttributes<"button"> & {
+type Props = HTMLAttributes<'button'> & {
   /**
    * When true, the component will render its child element instead of a button
    */
@@ -14,7 +14,7 @@ const { class: className, asChild = false, ...rest } = Astro.props;
 
 // Get the first child element if asChild is true
 let hasChildren = false;
-if (Astro.slots.has("default")) {
+if (Astro.slots.has('default')) {
   hasChildren = true;
 }
 ---

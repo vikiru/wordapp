@@ -1,7 +1,7 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-type Props = HTMLAttributes<"div"> & {
+type Props = HTMLAttributes<'div'> & {
   /**
    * When true, the dropdown will open on hover in addition to click
    */
@@ -15,7 +15,12 @@ type Props = HTMLAttributes<"div"> & {
   children: any;
 };
 
-const { class: className, openOnHover = false, closeDelay = 200, ...rest } = Astro.props;
+const {
+  class: className,
+  openOnHover = false,
+  closeDelay = 200,
+  ...rest
+} = Astro.props;
 ---
 
 <div

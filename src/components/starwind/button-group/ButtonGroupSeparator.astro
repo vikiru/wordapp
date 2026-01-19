@@ -1,22 +1,24 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { tv } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import { tv } from 'tailwind-variants';
 
-import { Separator } from "@/components/starwind/separator";
+import { Separator } from '@/components/starwind/separator';
 
-type Props = HTMLAttributes<"div"> & {
+type Props = HTMLAttributes<'div'> & {
   /**
    * The orientation of the separator.
    * @default "vertical"
    */
-  orientation?: "horizontal" | "vertical";
+  orientation?: 'horizontal' | 'vertical';
 };
 
 export const buttonGroupSeparator = tv({
-  base: ["bg-input relative m-0! self-stretch data-[orientation=vertical]:h-auto"],
+  base: [
+    'bg-input relative m-0! self-stretch data-[orientation=vertical]:h-auto',
+  ],
 });
 
-const { class: className, orientation = "vertical", ...rest } = Astro.props;
+const { class: className, orientation = 'vertical', ...rest } = Astro.props;
 ---
 
 <Separator

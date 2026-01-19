@@ -1,21 +1,21 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { type EmblaOptionsType } from "embla-carousel";
-import { tv } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import { type EmblaOptionsType } from 'embla-carousel';
+import { tv } from 'tailwind-variants';
 
 const carousel = tv({
-  base: "starwind-carousel group/carousel relative",
+  base: 'starwind-carousel group/carousel relative',
 });
 
-export interface Props extends HTMLAttributes<"div"> {
-  orientation?: "horizontal" | "vertical";
+export interface Props extends HTMLAttributes<'div'> {
+  orientation?: 'horizontal' | 'vertical';
   opts?: EmblaOptionsType;
   autoInit?: boolean;
 }
 
 const {
   class: className,
-  orientation = "horizontal",
+  orientation = 'horizontal',
   opts = {},
   autoInit = true,
   ...rest

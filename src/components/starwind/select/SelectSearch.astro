@@ -1,9 +1,9 @@
 ---
-import Search from "@tabler/icons/outline/search.svg";
-import type { HTMLAttributes } from "astro/types";
-import { tv } from "tailwind-variants";
+import Search from '@tabler/icons/outline/search.svg';
+import type { HTMLAttributes } from 'astro/types';
+import { tv } from 'tailwind-variants';
 
-type Props = Omit<HTMLAttributes<"input">, "type" | "autocomplete"> & {
+type Props = Omit<HTMLAttributes<'input'>, 'type' | 'autocomplete'> & {
   /**
    * The text to display when no results are found
    * @default "No results found."
@@ -13,15 +13,15 @@ type Props = Omit<HTMLAttributes<"input">, "type" | "autocomplete"> & {
 
 export const selectSearch = tv({
   base: [
-    "placeholder:text-muted-foreground flex w-full border-0 bg-transparent px-0 py-2.5",
-    "ring-0 outline-none disabled:cursor-not-allowed disabled:opacity-50",
+    'placeholder:text-muted-foreground flex w-full border-0 bg-transparent px-0 py-2.5',
+    'ring-0 outline-none disabled:cursor-not-allowed disabled:opacity-50',
   ],
 });
 
 const {
   class: className,
-  placeholder = "Search...",
-  emptyText = "No results found.",
+  placeholder = 'Search...',
+  emptyText = 'No results found.',
   ...rest
 } = Astro.props;
 ---

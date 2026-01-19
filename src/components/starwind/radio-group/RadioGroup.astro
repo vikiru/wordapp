@@ -1,8 +1,8 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { tv } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import { tv } from 'tailwind-variants';
 
-type Props = HTMLAttributes<"fieldset"> & {
+type Props = HTMLAttributes<'fieldset'> & {
   /**
    * Value for the radio group
    */
@@ -22,19 +22,19 @@ type Props = HTMLAttributes<"fieldset"> & {
   /**
    * Orientation of the radio group
    */
-  orientation?: "horizontal" | "vertical";
+  orientation?: 'horizontal' | 'vertical';
 };
 
 export const radioGroup = tv({
-  base: "starwind-radio-group disabled:cursor-not-allowed disabled:opacity-70",
+  base: 'starwind-radio-group disabled:cursor-not-allowed disabled:opacity-70',
   variants: {
     orientation: {
-      vertical: "grid gap-3",
-      horizontal: "flex flex-row items-center gap-3",
+      vertical: 'grid gap-3',
+      horizontal: 'flex flex-row items-center gap-3',
     },
   },
   defaultVariants: {
-    orientation: "vertical",
+    orientation: 'vertical',
   },
 });
 
@@ -44,7 +44,7 @@ const {
   defaultValue,
   legend,
   disabled = false,
-  orientation = "vertical",
+  orientation = 'vertical',
   ...rest
 } = Astro.props;
 ---
