@@ -1,7 +1,0 @@
-onlyBuiltDependencies:
-  - '@prisma/engines'
-  - '@tailwindcss/oxide'
-  - esbuild
-  - lefthook
-  - prisma
-  - sharp
