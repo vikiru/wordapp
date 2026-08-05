@@ -1,0 +1,36 @@
+[project]
+name = "data"
+version = "0.1.0"
+
+requires-python = ">=3.13"
+dependencies = [
+    "config",
+    "beanie>=2.1.0",
+    "orjson",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.10",
+]
+
+[project.scripts]
+data-upload = "data.upload:_async_main"
+data-export = "data.export:_async_main"
+data-reset = "data.reset:_async_main"
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.sources]
+config = { workspace = true }
+
+[tool.pyrefly]
+preset = "strict"
+project-includes = ["src"]
+
+[tool.poe.tasks]
+typecheck = "python -m pyrefly check"
+format = "ruff format ."
+lint = "ruff check --fix ."
+save-to-db = "python -m data.upload"
+fetch = "python -m data.export"
+reset = "uv run data-reset"
