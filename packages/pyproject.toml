@@ -1,0 +1,45 @@
+[project]
+name = "wordapp-packages"
+version = "0.1.0"
+description = "Wordapp data pipeline packages: config, curate, generate, data"
+requires-python = ">=3.13"
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.48.0",
+    "pyrefly>=1.1.1",
+    "ruff>=0.16.0",
+    "ty>=0.0.65",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["config", "curate", "generate", "data"]
+
+[tool.ruff]
+line-length = 120
+fix = true
+extend-exclude = [".venv", "logs"]
+
+[tool.ruff.lint]
+select = ["E", "F", "UP", "B", "SIM", "I"]
+ignore = ["E501", "W291"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["config", "curate", "data", "generate", "models", "prompts", "utils"]
+known-third-party = ["beanie", "english_words", "google", "glin_profanity", "loguru", "msgspec", "orjson", "pydantic", "pycountry", "simplemma", "wn", "wordfreq"]
+
+[tool.ruff.format]
+docstring-code-format = true
+quote-style = "single"
+line-ending = "lf"
+skip-magic-trailing-comma = false
+
+[tool.ty.environment]
+python = ".venv"
+
+[tool.poe.tasks]
+format = "ruff format ."
+lint = "ruff check --fix ."
