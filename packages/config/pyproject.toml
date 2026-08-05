@@ -1,0 +1,25 @@
+[project]
+name = "config"
+version = "0.1.0"
+description = "Shared configuration and logging for wordapp packages"
+requires-python = ">=3.13"
+dependencies = [
+    "loguru>=0.7.3",
+    "python-dotenv>=1.0.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = true
+
+[tool.pyrefly]
+preset = "strict"
+project-includes = ["src"]
+
+[tool.poe.tasks]
+typecheck = "python -m pyrefly check"
+format = "ruff format ."
+lint = "ruff check --fix ."
