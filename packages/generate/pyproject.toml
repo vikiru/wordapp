@@ -1,0 +1,34 @@
+[project]
+name = "generate"
+version = "0.1.0"
+description = "Daily Gemini enrichment of curated vocabulary words"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "config",
+    "google-genai>=2.16.0",
+    "loguru>=0.7.3",
+    "orjson>=3.11.9",
+    "pydantic>=2.13.4",
+]
+
+[project.scripts]
+generate = "main:main"
+generate-clean = "generate.clean:main"
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+config = { workspace = true }
+
+[tool.pyrefly]
+preset = "strict"
+project-includes = ["."]
+
+[tool.poe.tasks]
+typecheck = "python -m pyrefly check"
+format = "ruff format ."
+lint = "ruff check --fix ."
+generate = "python main.py"
+clean = "uv run generate-clean"
