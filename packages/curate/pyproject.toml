@@ -1,0 +1,39 @@
+[project]
+name = "curate"
+version = "0.1.0"
+description = "Word curation pipeline"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "config",
+    "english-words>=2.0.2",
+    "glin-profanity>=3.4.0",
+    "loguru>=0.7.3",
+    "msgspec>=0.21.1",
+    "orjson>=3.11.9",
+    "pycountry>=26.2.16",
+    "simplemma>=1.2.0",
+    "wn>=1.1.0",
+    "wordfreq>=3.1.1",
+]
+
+[project.scripts]
+curate = "curate.main:main"
+
+[tool.uv]
+package = true
+
+[tool.uv.sources]
+curate = { path = "src/curate", editable = true }
+config = { workspace = true }
+
+[tool.pyrefly]
+preset = "strict"
+project-includes = ["src/curate"]
+
+[tool.poe.tasks]
+typecheck = "python -m pyrefly check"
+format = "ruff format ."
+lint = "ruff check --fix ."
+curate = "python -m curate.main"
+rebuild-cache = "python -m curate.build_cache"
