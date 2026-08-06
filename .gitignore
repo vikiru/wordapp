@@ -145,6 +145,9 @@ openspec
 .agents
 .agent
 .serena
+.codanna
+.codannaignore
+.fastembed_cache
 .impeccable
 skills-lock.json
 .github/prompts
@@ -157,6 +160,7 @@ skills-lock.json
 .opencode
 .omp
 .windsurf
+.vibe
 .claude
 .continue
 .trae
@@ -175,6 +179,7 @@ skills-lock.json
 .iflow
 .qoder
 .roo
+
 
 frontend/src/data/*.json
 packages/curate/web2_wordnet_cache.json
