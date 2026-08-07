@@ -59,6 +59,7 @@ web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
+*.map
 
 # Optional npm cache directory
 .npm
@@ -159,9 +160,18 @@ skills-lock.json
 .vscode/
 .kilocode
 .opencode
+.hermes
+.devin
+.forge
+.zcode
+.bob
+.codeartsdoer
+.kimi-code/skills
+.lingma
 .omp
 .windsurf
 .vibe
+.junie
 .claude
 .continue
 .trae
