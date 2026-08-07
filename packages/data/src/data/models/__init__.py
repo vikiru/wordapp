@@ -1,5 +1,6 @@
 """Data package models."""
 
+from data.models.archive import ArchiveEntry, ArchiveFile, WordsFile, WordsTodayFile, WotdFile
 from data.models.word import (
     EtymologyDoc,
     InflectionsDoc,
@@ -11,6 +12,11 @@ from data.models.word import (
 )
 
 __all__ = [
+    'WordsFile',
+    'WordsTodayFile',
+    'WotdFile',
+    'ArchiveEntry',
+    'ArchiveFile',
     'EtymologyDoc',
     'InflectionsDoc',
     'PronunciationDoc',
