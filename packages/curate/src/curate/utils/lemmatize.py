@@ -4,7 +4,7 @@ from simplemma import Lemmatizer
 from simplemma.strategies import DefaultStrategy
 
 from ..constants import SPELLING_VARIANTS
-from .models import WordRecord
+from ..models import WordRecord
 
 lemmatizer = Lemmatizer(cache_max_size=16, lemmatization_strategy=DefaultStrategy())
 
