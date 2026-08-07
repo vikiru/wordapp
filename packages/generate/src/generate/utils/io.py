@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 import orjson
 
 from config import workspace_root
-from models import GeneratedMetadata, GeneratedWord
+from generate.models import GeneratedMetadata, GeneratedWord
 
 GENERATE_DIR = workspace_root() / 'generate'
 CURATE_DIR = workspace_root() / 'curate'

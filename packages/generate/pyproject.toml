@@ -13,22 +13,27 @@ dependencies = [
 ]
 
 [project.scripts]
-generate = "main:main"
+generate = "generate.main:main"
 generate-clean = "generate.clean:main"
 
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["generate*"]
+
 [tool.uv]
-package = false
+package = true
 
 [tool.uv.sources]
+generate = { path = "src/generate", editable = true }
 config = { workspace = true }
 
-[tool.pyrefly]
-preset = "strict"
-project-includes = ["."]
-
 [tool.poe.tasks]
-typecheck = "python -m pyrefly check"
+typecheck = { shell = "uv sync --all-packages && python -m pyrefly check", cwd = ".." }
 format = "ruff format ."
 lint = "ruff check --fix ."
-generate = "python main.py"
+generate = "python -m generate.main"
 clean = "uv run generate-clean"

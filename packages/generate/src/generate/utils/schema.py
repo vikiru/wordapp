@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from google.genai import types
 
-from models import GeneratedWord
+from generate.models import GeneratedWord
 
 
 def build_response_schema() -> types.Schema:

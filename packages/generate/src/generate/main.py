@@ -7,7 +7,7 @@ from loguru import logger
 
 from config import load_env
 from config.logger import setup_logging
-from utils import (
+from generate.utils import (
     build_client,
     generate_entries,
     load_curated_words,
@@ -26,7 +26,7 @@ def main() -> None:
 
     api_key = os.environ.get('GEMINI_API_KEY')
     if not api_key:
-        logger.error('GEMINI_API_KEY environment variable is required')
+        logger.error('generate: GEMINI_API_KEY environment variable is required.')
         sys.exit(1)
 
     model = os.environ.get('GEMINI_MODEL', DEFAULT_MODEL)
@@ -34,7 +34,7 @@ def main() -> None:
     curated = load_curated_words()
     generated = load_generated_words()
     logger.info(
-        'Loaded {} curated words, {} already generated',
+        'generate: Loaded {} curated words, {} already generated.',
         len(curated),
         len(generated),
     )
@@ -44,12 +44,12 @@ def main() -> None:
         return
 
     client = build_client(api_key=api_key)
-    logger.info('Generating entries for {} words with model {}', len(words), model)
+    logger.info('generate: Generating entries for {} words with model {}.', len(words), model)
 
     try:
         entries = generate_entries(client, model, words)
     except Exception as exc:
-        logger.error('Failed to generate entries: {}', exc)
+        logger.error('generate: Failed to generate entries: {}.', exc)
         sys.exit(1)
 
     generated_count = len(entries)
