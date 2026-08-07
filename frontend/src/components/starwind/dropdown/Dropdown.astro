@@ -479,7 +479,7 @@ const {
             this.touchStartPoint = null;
             return;
           }
-          const touch = e.touches[0];
+          const touch = e.touches[0]!;
           this.touchStartPoint = { x: touch.clientX, y: touch.clientY };
           this.clearLongPressTimer();
           this.longPressTimerRef = window.setTimeout(() => {
@@ -501,7 +501,7 @@ const {
             return;
           }
           if (!this.touchStartPoint) return;
-          const touch = e.touches[0];
+          const touch = e.touches[0]!;
           const deltaX = Math.abs(touch.clientX - this.touchStartPoint.x);
           const deltaY = Math.abs(touch.clientY - this.touchStartPoint.y);
           if (deltaX > 10 || deltaY > 10) {
@@ -590,7 +590,7 @@ const {
           if (currentIdx !== -1) {
             e.preventDefault();
             e.stopPropagation();
-            this.items[currentIdx].click();
+            this.items[currentIdx]!.click();
           }
           break;
       }

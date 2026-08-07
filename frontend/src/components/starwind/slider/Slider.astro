@@ -48,7 +48,7 @@ function getPercentage(val: number): number {
 }
 
 const rangeStart = isRange ? getPercentage(Math.min(...values)) : 0;
-const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(values[0]);
+const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(values[0]!);
 ---
 
 <div
@@ -195,15 +195,15 @@ const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(va
       const isRange = this.values.length > 1;
 
       if (isRange) {
-        if (index === 0 && newValue > this.values[1]) {
-          newValue = this.values[1];
-        } else if (index === 1 && newValue < this.values[0]) {
-          newValue = this.values[0];
+        if (index === 0 && newValue > this.values[1]!) {
+          newValue = this.values[1]!;
+        } else if (index === 1 && newValue < this.values[0]!) {
+          newValue = this.values[0]!;
         }
       }
 
       this.values[index] = newValue;
-      this.inputs[index].value = String(newValue);
+      this.inputs[index]!.value = String(newValue);
 
       this.updateVisuals();
       this.dispatchChangeEvent();
@@ -214,7 +214,7 @@ const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(va
       const rangeStart = isRange ? this.getPercentage(Math.min(...this.values)) : 0;
       const rangeEnd = isRange
         ? this.getPercentage(Math.max(...this.values))
-        : this.getPercentage(this.values[0]);
+        : this.getPercentage(this.values[0]!);
 
       if (this.orientation === "horizontal") {
         this.range.style.left = `${rangeStart}%`;
@@ -225,18 +225,18 @@ const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(va
       }
 
       this.thumbs.forEach((thumb, index) => {
-        const percentage = this.getPercentage(this.values[index]);
+        const percentage = this.getPercentage(this.values[index]!);
         if (this.orientation === "horizontal") {
           thumb.style.left = `${percentage}%`;
         } else {
           thumb.style.bottom = `${percentage}%`;
         }
-        thumb.setAttribute("aria-valuenow", String(this.values[index]));
+        thumb.setAttribute("aria-valuenow", String(this.values[index]!));
       });
     }
 
     private dispatchChangeEvent(): void {
-      const value = this.values.length === 1 ? this.values[0] : [...this.values];
+      const value = this.values.length === 1 ? this.values[0]! : [...this.values];
       this.root.dispatchEvent(
         new CustomEvent("slider-change", {
           detail: { value },
@@ -251,8 +251,8 @@ const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(va
       this.activeThumbIndex = index;
       this.dragging = true;
       this.root.setAttribute("data-dragging", "");
-      this.thumbs[index].setAttribute("data-dragging", "");
-      this.thumbs[index].focus();
+      this.thumbs[index]!.setAttribute("data-dragging", "");
+      this.thumbs[index]!.focus();
       (e.target as HTMLElement).setPointerCapture(e.pointerId);
     }
 
@@ -268,7 +268,7 @@ const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(va
       this.root.removeAttribute("data-dragging");
       this.thumbs.forEach((thumb) => thumb.removeAttribute("data-dragging"));
 
-      const value = this.values.length === 1 ? this.values[0] : [...this.values];
+      const value = this.values.length === 1 ? this.values[0]! : [...this.values];
       this.root.dispatchEvent(
         new CustomEvent("slider-commit", {
           detail: { value },
@@ -290,13 +290,13 @@ const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(va
       }
 
       this.updateValue(closestIndex, newValue);
-      this.thumbs[closestIndex].focus();
+      this.thumbs[closestIndex]!.focus();
     }
 
     private handleKeyDown(e: KeyboardEvent, index: number): void {
       if (this.disabled) return;
 
-      let newValue = this.values[index];
+      let newValue = this.values[index]!;
       const isHorizontal = this.orientation === "horizontal";
 
       switch (e.key) {
@@ -304,13 +304,13 @@ const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(va
         case "ArrowUp":
           e.preventDefault();
           newValue += isHorizontal === (e.key === "ArrowRight") ? this.step : -this.step;
-          if (e.shiftKey) newValue = this.values[index] + this.largeStep;
+          if (e.shiftKey) newValue = this.values[index]! + this.largeStep;
           break;
         case "ArrowLeft":
         case "ArrowDown":
           e.preventDefault();
           newValue -= isHorizontal === (e.key === "ArrowLeft") ? this.step : -this.step;
-          if (e.shiftKey) newValue = this.values[index] - this.largeStep;
+          if (e.shiftKey) newValue = this.values[index]! - this.largeStep;
           break;
         case "PageUp":
           e.preventDefault();
@@ -338,7 +338,7 @@ const rangeEnd = isRange ? getPercentage(Math.max(...values)) : getPercentage(va
 
     private handleFocus(index: number): void {
       this.root.setAttribute("data-focused", "");
-      this.thumbs[index].setAttribute("data-focused", "");
+      this.thumbs[index]!.setAttribute("data-focused", "");
     }
 
     private handleBlur(): void {

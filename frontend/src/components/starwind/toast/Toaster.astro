@@ -477,7 +477,7 @@ const {
       const toastIndex = this.toasts.findIndex((t) => t.id === id);
       if (toastIndex === -1) return;
 
-      const toast = this.toasts[toastIndex];
+      const toast = this.toasts[toastIndex]!;
       const oldVariant = toast.variant;
       Object.assign(toast, options);
 
