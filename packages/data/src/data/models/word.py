@@ -7,6 +7,7 @@ from typing import Any
 
 from beanie import Document
 from pydantic import BaseModel, Field
+from pymongo import IndexModel
 
 
 class PronunciationDoc(BaseModel):
@@ -75,14 +76,15 @@ class WordDocument(Document):
     etymology: list[EtymologyDoc] = []
     common_mistakes: list[str] = Field(max_length=3)
     interesting_fact: str | None = None
+    is_wotd: bool = False
     generation_date: date
 
     class Settings:
         name = 'words'
         use_revision = False
         indexes = [
-            'word',
-            'generation_date',
+            IndexModel('word', unique=True),
+            IndexModel([('generation_date', 1), ('is_wotd', 1)]),
         ]
 
     @classmethod
@@ -151,5 +153,6 @@ class WordDocument(Document):
             ],
             common_mistakes=payload.get('common_mistakes', []),
             interesting_fact=payload.get('interesting_fact'),
+            is_wotd=payload.get('is_wotd', False),
             generation_date=generation_date,
         )
