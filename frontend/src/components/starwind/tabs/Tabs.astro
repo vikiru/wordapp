@@ -145,7 +145,7 @@ const { defaultValue, syncKey, class: className, ...rest } = Astro.props;
         case "ArrowRight": {
           for (let i = 1; i < this.triggers.length; i++) {
             const index = (this.currentTabIndex + i) % this.triggers.length;
-            if (!this.triggers[index].disabled) {
+            if (!this.triggers[index]!.disabled) {
               newIndex = index;
               break;
             }
@@ -155,7 +155,7 @@ const { defaultValue, syncKey, class: className, ...rest } = Astro.props;
         case "ArrowLeft": {
           for (let i = 1; i < this.triggers.length; i++) {
             const index = (this.currentTabIndex - i + this.triggers.length) % this.triggers.length;
-            if (!this.triggers[index].disabled) {
+            if (!this.triggers[index]!.disabled) {
               newIndex = index;
               break;
             }
@@ -164,7 +164,7 @@ const { defaultValue, syncKey, class: className, ...rest } = Astro.props;
         }
         case "Home": {
           for (let i = 0; i < this.triggers.length; i++) {
-            if (!this.triggers[i].disabled) {
+            if (!this.triggers[i]!.disabled) {
               newIndex = i;
               break;
             }
@@ -173,7 +173,7 @@ const { defaultValue, syncKey, class: className, ...rest } = Astro.props;
         }
         case "End": {
           for (let i = this.triggers.length - 1; i >= 0; i--) {
-            if (!this.triggers[i].disabled) {
+            if (!this.triggers[i]!.disabled) {
               newIndex = i;
               break;
             }
@@ -185,7 +185,7 @@ const { defaultValue, syncKey, class: className, ...rest } = Astro.props;
       }
 
       e.preventDefault();
-      const newTrigger = this.triggers[newIndex];
+      const newTrigger = this.triggers[newIndex]!;
       const value = newTrigger.getAttribute("data-value");
       if (value) {
         this.showTab(value);

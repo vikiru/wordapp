@@ -189,7 +189,7 @@ const { type = "single", defaultValue, class: className, ...rest } = Astro.props
      */
     private focusItem(index: number): void {
       const targetIndex = (index + this.items.length) % this.items.length;
-      this.items[targetIndex].trigger.focus();
+      this.items[targetIndex]!.trigger.focus();
     }
 
     /**

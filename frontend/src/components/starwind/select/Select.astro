@@ -503,7 +503,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
         item.textContent?.toLowerCase().trim().startsWith(search.toLowerCase()),
       ) as HTMLElement[];
       if (matches.length > 0) {
-        this.setActiveItem(matches[0]);
+        this.setActiveItem(matches[0]!);
       }
 
       // update the typeahead search and reset the timer
