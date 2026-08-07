@@ -54,40 +54,37 @@ def keep_words(candidates: list[str], cache: dict[str, WordRecord], raw_word_set
             elapsed = time.perf_counter() - start
             rate = index / elapsed if elapsed else 0.0
             eta = (total - index) / rate if rate else 0.0
-            logger.info('Processed {:,}/{:,} words ({:.0f}/s, ETA {:.1f}s)', index, total, rate, eta)
+            logger.debug('curate: Processed {:,}/{:,} words ({:.0f}/s, ETA {:.1f}s).', index, total, rate, eta)
     return kept
 
 
 def write_filtered_words(words: set[str], out_path: Path) -> None:
     out_path.write_text(''.join(f'{word}\n' for word in sorted(words)), encoding='utf-8')
-    logger.info('Wrote {:,} words to {}.', len(words), out_path)
+    logger.info('curate: Wrote {:,} words to {}.', len(words), out_path)
 
 
 def main() -> None:
-    start_time = time.perf_counter()
-
     if not CACHE_PATH.exists():
-        logger.warning('Cache {} is missing; building it first.', CACHE_PATH)
+        logger.warning('curate: Cache missing at path; rebuilding.')
         from curate.build_cache import build_full_cached_metadata
 
         build_full_cached_metadata()
 
     cache = WordRecord.from_cache(CACHE_PATH.read_bytes())
-    logger.info('Loaded metadata cache for {:,} words.', len(cache))
+    logger.info('curate: Loaded metadata cache for {:,} words.', len(cache))
 
     raw_words = get_english_words_set(['web2'], lower=False)
     raw_word_set = {w.lower() for w in raw_words}
 
-    logger.info('Prefiltering {:,} raw entries...', len(raw_words))
+    logger.info('curate: Prefiltering {:,} raw entries.', len(raw_words))
     candidates = prefilter(raw_words)
-    logger.info('Retained {:,} shape-eligible candidates.', len(candidates))
+    logger.info('curate: Retained {:,} shape-eligible candidates.', len(candidates))
 
-    logger.info('Applying rejection gates to {:,} candidates...', len(candidates))
+    logger.info('curate: Applying rejection gates to {:,} candidates.', len(candidates))
     curated_set = keep_words(candidates, cache, raw_word_set)
-    logger.info('Kept {:,} words after curation.', len(curated_set))
+    logger.info('curate: Kept {:,} words after curation.', len(curated_set))
 
     write_filtered_words(curated_set, OUT_PATH)
-    logger.info('Finished in {:.2f}s.', time.perf_counter() - start_time)
 
 
 if __name__ == '__main__':
