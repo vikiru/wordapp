@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && tsx src/lib/validation/validate-data.ts && astro build",
+    "build": "astro check && tsx src/lib/validation/validate-data.ts && tsx src/lib/search/build-index.ts && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
