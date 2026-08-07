@@ -15,11 +15,7 @@ build-backend = "uv_build"
 [tool.uv]
 package = true
 
-[tool.pyrefly]
-preset = "strict"
-project-includes = ["src"]
-
 [tool.poe.tasks]
-typecheck = "python -m pyrefly check"
+typecheck = { shell = "uv sync --all-packages && python -m pyrefly check", cwd = ".." }
 format = "ruff format ."
 lint = "ruff check --fix ."
