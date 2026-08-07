@@ -14,7 +14,6 @@ from data.models import WordDocument
 
 def _async_main() -> int:
     setup_logging(name='data-reset')
-    logger.info('Starting data reset')
 
     async def _run() -> int:
         await connect()
@@ -22,10 +21,10 @@ def _async_main() -> int:
             collection = WordDocument.get_pymongo_collection()
             result = await collection.delete_many({})
             deleted_count = result.deleted_count
-            logger.info('Deleted {} word documents from MongoDB', deleted_count)
+            logger.info('data: Deleted {} word documents from MongoDB.', deleted_count)
             return 0
         except Exception as exc:
-            logger.exception('Reset failed: {}', exc)
+            logger.exception('data: Reset failed: {}.', exc)
             return 1
         finally:
             await disconnect()

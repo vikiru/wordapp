@@ -14,21 +14,20 @@ from data.repository import upload_words_for_day
 
 def _async_main() -> int:
     setup_logging(name='data-upload')
-    logger.info('Starting word upload to MongoDB')
 
     async def _run() -> int:
         await connect()
         try:
             result = await upload_words_for_day()
             logger.info(
-                'Upload complete: {} inserted, {} updated, {} total',
+                'data: Uploaded {} words ({} inserted, {} updated).',
+                result['total'],
                 result['inserted'],
                 result['updated'],
-                result['total'],
             )
             return 0
         except Exception as exc:
-            logger.exception('Upload failed: {}', exc)
+            logger.exception('data: Upload failed: {}.', exc)
             return 1
         finally:
             await disconnect()
