@@ -61,6 +61,18 @@ _memo_inst_hyper: dict[str, frozenset[str]] = {}
 _memo_related_targets: dict[str, frozenset[str]] = {}
 
 
+def _load_wordnet() -> wn.Wordnet:
+    """Load the OEWN 2025+ wordnet, hinting at the install command if the data is missing."""
+    try:
+        return wn.Wordnet('oewn:2025+')
+    except wn.Error:
+        logger.error(
+            'curate: Failed to load WordNet data (oewn:2025+); '
+            'run `python -m wn download oewn:2025+` to install it.'
+        )
+        raise
+
+
 def _init_worker(
     unwanted_synset_ids_: set[str] | frozenset[str],
     entity_ids_: set[str] | frozenset[str],
@@ -71,7 +83,7 @@ def _init_worker(
     _unwanted_synset_ids = frozenset(unwanted_synset_ids_)
     _entity_ids = frozenset(entity_ids_)
     _pure_body_nouns = frozenset(pure_body_nouns_)
-    _ewn = wn.Wordnet('oewn:2025+')
+    _ewn = _load_wordnet()
     _profanity_filter = Filter(
         {
             'languages': ['english'],
@@ -343,16 +355,19 @@ def _print_progress(done: int, total_words: int, loop_start: float) -> None:
     elapsed = time.perf_counter() - loop_start
     rate = done / elapsed if elapsed > 0 else 0
     eta = (total_words - done) / rate if rate > 0 else 0
-    logger.info(
-        f'      Processed {done:,} / {total_words:,} words in {elapsed:.1f}s '
-        f'({rate:.0f} words/s, ETA {eta / 60:.1f} min)'
+    logger.debug(
+        'curate: Processed {:,} / {:,} words in {:.1f}s ({:.0f} words/s, ETA {:.1f} min).',
+        done,
+        total_words,
+        elapsed,
+        rate,
+        eta / 60,
     )
 
 
 def build_full_cached_metadata() -> None:
     start_time = time.perf_counter()
-    logger.info('[1/2] Pre-analyzing WordNet taxonomy, Zipf, Base Lemma, AND Profanity status for all raw words...')
-    ewn = wn.Wordnet('oewn:2025+')
+    ewn = _load_wordnet()
 
     t0 = time.perf_counter()
     unwanted_synset_ids = _build_unwanted_ids(ewn)
@@ -370,11 +385,16 @@ def build_full_cached_metadata() -> None:
     raw_words = sorted({w.lower() for w in get_english_words_set(['web2'], lower=False)})
     total_words = len(raw_words)
     t_words = time.perf_counter() - t0
-    logger.info(
-        f'      Pre-analysis: {len(unwanted_synset_ids):,} unwanted synsets in {t_unwanted:.2f}s | '
-        f'{len(entity_ids):,} entity synsets in {t_entity:.2f}s | '
-        f'{len(pure_body_nouns):,} pure-body nouns in {t_pure_body:.2f}s | '
-        f'{total_words:,} words loaded in {t_words:.2f}s'
+    logger.debug(
+        'curate: Pre-analysis: {:,} unwanted synsets in {:.2f}s | {:,} entity synsets in {:.2f}s | {:,} pure-body nouns in {:.2f}s | {:,} words loaded in {:.2f}s.',
+        len(unwanted_synset_ids),
+        t_unwanted,
+        len(entity_ids),
+        t_entity,
+        len(pure_body_nouns),
+        t_pure_body,
+        total_words,
+        t_words,
     )
 
     chunks = [raw_words[i : i + CHUNK_SIZE] for i in range(0, total_words, CHUNK_SIZE)]
@@ -384,9 +404,6 @@ def build_full_cached_metadata() -> None:
     n_wn = 0
     done = 0
     loop_start = time.perf_counter()
-    logger.info(
-        f'      Building cache with {MAX_WORKERS} worker(s), {len(chunks):,} chunks of up to {CHUNK_SIZE:,} words...'
-    )
 
     if MAX_WORKERS <= 1:
         _init_worker(unwanted_synset_ids, entity_ids, pure_body_nouns)
@@ -420,19 +437,24 @@ def build_full_cached_metadata() -> None:
 
     loop_elapsed = time.perf_counter() - loop_start
 
-    logger.info(f'[2/2] Writing comprehensive cache to {CACHE_PATH} (msgspec, compact)...')
     t0 = time.perf_counter()
     CACHE_PATH.write_bytes(msgspec.json.encode(cache_data))
     t_dump = time.perf_counter() - t0
 
     elapsed = time.perf_counter() - start_time
-    logger.info(f'[SUCCESS] Pre-computed complete metadata cache for {len(cache_data):,} words in {elapsed:.2f}s!')
-    logger.info(f'      Loop: {loop_elapsed:.1f}s ({total_words / loop_elapsed:.0f} words/s overall)')
+    logger.info('curate: Built metadata cache for {:,} words in {:.2f}s.', len(cache_data), elapsed)
+    logger.debug('curate: Loop: {:.1f}s ({:.0f} words/s overall).', loop_elapsed, total_words / loop_elapsed)
     unit = 'CPU' if MAX_WORKERS > 1 else 'wall'
-    logger.info(
-        f'      Timing ({unit}): zipf {t_zipf:.1f}s | lemma {t_lemma:.1f}s | profanity {t_prof:.1f}s | '
-        f'wordnet {t_syn:.1f}s ({t_syn / max(n_wn, 1) * 1000:.1f} ms/wn-word, {n_wn:,} wn words) | '
-        f'msgspec dump {t_dump:.1f}s'
+    logger.debug(
+        'curate: Timing ({}): zipf {:.1f}s | lemma {:.1f}s | profanity {:.1f}s | wordnet {:.1f}s ({:.1f} ms/wn-word, {:,} wn words) | msgspec dump {:.1f}s.',
+        unit,
+        t_zipf,
+        t_lemma,
+        t_prof,
+        t_syn,
+        t_syn / max(n_wn, 1) * 1000,
+        n_wn,
+        t_dump,
     )
 
 
