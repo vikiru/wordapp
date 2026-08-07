@@ -1,7 +1,31 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "project": ["tsconfig.json"],
-  "entry": ["src/**/*.{js,mjs,cjs,ts,jsx,tsx,css,astro}", "*.{js,mjs,cjs,ts,jsx,tsx,astro}"],
+  "workspaces": {
+    "frontend": {
+      "entry": [
+        "src/pages/**/*.astro",
+        "src/types/**"
+      ],
+      "project": [
+        "**/*.{js,mjs,cjs,ts,jsx,tsx,astro}",
+        "!node_modules/**",
+        "!dist/**",
+        "!.astro/**",
+        "!src/components/starwind/**",
+        "!src/lib/utils/starwind/**"
+      ],
+      "ignoreDependencies": [
+        "@tabler/icons",
+        "@tailwindcss/forms",
+        "embla-carousel",
+        "flexsearch",
+        "tailwind-merge",
+        "tailwind-variants",
+        "tailwindcss",
+        "tw-animate-css"
+      ]
+    }
+  },
   "ignoreExportsUsedInFile": {
     "interface": true,
     "type": true
