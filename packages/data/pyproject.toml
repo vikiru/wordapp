@@ -5,6 +5,7 @@ version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
     "config",
+    "generate",
     "beanie>=2.1.0",
     "orjson",
     "pydantic>=2.13.4",
@@ -14,6 +15,7 @@ dependencies = [
 [project.scripts]
 data-upload = "data.upload:_async_main"
 data-export = "data.export:_async_main"
+data-archive = "data.archive:_async_main"
 data-reset = "data.reset:_async_main"
 
 [build-system]
@@ -22,15 +24,13 @@ build-backend = "uv_build"
 
 [tool.uv.sources]
 config = { workspace = true }
-
-[tool.pyrefly]
-preset = "strict"
-project-includes = ["src"]
+generate = { workspace = true }
 
 [tool.poe.tasks]
-typecheck = "python -m pyrefly check"
+typecheck = { shell = "uv sync --all-packages && python -m pyrefly check", cwd = ".." }
 format = "ruff format ."
 lint = "ruff check --fix ."
 save-to-db = "python -m data.upload"
 fetch = "python -m data.export"
+archive = "python -m data.archive"
 reset = "uv run data-reset"
