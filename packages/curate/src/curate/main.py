@@ -12,7 +12,8 @@ from loguru import logger
 
 from config.logger import setup_logging
 from curate.constants import CACHE_FILE, MAX_WORD_LENGTH, MIN_WORD_LENGTH, WHITELIST
-from curate.utils import WordRecord, keep_base_lemma
+from curate.models import WordRecord
+from curate.utils import keep_base_lemma
 
 setup_logging(name='curate')
 
