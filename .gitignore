@@ -156,6 +156,7 @@ skills-lock.json
 .cospec
 .gemini
 .qwen
+.vscode/
 .kilocode
 .opencode
 .omp
