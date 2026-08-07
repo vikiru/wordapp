@@ -1,4 +1,4 @@
-from models.word_entry import (
+from generate.models.word_entry import (
     Etymology,
     GeneratedMetadata,
     GeneratedWord,

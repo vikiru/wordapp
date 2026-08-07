@@ -1,11 +1,11 @@
-from utils.gemini import (
+from generate.utils.gemini import (
     DEFAULT_MODEL,
     MAX_SAFETY_SETTINGS,
     build_client,
     generate_entries,
     log_run_summary,
 )
-from utils.io import (
+from generate.utils.io import (
     GENERATED_DATA_FILE,
     GENERATED_WORDS_FILE,
     GENERATION_METADATA_FILE,
@@ -13,8 +13,8 @@ from utils.io import (
     load_generated_words,
     write_outputs,
 )
-from utils.schema import build_response_schema
-from utils.selection import WORDS_PER_RUN, select_words
+from generate.utils.schema import build_response_schema
+from generate.utils.selection import WORDS_PER_RUN, select_words
 
 __all__ = [
     'DEFAULT_MODEL',
