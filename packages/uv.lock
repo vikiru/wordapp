@@ -306,6 +306,7 @@ source = { editable = "data" }
 dependencies = [
     { name = "beanie" },
     { name = "config" },
+    { name = "generate" },
     { name = "orjson" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
@@ -315,6 +316,7 @@ dependencies = [
 requires-dist = [
     { name = "beanie", specifier = ">=2.1.0" },
     { name = "config", editable = "config" },
+    { name = "generate", editable = "generate" },
     { name = "orjson" },
     { name = "pydantic", specifier = ">=2.13.4" },
     { name = "pydantic-settings", specifier = ">=2.10" },
@@ -362,7 +364,7 @@ wheels = [
 [[package]]
 name = "generate"
 version = "0.1.0"
-source = { virtual = "generate" }
+source = { editable = "generate" }
 dependencies = [
     { name = "config" },
     { name = "google-genai" },
