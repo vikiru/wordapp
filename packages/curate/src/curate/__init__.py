@@ -7,8 +7,8 @@ from curate.constants import (
     MIN_WORD_LENGTH,
     WHITELIST,
 )
+from curate.models import WordRecord
 from curate.utils import (
-    WordRecord,
     has_redundant_derivation,
     keep_base_lemma,
     resolve_base_lemma,

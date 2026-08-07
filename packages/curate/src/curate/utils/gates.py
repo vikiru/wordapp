@@ -28,9 +28,9 @@ from ..constants import (
     TAXONOMY_ROOT_EXCLUSIONS,
     WHITELIST,
 )
+from ..models import WordRecord
 from .derivations import has_redundant_derivation
 from .lemmatize import resolve_base_lemma
-from .models import WordRecord
 from .zipf import within_zipf_window
 
 _origin_marker = re.compile(DEFINITION_ORIGIN_MARKERS.pattern)

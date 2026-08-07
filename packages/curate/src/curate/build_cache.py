@@ -21,7 +21,7 @@ from curate.constants import (
     NAMED_INDIVIDUAL_DEFINITION_REGEX,
     TAXONOMY_ROOT_EXCLUSIONS,
 )
-from curate.utils import WordRecord
+from curate.models import WordRecord
 
 setup_logging(name='curate')
 
