@@ -13,6 +13,12 @@
       "@/*": [
         "src/*"
       ]
-    }
+    },
+    "noUncheckedIndexedAccess": true,
+    "strict": true,
+    "noEmit": true,
+    "sourceMap": false,
+    "inlineSourceMap": false,
+    "declaration": false
   }
 }
