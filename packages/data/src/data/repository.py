@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import date
 
+from beanie.odm.enums import SortDirection
 from pymongo import ReplaceOne
 
 from data.models import WordDocument
@@ -33,7 +34,7 @@ async def upload_words_for_day(
     operations = [
         ReplaceOne(
             filter={'word': doc.word},
-            replacement=doc.model_dump(mode='json'),
+            replacement=doc.model_dump(mode='json', exclude={'id'}),
             upsert=True,
         )
         for doc in docs
@@ -53,8 +54,30 @@ async def upload_words_for_day(
 
 
 async def fetch_all_words() -> list[WordDocument]:
-    """Fetch all persisted words from MongoDB."""
-    return await WordDocument.find_all().to_list()
+    """Fetch all persisted words from MongoDB, sorted alphabetically (A-Z) by word.
+
+    The sort is served by the unique ``word`` index.
+    """
+    return await (
+        WordDocument.find_all().sort(('word', SortDirection.ASCENDING)).to_list()
+    )
+
+
+async def fetch_words_grouped_by_date() -> dict[str, list[WordDocument]]:
+    """Fetch all words grouped by generation date.
+
+    Returns a mapping of ISO date string to that day's documents, dates sorted
+    newest first. Grouping happens in Python over a date-sorted scan: at ~10
+    words/day a ``$group`` aggregation would only add BSON-to-JSON conversion
+    without saving anything.
+    """
+    all_words = await (
+        WordDocument.find_all().sort(('generation_date', SortDirection.DESCENDING)).to_list()
+    )
+    grouped: dict[str, list[WordDocument]] = {}
+    for doc in all_words:
+        grouped.setdefault(doc.generation_date.isoformat(), []).append(doc)
+    return grouped
 
 
 async def get_word(word: str) -> WordDocument | None:

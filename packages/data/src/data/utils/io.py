@@ -17,6 +17,8 @@ GENERATED_DATA_FILE = GENERATE_DIR / 'generated_data.json'
 GENERATION_METADATA_FILE = GENERATE_DIR / 'generation_metadata.json'
 WORDS_JSON_FILE = FRONTEND_DATA_DIR / 'words.json'
 WOTD_JSON_FILE = FRONTEND_DATA_DIR / 'wotd.json'
+WORDS_TODAY_JSON_FILE = FRONTEND_DATA_DIR / 'words_today.json'
+ARCHIVE_JSON_FILE = FRONTEND_DATA_DIR / 'archive.json'
 
 
 def load_generated_words() -> list[dict[str, Any]]:
@@ -50,10 +52,26 @@ def write_words_json(words: list[dict[str, Any]]) -> None:
     WORDS_JSON_FILE.write_bytes(orjson.dumps(words))
 
 
-def write_wotd_json(words: list[dict[str, Any]]) -> None:
-    """Write today's words (filtered by generation_date) to frontend/src/data/wotd.json."""
+def write_words_today_json(words: list[dict[str, Any]]) -> None:
+    """Write the latest generation day's words to frontend/src/data/words_today.json."""
     FRONTEND_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    WOTD_JSON_FILE.write_bytes(orjson.dumps(words))
+    WORDS_TODAY_JSON_FILE.write_bytes(orjson.dumps(words))
+
+
+def write_wotd_json(word: dict[str, Any]) -> None:
+    """Write the day's featured word (single entry) to frontend/src/data/wotd.json."""
+    FRONTEND_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    WOTD_JSON_FILE.write_bytes(orjson.dumps(word))
+
+
+def write_archive_json(days: dict[str, list[dict[str, Any]]]) -> None:
+    """Write all words grouped by generation date to frontend/src/data/archive.json.
+
+    Keys are ISO dates in the order provided (newest first by convention); each
+    value is that day's full word documents.
+    """
+    FRONTEND_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    ARCHIVE_JSON_FILE.write_bytes(orjson.dumps(days))
 
 
 def get_wotd_from_db(generation_date: date) -> list[dict[str, Any]]:
