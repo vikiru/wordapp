@@ -23,6 +23,7 @@ class ArchiveEntry(GeneratedWord):
     """One word as persisted in `archive.json`: `GeneratedWord` + persistence fields."""
 
     generation_date: date
+    past_wotd: bool = False
     id: str | None = None
 
 
@@ -47,8 +48,11 @@ class WordsTodayFile(RootModel[list[ArchiveEntry]]):
     """`frontend/src/data/words_today.json`: the latest generation day's words."""
 
 
-class WotdFile(RootModel[ArchiveEntry]):
-    """`frontend/src/data/wotd.json`: the day's featured word.
+class WotdFile(RootModel[list[ArchiveEntry]]):
+    """`frontend/src/data/wotd.json`: the day's featured word, as a one-entry array.
 
-    The entry flagged `is_wotd`, else the day's first entry.
+    Array shape lets the frontend load it with Astro's `file()` loader, which
+    watches the file for dev hot-reloads (a custom loader would serve stale
+    imports in long-running dev servers). The entry is flagged `is_wotd`,
+    else the day's first entry.
     """

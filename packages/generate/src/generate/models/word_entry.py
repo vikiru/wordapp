@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from enum import StrEnum
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_serializer, field_validator
 
 
 class PartOfSpeech(StrEnum):
@@ -49,12 +49,18 @@ class WordRelation(BaseModel):
 
 
 class Inflections(BaseModel):
-    past: list[str] | None = None
-    past_participle: list[str] | None = None
-    present_participle: list[str] | None = None
-    plural: list[str] | None = None
-    comparative: list[str] | None = None
-    superlative: list[str] | None = None
+    past: str | list[str] | None = None
+    past_participle: str | list[str] | None = None
+    present_participle: str | list[str] | None = None
+    plural: str | list[str] | None = None
+    comparative: str | list[str] | None = None
+    superlative: str | list[str] | None = None
+
+    @field_serializer('past', 'past_participle', 'present_participle', 'plural', 'comparative', 'superlative')
+    def _flatten_to_string(self, v: str | list[str] | None) -> str | None:
+        if isinstance(v, list):
+            return ', '.join(v)
+        return v
 
 
 class GeneratedWord(BaseModel):
@@ -82,6 +88,7 @@ class GeneratedWord(BaseModel):
 
 class GeneratedMetadata(BaseModel):
     last_generation_date: str
+    model: str
     total_generated_words: int
     total_curated_words: int
     words_generated_this_run: int
