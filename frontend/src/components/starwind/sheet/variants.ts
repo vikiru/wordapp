@@ -3,8 +3,8 @@ import { tv } from "tailwind-variants";
 export const dialogBackdrop = tv({
   base: [
     "starwind-dialog-backdrop fixed inset-0 top-0 left-0 z-50 hidden h-screen w-screen bg-black/80",
-    "data-[state=open]:animate-in fade-in",
-    "data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards fade-out",
+    "data-[state=open]:animate-in fade-in motion-reduce:animate-none",
+    "data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards fade-out motion-reduce:animate-none",
     "data-[state=closed]:duration-300 data-[state=open]:duration-500",
   ],
 });
@@ -12,8 +12,8 @@ export const dialogBackdrop = tv({
 export const sheetContent = tv({
   base: [
     "starwind-dialog-content",
-    "bg-background fixed z-50 flex-col gap-4 shadow-lg transition ease-in-out open:flex",
-    "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards",
+    "bg-background fixed z-50 flex-col gap-4 shadow-lg transition ease-in-out open:flex motion-reduce:transition-none",
+    "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards motion-reduce:animate-none",
     "data-[state=closed]:duration-300 data-[state=open]:duration-500",
   ],
   variants: {
@@ -45,7 +45,7 @@ export const sheetCloseButton = tv({
   base: [
     "starwind-dialog-close",
     "absolute top-4 right-4 rounded-xs [&>svg]:opacity-70 hover:[&>svg]:opacity-100",
-    "focus-visible:ring-outline/50 transition-[color,box-shadow] outline-none focus-visible:ring-3",
+    "focus-visible:ring-outline/50 transition-[color,box-shadow] outline-none focus-visible:ring-3 motion-reduce:transition-none",
   ],
 });
 

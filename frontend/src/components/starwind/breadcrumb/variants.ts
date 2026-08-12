@@ -6,7 +6,7 @@ export const breadcrumbEllipsis = tv({
 
 export const breadcrumbItem = tv({ base: "inline-flex items-center gap-1.5" });
 
-export const breadcrumbLink = tv({ base: "hover:text-foreground transition-colors" });
+export const breadcrumbLink = tv({ base: "hover:text-foreground transition-colors motion-reduce:transition-none" });
 
 export const breadcrumbList = tv({
   base: "text-muted-foreground flex flex-wrap items-center gap-1.5 wrap-break-word sm:gap-2",

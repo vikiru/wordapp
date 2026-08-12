@@ -7,7 +7,7 @@ export const toggle = tv({
     "data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
     "focus-visible:border-outline focus-visible:ring-outline/50 focus-visible:ring-3",
-    "transition-colors outline-none",
+    "transition-colors outline-none motion-reduce:transition-none",
     "aria-invalid:ring-error/40 aria-invalid:border-error",
   ],
   variants: {
