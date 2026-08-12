@@ -16,62 +16,60 @@ import Facts from '@/components/sections/facts/Facts.astro';
 import Breadcrumbs from '@/components/breadcrumbs/Breadcrumbs.astro';
 
 export async function getStaticPaths() {
-	const words = await getCollection('words');
-	const archive = await getCollection('archive');
-	const seen = new Set<string>();
-	return [...words.map((w) => w.data), ...archive.flatMap((day) => day.data)]
-		.filter((w) => {
-			const slug = slugify(w.word);
-			if (seen.has(slug)) return false;
-			seen.add(slug);
-			return true;
-		})
-		.map((w) => ({ params: { slug: slugify(w.word) } }));
+  const words = await getCollection('words');
+  const archive = await getCollection('archive');
+  const seen = new Set<string>();
+  return [...words.map((w) => w.data), ...archive.flatMap((day) => day.data)]
+    .filter((w) => {
+      const slug = slugify(w.word);
+      if (seen.has(slug)) return false;
+      seen.add(slug);
+      return true;
+    })
+    .map((w) => ({ params: { slug: slugify(w.word) } }));
 }
 const slug = Astro.params.slug;
-const data = [...(await getCollection('words')).map((w) => w.data), ...(await getCollection('archive')).flatMap((day) => day.data)].find(
-	(w) => slugify(w.word) === slug,
-);
+const data = [
+  ...(await getCollection('words')).map((w) => w.data),
+  ...(await getCollection('archive')).flatMap((day) => day.data),
+].find((w) => slugify(w.word) === slug);
 ---
+
 <BaseLayout
-	wide
-	title={data?.word ?? 'Word'}
-	description={data?.senses[0]?.definition ?? 'Word details'}
-	jsonLd={
-		data
-			? wordPageJsonLd(data.word, Astro.url.pathname, data.senses[0]?.definition ?? '')
-			: []
-	}
+  wide
+  title={data?.word ?? 'Word'}
+  description={data?.senses[0]?.definition ?? 'Word details'}
+  jsonLd={data ? wordPageJsonLd(data.word, Astro.url.pathname, data.senses[0]?.definition ?? '') : []}
 >
-	{data && (
-		<Breadcrumbs
-			crumbs={[
-				{ label: 'Home', href: '/' },
-				{ label: 'Glossary', href: '/glossary/' },
-				{ label: data.word },
-			]}
-		/>
-	)}
-	{data ? (
-		<Card>
-			<WordHeader
-				word={data.word}
-				generationDate={data.generation_date}
-				posTags={data.pos_tags}
-				pronunciation={data.pronunciation}
-			/>
-			<CardContent class="flex flex-col gap-6">
-				<Senses senses={data.senses} word={data.word} />
-				{data.synonyms.length > 0 && <Synonyms synonyms={data.synonyms} />}
-				{data.antonyms.length > 0 && <Antonyms antonyms={data.antonyms} />}
-				{data.word_family.length > 0 && <WordFamily forms={data.word_family} />}
-				<Inflections inflections={data.inflections} />
-				{data.etymology.length > 0 && <Etymology entries={data.etymology} />}
-				{data.common_mistakes.length > 0 && <CommonMistakes mistakes={data.common_mistakes} />}
-				{data.interesting_fact && <Facts fact={data.interesting_fact} />}
-			</CardContent>
-		</Card>
-	) : (
-		<p class="text-muted-foreground">Word not found.</p>
-	)}
+  {
+    data && (
+      <Breadcrumbs
+        crumbs={[{ label: 'Home', href: '/' }, { label: 'Glossary', href: '/glossary/' }, { label: data.word }]}
+      />
+    )
+  }
+  {
+    data ? (
+      <Card>
+        <WordHeader
+          word={data.word}
+          generationDate={data.generation_date}
+          posTags={data.pos_tags}
+          pronunciation={data.pronunciation}
+        />
+        <CardContent class="flex flex-col gap-6">
+          <Senses senses={data.senses} word={data.word} />
+          {data.synonyms.length > 0 && <Synonyms synonyms={data.synonyms} />}
+          {data.antonyms.length > 0 && <Antonyms antonyms={data.antonyms} />}
+          {data.word_family.length > 0 && <WordFamily forms={data.word_family} />}
+          <Inflections inflections={data.inflections} />
+          {data.etymology.length > 0 && <Etymology entries={data.etymology} />}
+          {data.common_mistakes.length > 0 && <CommonMistakes mistakes={data.common_mistakes} />}
+          {data.interesting_fact && <Facts fact={data.interesting_fact} />}
+        </CardContent>
+      </Card>
+    ) : (
+      <p class="text-muted-foreground">Word not found.</p>
+    )
+  }
 </BaseLayout>

@@ -9,10 +9,8 @@ export const WordsTodayFileSchema = z.array(GeneratedWordSchema);
 export const WotdFileSchema = z.array(GeneratedWordSchema);
 
 export const ArchiveFileSchema = z.record(
-  z
-    .string()
-    .regex(ISO_DATE_KEY, 'archive key must be an ISO date (YYYY-MM-DD)'),
-  z.array(GeneratedWordSchema),
+  z.string().regex(ISO_DATE_KEY, 'archive key must be an ISO date (YYYY-MM-DD)'),
+  z.array(GeneratedWordSchema)
 );
 
 export type WordsFile = z.infer<typeof WordsFileSchema>;

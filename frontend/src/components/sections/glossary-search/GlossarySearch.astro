@@ -5,43 +5,46 @@ import { capitalize } from '@/lib/functions/string';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/starwind/tooltip';
 
 interface Props {
-	posFilters: string[];
-	posFilterLabels: Record<string, string>;
-	posFilterDescs: Record<string, string>;
+  posFilters: string[];
+  posFilterLabels: Record<string, string>;
+  posFilterDescs: Record<string, string>;
 }
 
 const { posFilters, posFilterLabels, posFilterDescs } = Astro.props;
 ---
+
 <div class="flex flex-col gap-3">
-	<div class="relative">
-		<Search
-			aria-hidden="true"
-			class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
-		/>
-		<Input type="search" id="glossary-search" placeholder="Search words…" aria-label="Search words" class="pl-9" />
-	</div>
-	<div class="flex flex-wrap gap-2">
-		{posFilters.map((pos) => (
-			<Tooltip>
-				<TooltipTrigger>
-					<button
-						data-pos-filter={pos}
-						class:list={[
-							'rounded border px-3 py-1 text-small font-semibold uppercase tracking-wider transition-colors outline-none motion-reduce:transition-none focus-visible:ring-3 focus-visible:ring-outline/50',
-							pos === 'all'
-								? 'border-primary bg-primary/5 text-primary'
-								: 'border-border text-muted-foreground hover:border-input hover:text-foreground',
-						]}
-					>
-						{pos === 'all' ? 'All Words' : posFilterLabels[pos] ?? capitalize(pos)}
-					</button>
-				</TooltipTrigger>
-				{pos !== 'all' && posFilterDescs[pos] && (
-					<TooltipContent side="top" align="center" class="max-w-xs">
-						{posFilterDescs[pos]}
-					</TooltipContent>
-				)}
-			</Tooltip>
-		))}
-	</div>
+  <div class="relative">
+    <Search
+      aria-hidden="true"
+      class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+    />
+    <Input type="search" id="glossary-search" placeholder="Search words…" aria-label="Search words" class="pl-9" />
+  </div>
+  <div class="flex flex-wrap gap-2">
+    {
+      posFilters.map((pos) => (
+        <Tooltip>
+          <TooltipTrigger>
+            <button
+              data-pos-filter={pos}
+              class:list={[
+                'rounded border px-3 py-1 text-small font-semibold uppercase tracking-wider transition-colors outline-none motion-reduce:transition-none focus-visible:ring-3 focus-visible:ring-outline/50',
+                pos === 'all'
+                  ? 'border-primary bg-primary/5 text-primary'
+                  : 'border-border text-muted-foreground hover:border-input hover:text-foreground',
+              ]}
+            >
+              {pos === 'all' ? 'All Words' : (posFilterLabels[pos] ?? capitalize(pos))}
+            </button>
+          </TooltipTrigger>
+          {pos !== 'all' && posFilterDescs[pos] && (
+            <TooltipContent side="top" align="center" class="max-w-xs">
+              {posFilterDescs[pos]}
+            </TooltipContent>
+          )}
+        </Tooltip>
+      ))
+    }
+  </div>
 </div>

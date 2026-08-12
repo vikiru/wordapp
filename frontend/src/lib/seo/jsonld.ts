@@ -1,10 +1,4 @@
-import type {
-  BreadcrumbList,
-  DefinedTerm,
-  ItemList,
-  WebSite,
-  WithContext,
-} from 'schema-dts';
+import type { BreadcrumbList, DefinedTerm, ItemList, WebSite, WithContext } from 'schema-dts';
 import { slugify } from '@/lib/slugify';
 
 const site = import.meta.env.SITE.replace(/\/$/, '');
@@ -20,9 +14,7 @@ export const webSiteJsonLd = (): WithContext<WebSite> => ({
   inLanguage: 'en',
 });
 
-export const breadcrumbJsonLd = (
-  crumbs: Array<{ name: string; path: string }>,
-): WithContext<BreadcrumbList> => ({
+export const breadcrumbJsonLd = (crumbs: Array<{ name: string; path: string }>): WithContext<BreadcrumbList> => ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: crumbs.map((crumb, index) => ({
@@ -36,7 +28,7 @@ export const breadcrumbJsonLd = (
 export const wordPageJsonLd = (
   word: string,
   path: string,
-  definition: string,
+  definition: string
 ): Array<WithContext<DefinedTerm | BreadcrumbList>> => [
   {
     '@context': 'https://schema.org',
@@ -61,10 +53,7 @@ export const wordPageJsonLd = (
   },
 ];
 
-export const dayListJsonLd = (
-  words: string[],
-  path: string,
-): WithContext<ItemList> => ({
+export const dayListJsonLd = (words: string[], path: string): WithContext<ItemList> => ({
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Generated words',

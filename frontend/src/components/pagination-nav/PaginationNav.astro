@@ -1,19 +1,19 @@
 ---
 import {
-	Pagination,
-	PaginationContent,
-	PaginationEllipsis,
-	PaginationItem,
-	PaginationLink,
-	PaginationNext,
-	PaginationPrevious,
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 } from '@/components/starwind/pagination';
 import { pageItems, clampPage } from '@/lib/functions/pagination';
 
 interface Props {
-	page: number;
-	totalPages: number;
-	href: (page: number) => string;
+  page: number;
+  totalPages: number;
+  href: (page: number) => string;
 }
 
 const { page, totalPages, href } = Astro.props;
@@ -26,33 +26,35 @@ const nextDisabled = current >= totalPages;
 ---
 
 <Pagination>
-	<PaginationContent>
-		<PaginationItem>
-			<PaginationPrevious
-				href={prevHref}
-				class:list={[prevDisabled && 'pointer-events-none opacity-50']}
-				aria-disabled={prevDisabled ? 'true' : undefined}
-			/>
-		</PaginationItem>
-		{items.map((item) =>
-			item === 'ellipsis' ? (
-				<PaginationItem>
-					<PaginationEllipsis />
-				</PaginationItem>
-			) : (
-				<PaginationItem>
-					<PaginationLink href={href(item)} isActive={item === current}>
-						{item}
-					</PaginationLink>
-				</PaginationItem>
-			),
-		)}
-		<PaginationItem>
-			<PaginationNext
-				href={nextHref}
-				class:list={[nextDisabled && 'pointer-events-none opacity-50']}
-				aria-disabled={nextDisabled ? 'true' : undefined}
-			/>
-		</PaginationItem>
-	</PaginationContent>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious
+        href={prevHref}
+        class:list={[prevDisabled && 'pointer-events-none opacity-50']}
+        aria-disabled={prevDisabled ? 'true' : undefined}
+      />
+    </PaginationItem>
+    {
+      items.map((item) =>
+        item === 'ellipsis' ? (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        ) : (
+          <PaginationItem>
+            <PaginationLink href={href(item)} isActive={item === current}>
+              {item}
+            </PaginationLink>
+          </PaginationItem>
+        )
+      )
+    }
+    <PaginationItem>
+      <PaginationNext
+        href={nextHref}
+        class:list={[nextDisabled && 'pointer-events-none opacity-50']}
+        aria-disabled={nextDisabled ? 'true' : undefined}
+      />
+    </PaginationItem>
+  </PaginationContent>
 </Pagination>

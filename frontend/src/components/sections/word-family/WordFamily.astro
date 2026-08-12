@@ -6,21 +6,26 @@ import { capitalize } from '@/lib/functions/string';
 import { formatIpa } from '@/lib/functions/pronunciation';
 
 interface Props {
-	forms: WordForm[];
+  forms: WordForm[];
 }
 
 const { forms } = Astro.props;
 ---
+
 <section class="flex flex-col gap-3">
-	<SectionHeader title="Word family" help="Related words formed from the same root." />
-	<ul class="flex flex-col gap-2">
-		{forms.map((form) => (
-			<Item as="li" variant="outline">
-				<ItemTitle>{form.word}</ItemTitle>
-				<ItemDescription>
-					{[form.part_of_speech ? capitalize(form.part_of_speech) : undefined, formatIpa(form.ipa)].filter(Boolean).join(' · ')}
-				</ItemDescription>
-			</Item>
-		))}
-	</ul>
+  <SectionHeader title="Word family" help="Related words formed from the same root." />
+  <ul class="flex flex-col gap-2">
+    {
+      forms.map((form) => (
+        <Item as="li" variant="outline">
+          <ItemTitle>{form.word}</ItemTitle>
+          <ItemDescription>
+            {[form.part_of_speech ? capitalize(form.part_of_speech) : undefined, formatIpa(form.ipa)]
+              .filter(Boolean)
+              .join(' · ')}
+          </ItemDescription>
+        </Item>
+      ))
+    }
+  </ul>
 </section>

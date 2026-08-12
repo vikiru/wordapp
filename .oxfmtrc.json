@@ -1,0 +1,13 @@
+{
+  "sortTailwindcss": {
+    "stylesheet": "frontend/src/styles/globals.css",
+    "functions": ["cn", "clsx"],
+    "preserveWhitespace": false
+  },
+  "plugins": [],
+  "rules": {
+    "sort-imports": "error",
+    "sort-keys": "off",
+    "sort-html-attributes": "off"
+  }
+}

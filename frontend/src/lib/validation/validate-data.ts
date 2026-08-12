@@ -4,12 +4,7 @@
  */
 import { readFileSync } from 'node:fs';
 import type { ZodType } from 'zod';
-import {
-  ArchiveFileSchema,
-  WordsFileSchema,
-  WordsTodayFileSchema,
-  WotdFileSchema,
-} from '@/types/data-files';
+import { ArchiveFileSchema, WordsFileSchema, WordsTodayFileSchema, WotdFileSchema } from '@/types/data-files';
 
 const DATA_DIR = new URL('../../data/', import.meta.url);
 
@@ -19,10 +14,7 @@ function validateJsonFile(schema: ZodType, fileName: string): void {
   const result = schema.safeParse(data);
   if (!result.success) {
     const details = result.error.issues
-      .map(
-        (issue) =>
-          `  - ${fileName}: ${issue.path.join('.') || '(root)'} — ${issue.message}`,
-      )
+      .map((issue) => `  - ${fileName}: ${issue.path.join('.') || '(root)'} — ${issue.message}`)
       .join('\n');
     throw new Error(`Data validation failed:\n${details}`);
   }
@@ -37,6 +29,4 @@ export function validateAllData(): void {
 
 // Build-only entrypoint: `tsx src/lib/validation/validate-data.ts` in `pnpm build`.
 validateAllData();
-console.log(
-  'Data validation: words.json, words_today.json, wotd.json, archive.json OK',
-);
+console.log('Data validation: words.json, words_today.json, wotd.json, archive.json OK');

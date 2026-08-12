@@ -1,16 +1,31 @@
 pre-commit:
+  parallel: true
   jobs:
-    - name: Lint JS/TS with Biome
-      glob: "**/*.{ts,js,jsx,tsx,cjs,mjs}"
+    - name: "Format .astro with Prettier"
+      glob: "frontend/**/*.astro"
+      run: "pnpm prettier --write {staged_files}"
+    - name: "Lint & Format TS/JS with oxlint"
+      glob: "frontend/**/*.{ts,tsx,js,jsx}"
       exclude:
         - "frontend/src/components/starwind/**"
+        - "frontend/src/lib/utils/starwind/**"
+      run: "pnpm oxlint --fix {staged_files}"
+    - name: "Format JSON/YAML/MD/CSS with Prettier"
+      glob: "**/*.{json,yaml,yml,md,css}"
+      exclude:
+        - "node_modules/**"
+        - "dist/**"
+        - ".astro/**"
         - "packages/**"
-      run: pnpm typecheck {staged_files}
-    - name: Lint and format Python with Ruff
+        - "frontend/src/components/starwind/**"
+        - "frontend/src/lib/utils/starwind/**"
+      run: "pnpm prettier --write {staged_files}"
+    - name: "Lint & Format Python with Ruff"
       root: packages
       glob: "**/*.py"
-      run: uv run ruff check --fix {staged_files} && uv run ruff format {staged_files}
+      run: "uv run ruff check --fix {staged_files} && uv run ruff format {staged_files}"
+
 commit-msg:
   jobs:
-    - name: Validate commit-msg with commitlint
-      run: pnpm exec commitlint --edit $1
+    - name: "Validate commit message"
+      run: "pnpm exec commitlint --edit $1"
