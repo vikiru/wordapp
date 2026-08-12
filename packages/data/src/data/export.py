@@ -49,13 +49,16 @@ def _async_main() -> int:
             logger.info('data: Exported {} days to frontend/src/data/archive.json.', len(payload))
 
             # Write the daily files: words_today.json (the latest generation
-            # day's words) and wotd.json (the day's featured word — the entry
-            # flagged is_wotd, else the day's first entry).
+            # day's words) and wotd.json (that same day's featured word —
+            # live is_wotd, else the day's past_wotd, else its first entry).
             latest_date = max(payload)
             words_today = payload[latest_date]
-            featured = next((w for w in words_today if w.get('is_wotd')), words_today[0])
+            featured = next(
+                (w for w in words_today if w.get('is_wotd') or w.get('past_wotd')),
+                words_today[0],
+            )
             WordsTodayFile.model_validate(words_today)
-            WotdFile.model_validate(featured)
+            WotdFile.model_validate([featured])
             write_words_today_json(words_today)
             logger.info(
                 'data: Exported {} words to frontend/src/data/words_today.json (date: {}).',

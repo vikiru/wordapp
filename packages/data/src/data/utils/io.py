@@ -59,9 +59,9 @@ def write_words_today_json(words: list[dict[str, Any]]) -> None:
 
 
 def write_wotd_json(word: dict[str, Any]) -> None:
-    """Write the day's featured word (single entry) to frontend/src/data/wotd.json."""
+    """Write the day's featured word as a one-entry array to frontend/src/data/wotd.json."""
     FRONTEND_DATA_DIR.mkdir(parents=True, exist_ok=True)
-    WOTD_JSON_FILE.write_bytes(orjson.dumps(word))
+    WOTD_JSON_FILE.write_bytes(orjson.dumps([word]))
 
 
 def write_archive_json(days: dict[str, list[dict[str, Any]]]) -> None:

@@ -35,5 +35,5 @@ config = { workspace = true }
 typecheck = { shell = "uv sync --all-packages && python -m pyrefly check", cwd = ".." }
 format = "ruff format ."
 lint = "ruff check --fix ."
-generate = "python -m generate.main"
+generate = "python -m generate.main $POE_EXTRA_ARGS"
 clean = "uv run generate-clean"

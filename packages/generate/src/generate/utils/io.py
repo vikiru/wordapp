@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import date
 
 import orjson
 
@@ -33,6 +33,9 @@ def write_outputs(
     words: list[str],
     curated_count: int,
     remaining: int,
+    *,
+    generation_date: date | None = None,
+    model: str,
 ) -> None:
     GENERATED_DATA_FILE.write_bytes(orjson.dumps([entry.model_dump() for entry in entries]))
 
@@ -41,7 +44,8 @@ def write_outputs(
             fh.write(f'{word}\n')
 
     metadata = GeneratedMetadata(
-        last_generation_date=datetime.now(UTC).strftime('%Y-%m-%d'),
+        last_generation_date=(generation_date or date.today()).isoformat(),
+        model=model,
         total_generated_words=len(load_generated_words()),
         total_curated_words=curated_count,
         words_generated_this_run=len(entries),

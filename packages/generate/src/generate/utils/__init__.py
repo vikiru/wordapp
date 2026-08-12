@@ -1,3 +1,4 @@
+from generate.utils.date_utils import format_iso, parse_mmddyyyy
 from generate.utils.gemini import (
     DEFAULT_MODEL,
     MAX_SAFETY_SETTINGS,
@@ -25,10 +26,12 @@ __all__ = [
     'WORDS_PER_RUN',
     'build_client',
     'build_response_schema',
+    'format_iso',
     'generate_entries',
     'load_curated_words',
     'load_generated_words',
     'log_run_summary',
+    'parse_mmddyyyy',
     'select_words',
     'write_outputs',
 ]

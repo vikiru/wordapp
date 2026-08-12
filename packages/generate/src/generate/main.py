@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import argparse
 import os
 import sys
+from datetime import date
 
 from loguru import logger
 
@@ -13,11 +15,39 @@ from generate.utils import (
     load_curated_words,
     load_generated_words,
     log_run_summary,
+    parse_mmddyyyy,
     select_words,
     write_outputs,
 )
 
 DEFAULT_MODEL = 'gemini-3.1-flash-lite'
+
+
+def _parse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog='generate',
+        description='Generate words for today or a specific date (MM/DD/YYYY).',
+    )
+    parser.add_argument(
+        'date',
+        nargs='?',
+        metavar='MM/DD/YYYY',
+        help='target generation date, e.g. 08/09/2026 (default: today)',
+    )
+    return parser.parse_args(argv)
+
+
+def _resolve_date(value: str | None) -> date:
+    if value is None:
+        return date.today()
+    try:
+        return parse_mmddyyyy(value)
+    except ValueError:
+        logger.error(
+            'generate: Invalid date {!r}. Expected MM/DD/YYYY (e.g. 08/09/2026).',
+            value,
+        )
+        sys.exit(1)
 
 
 def main() -> None:
@@ -30,17 +60,28 @@ def main() -> None:
         sys.exit(1)
 
     model = os.environ.get('GEMINI_MODEL', DEFAULT_MODEL)
+    target_date = _resolve_date(_parse_args(sys.argv[1:]).date)
 
     curated = load_curated_words()
     generated = load_generated_words()
     logger.info(
-        'generate: Loaded {} curated words, {} already generated.',
+        'generate: Loaded {} curated words, {} already generated. Target date: {}.',
         len(curated),
         len(generated),
+        target_date,
     )
 
     words = select_words(curated, generated)
     if not words:
+        logger.info('generate: Pool exhausted; writing empty run metadata.')
+        write_outputs(
+            entries=[],
+            words=[],
+            curated_count=len(curated),
+            remaining=0,
+            generation_date=target_date,
+            model=model,
+        )
         return
 
     client = build_client(api_key=api_key)
@@ -61,6 +102,8 @@ def main() -> None:
         words=[entry.word for entry in entries],
         curated_count=len(curated),
         remaining=remaining,
+        generation_date=target_date,
+        model=model,
     )
 
     log_run_summary(
