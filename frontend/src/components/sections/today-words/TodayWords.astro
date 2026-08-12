@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { slugify } from '@/lib/slugify';
+import { shortDate } from '@/lib/functions/date';
+import WordCard from '@/components/sections/word-card/WordCard.astro';
+
+interface Props {
+	words: CollectionEntry<'words_today'>[];
+}
+
+const { words } = Astro.props;
+---
+<section class="flex flex-col gap-4">
+	<div class="flex items-baseline justify-between border-b border-border pb-2">
+		<h2 class="text-h3">Today's words</h2>
+		<span class="text-small uppercase tracking-widest text-muted-foreground">
+			{`${words.length} ${words.length === 1 ? 'Entry' : 'Entries'}`}
+		</span>
+	</div>
+	<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+		{words.map((w) => (
+			<WordCard
+				word={w.data.word}
+				pos={w.data.pos_tags}
+				definition={w.data.senses[0]?.definition ?? ''}
+				date={shortDate(w.data.generation_date)}
+				href={`/words/${slugify(w.data.word)}`}
+			/>
+		))}
+	</div>
+</section>
