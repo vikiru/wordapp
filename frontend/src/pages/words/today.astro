@@ -9,19 +9,23 @@ import TodayWords from '@/components/sections/today-words/TodayWords.astro';
 const wotd = (await getCollection('wotd'))[0]?.data;
 const words = (await getCollection('words_today')).sort((a, b) => a.data.word.localeCompare(b.data.word));
 ---
+
 <BaseLayout
-	title="Today's words"
-	description="The day's new words, each defined, pronounced, and added to the lexicon"
-	jsonLd={[
-		dayListJsonLd(words.map((w) => w.data.word), '/words/today/'),
-		breadcrumbJsonLd([
-			{ name: 'Home', path: '/' },
-			{ name: "Today's words", path: '/words/today/' },
-		]),
-	]}
-	wide
+  title="Today's words"
+  description="The day's new words, each defined, pronounced, and added to the lexicon"
+  jsonLd={[
+    dayListJsonLd(
+      words.map((w) => w.data.word),
+      '/words/today/'
+    ),
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: "Today's words", path: '/words/today/' },
+    ]),
+  ]}
+  wide
 >
-	<TodayHeader />
-	{wotd && <WordOfDay word={wotd} />}
-	{words.length > 0 && <TodayWords words={words} />}
+  <TodayHeader />
+  {wotd && <WordOfDay word={wotd} />}
+  {words.length > 0 && <TodayWords words={words} />}
 </BaseLayout>

@@ -6,11 +6,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { Document } from 'flexsearch';
-import {
-  INDEX_VERSION,
-  type SearchHit,
-  searchIndexOptions,
-} from '@/lib/search/config';
+import { INDEX_VERSION, type SearchHit, searchIndexOptions } from '@/lib/search/config';
 import type { GeneratedWord } from '@/types/word';
 
 const DATA_DIR = new URL('../../data/', import.meta.url);
@@ -51,9 +47,7 @@ export function buildSearchIndex(): void {
   const asset = JSON.stringify({ version: INDEX_VERSION, docs: hits, chunks });
   writeFileSync(OUT_FILE, asset);
   const sizeKb = (asset.length / 1024).toFixed(1);
-  console.log(
-    `Search index: ${hits.length} words -> src/data/search-index.json (${sizeKb} KB)`,
-  );
+  console.log(`Search index: ${hits.length} words -> src/data/search-index.json (${sizeKb} KB)`);
 }
 
 // Build-only entrypoint: `tsx src/lib/search/build-index.ts` in `pnpm build`.

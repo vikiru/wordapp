@@ -7,9 +7,9 @@ import { breadcrumbJsonLd } from '@/lib/seo/jsonld';
 import { clampPage, ARCHIVE_CARDS_PER_PAGE } from '@/lib/functions/pagination';
 
 export async function getStaticPaths() {
-	const archive = await getCollection('archive');
-	const totalPages = Math.max(1, Math.ceil(archive.length / ARCHIVE_CARDS_PER_PAGE));
-	return Array.from({ length: totalPages - 1 }, (_, i) => ({ params: { page: String(i + 2) } }));
+  const archive = await getCollection('archive');
+  const totalPages = Math.max(1, Math.ceil(archive.length / ARCHIVE_CARDS_PER_PAGE));
+  return Array.from({ length: totalPages - 1 }, (_, i) => ({ params: { page: String(i + 2) } }));
 }
 
 const { page } = Astro.params;
@@ -19,17 +19,18 @@ const totalPages = Math.max(1, Math.ceil(archive.length / ARCHIVE_CARDS_PER_PAGE
 const current = clampPage(Number(page), totalPages);
 const pageHref = (n: number) => (n === 1 ? '/archive/' : `/archive/page/${n}`);
 ---
+
 <BaseLayout
-	title="Archive"
-	description="Daily generation archive"
-	jsonLd={[
-		breadcrumbJsonLd([
-			{ name: 'Home', path: '/' },
-			{ name: 'Archive', path: '/archive/' },
-		]),
-	]}
-	wide
+  title="Archive"
+  description="Daily generation archive"
+  jsonLd={[
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Archive', path: '/archive/' },
+    ]),
+  ]}
+  wide
 >
-	<ArchiveHeader dayCount={archive.length} wordCount={totalWords} />
-	<ArchiveListing archive={archive} page={current} totalPages={totalPages} pageHref={pageHref} />
+  <ArchiveHeader dayCount={archive.length} wordCount={totalWords} />
+  <ArchiveListing archive={archive} page={current} totalPages={totalPages} pageHref={pageHref} />
 </BaseLayout>

@@ -6,51 +6,60 @@ import { capitalize } from '@/lib/functions/string';
 import { ArrowUpRight } from '@lucide/astro';
 
 interface Props {
-	wotd?: GeneratedWord;
-	today: CollectionEntry<'words_today'>[];
+  wotd?: GeneratedWord;
+  today: CollectionEntry<'words_today'>[];
 }
 
 const { wotd, today } = Astro.props;
 ---
+
 <aside class="sticky top-24 hidden max-h-[calc(100dvh-8rem)] flex-col gap-6 self-start overflow-y-auto xl:flex">
-	{wotd && (
-		<a
-			href={`/words/${slugify(wotd.word)}`}
-			class="group relative overflow-hidden rounded-lg border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-glow motion-reduce:transition-none"
-		>
-			<span
-				aria-hidden="true"
-				class="pointer-events-none absolute top-0 right-8 font-script text-8xl leading-none text-primary/10 select-none"
-			>
-				{wotd.word.charAt(0).toUpperCase()}
-			</span>
-			<p class="relative z-10 text-small font-semibold uppercase tracking-widest text-primary">Word of the day</p>
-			<p class="relative z-10 mt-2 font-heading text-2xl text-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">
-				{wotd.word}
-			</p>
-			<p class="relative z-10 mt-1 font-serif text-sm leading-relaxed text-muted-foreground line-clamp-2">
-				{wotd.senses[0]?.definition}
-			</p>
-		</a>
-	)}
-	<div class="flex flex-col gap-3 rounded-lg border border-border bg-secondary p-6">
-		<h3 class="border-b border-border pb-2 font-heading text-lg font-semibold text-foreground">Today's words</h3>
-		<ul class="flex flex-col gap-3">
-			{today.map((w) => (
-				<li>
-					<a class="group flex items-center justify-between gap-3 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-outline/50" href={`/words/${slugify(w.data.word)}`}>
-						<span class="flex flex-col">
-							<span class="font-heading text-base text-muted-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">
-								{w.data.word}
-							</span>
-							<span class="text-small uppercase text-muted-foreground">
-								{capitalize(w.data.pos_tags[0] ?? '')}
-							</span>
-						</span>
-						<ArrowUpRight class="size-4 shrink-0 text-primary/40 transition-colors group-hover:text-primary motion-reduce:transition-none" aria-hidden="true" />
-					</a>
-				</li>
-			))}
-		</ul>
-	</div>
+  {
+    wotd && (
+      <a
+        href={`/words/${slugify(wotd.word)}`}
+        class="group relative overflow-hidden rounded-lg border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-glow motion-reduce:transition-none"
+      >
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute top-0 right-8 font-script text-8xl leading-none text-primary/10 select-none"
+        >
+          {wotd.word.charAt(0).toUpperCase()}
+        </span>
+        <p class="relative z-10 text-small font-semibold uppercase tracking-widest text-primary">Word of the day</p>
+        <p class="relative z-10 mt-2 font-heading text-2xl text-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">
+          {wotd.word}
+        </p>
+        <p class="relative z-10 mt-1 font-serif text-sm leading-relaxed text-muted-foreground line-clamp-2">
+          {wotd.senses[0]?.definition}
+        </p>
+      </a>
+    )
+  }
+  <div class="flex flex-col gap-3 rounded-lg border border-border bg-secondary p-6">
+    <h3 class="border-b border-border pb-2 font-heading text-lg font-semibold text-foreground">Today's words</h3>
+    <ul class="flex flex-col gap-3">
+      {
+        today.map((w) => (
+          <li>
+            <a
+              class="group flex items-center justify-between gap-3 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-outline/50"
+              href={`/words/${slugify(w.data.word)}`}
+            >
+              <span class="flex flex-col">
+                <span class="font-heading text-base text-muted-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">
+                  {w.data.word}
+                </span>
+                <span class="text-small uppercase text-muted-foreground">{capitalize(w.data.pos_tags[0] ?? '')}</span>
+              </span>
+              <ArrowUpRight
+                class="size-4 shrink-0 text-primary/40 transition-colors group-hover:text-primary motion-reduce:transition-none"
+                aria-hidden="true"
+              />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </aside>

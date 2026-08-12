@@ -7,10 +7,18 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "lint": "astro-check .",
+    "lint": "pnpm oxlint && pnpm biome lint",
+    "lint:oxlint": "oxlint",
+    "lint:biome": "biome lint",
+    "format": "pnpm prettier --write . && pnpm biome format --write .",
+    "format:oxlint": "oxlint --fix .",
+    "format:prettier": "prettier --write .",
+    "format:biome": "biome format --write .",
+    "format:check": "pnpm prettier --check . && pnpm biome format --check .",
     "build": "astro check && tsx src/lib/validation/validate-data.ts && tsx src/lib/search/build-index.ts && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "astro-check": "astro-check ."
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -41,6 +49,8 @@
     "@types/lodash": "~4.17.25",
     "oxlint": "^1.78.0",
     "oxlint-tsgolint": "^7.0.2001",
+    "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
     "schema-dts": "^2.0.0",
     "tsx": "^4.23.8",
     "typescript": "^5.9.3"

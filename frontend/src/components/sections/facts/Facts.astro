@@ -1,11 +1,12 @@
 ---
 interface Props {
-	fact: string;
+  fact: string;
 }
 
 const { fact } = Astro.props;
 ---
+
 <section class="flex flex-col gap-3">
-	<h2 class="text-h3">Interesting Facts</h2>
-	<p class="font-serif leading-relaxed">{fact}</p>
+  <h2 class="text-h3">Interesting Facts</h2>
+  <p class="font-serif leading-relaxed">{fact}</p>
 </section>

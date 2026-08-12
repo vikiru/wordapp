@@ -11,56 +11,62 @@ import WordCard from '@/components/sections/word-card/WordCard.astro';
 import Breadcrumbs from '@/components/breadcrumbs/Breadcrumbs.astro';
 
 export async function getStaticPaths() {
-	const archive = await getCollection('archive');
-	return archive.map((entry) => ({ params: { date: entry.id } }));
+  const archive = await getCollection('archive');
+  return archive.map((entry) => ({ params: { date: entry.id } }));
 }
 const { date } = Astro.params;
 const day = date ? await getEntry('archive', date) : undefined;
 const wotd = day?.data.find((w) => w.is_wotd) ?? day?.data.find((w) => w.past_wotd);
 ---
+
 <BaseLayout
-	title={date ? `Archive - ${formatShortDate(date)}` : 'Archive'}
-	description={date ? `Words generated on ${formatShortDate(date)}` : 'Daily generation archive'}
-	jsonLd={
-		day
-			? [
-					dayListJsonLd(day.data.map((w) => w.word), `/archive/${date}/`),
-					breadcrumbJsonLd([
-						{ name: 'Home', path: '/' },
-						{ name: 'Archive', path: '/archive/' },
-						{ name: formatShortDate(date), path: `/archive/${date}/` },
-					]),
-				]
-			: []
-	}
-	wide
+  title={date ? `Archive - ${formatShortDate(date)}` : 'Archive'}
+  description={date ? `Words generated on ${formatShortDate(date)}` : 'Daily generation archive'}
+  jsonLd={day
+    ? [
+        dayListJsonLd(
+          day.data.map((w) => w.word),
+          `/archive/${date}/`
+        ),
+        breadcrumbJsonLd([
+          { name: 'Home', path: '/' },
+          { name: 'Archive', path: '/archive/' },
+          { name: formatShortDate(date), path: `/archive/${date}/` },
+        ]),
+      ]
+    : []}
+  wide
 >
-	{date && (
-		<Breadcrumbs
-			crumbs={[
-				{ label: 'Home', href: '/' },
-				{ label: 'Archive', href: '/archive/' },
-				{ label: formatShortDate(date) },
-			]}
-		/>
-	)}
-	<ArchiveDayHeader date={date ?? ''} count={day?.data.length ?? 0} />
-	{wotd && <WordOfDay word={wotd} isPast={!wotd.is_wotd} />}
-	{day ? (
-		<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-			{day.data.map((w) => (
-				<WordCard
-					word={w.word}
-					pos={w.pos_tags}
-					definition={w.senses[0]?.definition ?? ''}
-					date={w.generation_date}
-					href={`/words/${slugify(w.word)}`}
-					corner="ipa"
-					ipa={formatIpa(w.pronunciation.ipa)}
-				/>
-			))}
-		</div>
-	) : (
-		<p class="text-muted-foreground">No words for this date.</p>
-	)}
+  {
+    date && (
+      <Breadcrumbs
+        crumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'Archive', href: '/archive/' },
+          { label: formatShortDate(date) },
+        ]}
+      />
+    )
+  }
+  <ArchiveDayHeader date={date ?? ''} />
+  {wotd && <WordOfDay word={wotd} isPast={!wotd.is_wotd} />}
+  {
+    day ? (
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {day.data.map((w) => (
+          <WordCard
+            word={w.word}
+            pos={w.pos_tags}
+            definition={w.senses[0]?.definition ?? ''}
+            date={w.generation_date}
+            href={`/words/${slugify(w.word)}`}
+            corner="ipa"
+            ipa={formatIpa(w.pronunciation.ipa)}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="text-muted-foreground">No words for this date.</p>
+    )
+  }
 </BaseLayout>

@@ -3,73 +3,87 @@ import { Pause, Volume2 } from '@lucide/astro';
 import { Button } from '@/components/starwind/button';
 
 interface Props {
-	word: string;
+  word: string;
 }
 
 const { word } = Astro.props;
 ---
+
 <span data-pronounce-slot></span>
 <template data-pronounce-template>
-	<Button variant="primary" size="icon-sm" data-pronounce data-word={word} aria-label={`Listen to pronunciation of ${word}`}>
-		<Volume2 data-pronounce-icon class="size-4" />
-		<Pause data-pronounce-stop class="hidden size-4" />
-	</Button>
+  <Button
+    variant="primary"
+    size="icon-sm"
+    data-pronounce
+    data-word={word}
+    aria-label={`Listen to pronunciation of ${word}`}
+  >
+    <Volume2 data-pronounce-icon class="size-4" />
+    <Pause data-pronounce-stop class="hidden size-4" />
+  </Button>
 </template>
 <script>
-	import { hasVoices, isSupported, speak, stop } from '@/lib/pronunciation/tts';
+  import { hasVoices, isSupported, speak, stop } from '@/lib/pronunciation/tts';
 
-	const slot = document.querySelector<HTMLElement>('[data-pronounce-slot]');
-	const template = document.querySelector<HTMLTemplateElement>('[data-pronounce-template]');
-	const wire = () => {
-		if (!slot || !template || slot.hasChildNodes()) return;
-		slot.replaceChildren(template.content.cloneNode(true));
-		const button = slot.querySelector<HTMLButtonElement>('[data-pronounce]');
-		const playIcon = slot.querySelector<HTMLElement>('[data-pronounce-icon]');
-		const stopIcon = slot.querySelector<HTMLElement>('[data-pronounce-stop]');
-		let speaking = false;
-		const setSpeaking = (value: boolean) => {
-			speaking = value;
-			playIcon?.classList.toggle('hidden', value);
-			stopIcon?.classList.toggle('hidden', !value);
-			button?.setAttribute('aria-label', value ? 'Stop pronunciation' : `Listen to pronunciation of ${button.getAttribute('data-word') ?? ''}`);
-		};
-		button?.addEventListener('click', () => {
-			if (speaking) {
-				stop();
-				setSpeaking(false);
-				return;
-			}
-			const utterance = speak(button.getAttribute('data-word') ?? '');
-			if (!utterance) return;
-			let started = false;
-			utterance.addEventListener('start', () => {
-				started = true;
-			}, { once: true });
-			utterance.addEventListener('end', () => setSpeaking(false));
-			utterance.addEventListener('error', () => setSpeaking(false));
-			setSpeaking(true);
-			window.setTimeout(() => {
-				if (!started) {
-					stop();
-					setSpeaking(false);
-					slot.replaceChildren();
-				}
-			}, 1500);
-		});
-	};
-	if (!isSupported()) {
-		template?.remove();
-	} else if (hasVoices()) {
-		wire();
-	} else {
-		const timer = window.setTimeout(() => {
-			template?.remove();
-		}, 2500);
-		window.speechSynthesis.addEventListener('voiceschanged', () => {
-			if (hasVoices()) {
-				window.clearTimeout(timer);
-				wire();
-			}
-		});
-	}
+  const slot = document.querySelector<HTMLElement>('[data-pronounce-slot]');
+  const template = document.querySelector<HTMLTemplateElement>('[data-pronounce-template]');
+  const wire = () => {
+    if (!slot || !template || slot.hasChildNodes()) return;
+    slot.replaceChildren(template.content.cloneNode(true));
+    const button = slot.querySelector<HTMLButtonElement>('[data-pronounce]');
+    const playIcon = slot.querySelector<HTMLElement>('[data-pronounce-icon]');
+    const stopIcon = slot.querySelector<HTMLElement>('[data-pronounce-stop]');
+    let speaking = false;
+    const setSpeaking = (value: boolean) => {
+      speaking = value;
+      playIcon?.classList.toggle('hidden', value);
+      stopIcon?.classList.toggle('hidden', !value);
+      button?.setAttribute(
+        'aria-label',
+        value ? 'Stop pronunciation' : `Listen to pronunciation of ${button.getAttribute('data-word') ?? ''}`
+      );
+    };
+    button?.addEventListener('click', () => {
+      if (speaking) {
+        stop();
+        setSpeaking(false);
+        return;
+      }
+      const utterance = speak(button.getAttribute('data-word') ?? '');
+      if (!utterance) return;
+      let started = false;
+      utterance.addEventListener(
+        'start',
+        () => {
+          started = true;
+        },
+        { once: true }
+      );
+      utterance.addEventListener('end', () => setSpeaking(false));
+      utterance.addEventListener('error', () => setSpeaking(false));
+      setSpeaking(true);
+      window.setTimeout(() => {
+        if (!started) {
+          stop();
+          setSpeaking(false);
+          slot.replaceChildren();
+        }
+      }, 1500);
+    });
+  };
+  if (!isSupported()) {
+    template?.remove();
+  } else if (hasVoices()) {
+    wire();
+  } else {
+    const timer = window.setTimeout(() => {
+      template?.remove();
+    }, 2500);
+    window.speechSynthesis.addEventListener('voiceschanged', () => {
+      if (hasVoices()) {
+        window.clearTimeout(timer);
+        wire();
+      }
+    });
+  }
 </script>

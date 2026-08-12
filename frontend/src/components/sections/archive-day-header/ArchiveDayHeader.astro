@@ -3,14 +3,14 @@ import { Badge } from '@/components/starwind/badge';
 import { formatShortDate } from '@/lib/functions/date';
 
 interface Props {
-	date: string;
-	count: number;
+  date: string;
 }
 
-const { date, count } = Astro.props;
+const { date } = Astro.props;
 ---
+
 <div class="flex flex-col gap-4 pt-6">
-	<div class="flex flex-wrap items-baseline justify-between gap-3">
-		<h1 class="text-h1">{formatShortDate(date)}</h1>
-	</div>
+  <div class="flex flex-wrap items-baseline justify-between gap-3">
+    <h1 class="text-h1">{formatShortDate(date)}</h1>
+  </div>
 </div>

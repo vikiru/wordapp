@@ -11,17 +11,18 @@ const totalWords = archive.reduce((sum, day) => sum + day.data.length, 0);
 const totalPages = Math.max(1, Math.ceil(archive.length / ARCHIVE_CARDS_PER_PAGE));
 const pageHref = (n: number) => (n === 1 ? '/archive/' : `/archive/page/${n}`);
 ---
+
 <BaseLayout
-	title="Archive"
-	description="Daily generation archive"
-	jsonLd={[
-		breadcrumbJsonLd([
-			{ name: 'Home', path: '/' },
-			{ name: 'Archive', path: '/archive/' },
-		]),
-	]}
-	wide
+  title="Archive"
+  description="Daily generation archive"
+  jsonLd={[
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Archive', path: '/archive/' },
+    ]),
+  ]}
+  wide
 >
-	<ArchiveHeader dayCount={archive.length} wordCount={totalWords} />
-	<ArchiveListing archive={archive} page={1} totalPages={totalPages} pageHref={pageHref} />
+  <ArchiveHeader dayCount={archive.length} wordCount={totalWords} />
+  <ArchiveListing archive={archive} page={1} totalPages={totalPages} pageHref={pageHref} />
 </BaseLayout>

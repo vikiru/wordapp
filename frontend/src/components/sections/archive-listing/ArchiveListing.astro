@@ -6,10 +6,10 @@ import { formatMonthLabel } from '@/lib/functions/date';
 import { ARCHIVE_CARDS_PER_PAGE } from '@/lib/functions/pagination';
 
 interface Props {
-	archive: CollectionEntry<'archive'>[];
-	page: number;
-	totalPages: number;
-	pageHref: (n: number) => string;
+  archive: CollectionEntry<'archive'>[];
+  page: number;
+  totalPages: number;
+  pageHref: (n: number) => string;
 }
 
 const { archive, page, totalPages, pageHref } = Astro.props;
@@ -17,23 +17,27 @@ const start = (page - 1) * ARCHIVE_CARDS_PER_PAGE;
 const visibleDays = archive.slice(start, start + ARCHIVE_CARDS_PER_PAGE);
 const months: { label: string; days: CollectionEntry<'archive'>[] }[] = [];
 for (const day of visibleDays) {
-	const key = day.id.slice(0, 7);
-	let group = months.find((m) => m.days[0]?.id.slice(0, 7) === key);
-	if (!group) {
-		group = { label: formatMonthLabel(key), days: [] };
-		months.push(group);
-	}
-	group.days.push(day);
+  const key = day.id.slice(0, 7);
+  let group = months.find((m) => m.days[0]?.id.slice(0, 7) === key);
+  if (!group) {
+    group = { label: formatMonthLabel(key), days: [] };
+    months.push(group);
+  }
+  group.days.push(day);
 }
 ---
 
-{visibleDays.length > 0 ? (
-	<div class="flex flex-col gap-12">
-		{months.map((m) => <ArchiveMonth label={m.label} days={m.days} />)}
-	</div>
-) : (
-	<p class="text-muted-foreground">No generation days recorded yet.</p>
-)}
+{
+  visibleDays.length > 0 ? (
+    <div class="flex flex-col gap-12">
+      {months.map((m) => (
+        <ArchiveMonth label={m.label} days={m.days} />
+      ))}
+    </div>
+  ) : (
+    <p class="text-muted-foreground">No generation days recorded yet.</p>
+  )
+}
 <div class="mt-8">
-	<PaginationNav page={page} totalPages={totalPages} href={pageHref} />
+  <PaginationNav page={page} totalPages={totalPages} href={pageHref} />
 </div>
