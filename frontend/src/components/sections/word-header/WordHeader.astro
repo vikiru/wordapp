@@ -8,32 +8,37 @@ import { capitalize } from '@/lib/functions/string';
 import { formatIpa } from '@/lib/functions/pronunciation';
 
 interface Props {
-	word: string;
-	generationDate: string;
-	posTags: string[];
-	pronunciation: PronunciationData;
+  word: string;
+  generationDate: string;
+  posTags: string[];
+  pronunciation: PronunciationData;
 }
 
 const { word, generationDate, posTags, pronunciation } = Astro.props;
 const ipa = formatIpa(pronunciation.ipa);
 ---
+
 <CardHeader>
-	<div class="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
-		<div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
-			<div class="flex items-center gap-2.5">
-				<h1 class="text-h2 font-medium">{word}</h1>
-				<Pronunciation word={word} />
-			</div>
-			<div class="flex flex-wrap items-baseline gap-x-3">
-				{ipa && <span class="font-ipa text-lg text-muted-foreground">{ipa}</span>}
-				{pronunciation.phonetic && <span class="text-sm font-medium text-muted-foreground">{pronunciation.phonetic}</span>}
-			</div>
-		</div>
-		<span class="shrink-0 text-xs text-muted-foreground">{formatDate(generationDate)}</span>
-	</div>
+  <div class="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+    <div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
+      <div class="flex items-center gap-2.5">
+        <h1 class="text-h2 font-medium">{word}</h1>
+        <Pronunciation word={word} />
+      </div>
+      <div class="flex flex-wrap items-baseline gap-x-3">
+        {ipa && <span class="font-ipa text-lg text-muted-foreground">{ipa}</span>}
+        {
+          pronunciation.phonetic && (
+            <span class="text-sm font-medium text-muted-foreground">{pronunciation.phonetic}</span>
+          )
+        }
+      </div>
+    </div>
+    <span class="shrink-0 text-xs text-muted-foreground">{formatDate(generationDate)}</span>
+  </div>
 </CardHeader>
 <CardContent>
-	<div class="flex flex-wrap gap-2">
-		{posTags.map((pos) => <Badge variant="secondary">{capitalize(pos)}</Badge>)}
-	</div>
+  <div class="flex flex-wrap gap-2">
+    {posTags.map((pos) => <Badge variant="secondary">{capitalize(pos)}</Badge>)}
+  </div>
 </CardContent>

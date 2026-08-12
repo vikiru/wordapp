@@ -1,0 +1,38 @@
+{
+  "$schema": "https://oxlint.dev/schema.json",
+  "plugins": ["tsgolint"],
+  "rules": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "style": "warn",
+    "perf": "warn",
+    "nursery": "off",
+    "tsgolint/type-annotation-spacing": "error",
+    "tsgolint/consistent-type-imports": "error",
+    "tsgolint/no-unnecessary-condition": "warn",
+    "tsgolint/no-floating-promises": "warn",
+    "tsgolint/exactOptionalPropertyTypes": "off",
+    "tsgolint/no-implied-eval": "off",
+    "tsgolint/ban-types": "off",
+    "unicorn/no-null": "off",
+    "unicorn/errorMessage": "warn",
+    "unicorn/prefer-module": "off",
+    "unicorn/array-for-each": "warn",
+    "style/no-handler-zero": "off",
+    "style/no-classassign": "off",
+    "style/no-non-null-assertion": "off"
+  },
+  "settings": {
+    "tsgolint": {
+      "project": ["./tsconfig.json", "./frontend/tsconfig.json"]
+    }
+  },
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    ".astro",
+    "packages",
+    "frontend/src/components/starwind",
+    "frontend/src/lib/utils/starwind"
+  ]
+}

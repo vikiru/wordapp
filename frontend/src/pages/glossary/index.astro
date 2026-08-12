@@ -8,258 +8,295 @@ import { ArrowUpRight, Search } from '@lucide/astro';
 
 const capitalize = (value: string) => (value ? value.charAt(0).toUpperCase() + value.slice(1) : '');
 const shortDate = (iso: string) => {
-	const [year, month, day] = iso.split('-') as [string, string, string];
-	return `${month}.${day}.${year.slice(2)}`;
+  const [year, month, day] = iso.split('-') as [string, string, string];
+  return `${month}.${day}.${year.slice(2)}`;
 };
 
 const words = (await getCollection('words')).sort((a, b) => a.data.word.localeCompare(b.data.word));
-const groups = words.reduce((acc, w) => {
-	const letter = w.data.word.charAt(0).toUpperCase();
-	(acc[letter] ??= []).push(w);
-	return acc;
-}, {} as Record<string, typeof words>);
+const groups = words.reduce(
+  (acc, w) => {
+    const letter = w.data.word.charAt(0).toUpperCase();
+    (acc[letter] ??= []).push(w);
+    return acc;
+  },
+  {} as Record<string, typeof words>
+);
 const letters = Object.keys(groups).sort();
 const posFilters = ['all', ...new Set(words.flatMap((w) => w.data.pos_tags.map((p) => p.toLowerCase())))].slice(0, 4);
 const wotd = (await getCollection('wotd'))[0]?.data;
 const today = (await getCollection('words_today')).sort((a, b) => a.data.word.localeCompare(b.data.word));
 ---
+
 <BaseLayout
-	title="Glossary"
-	description="Browse every word the site has generated"
-	jsonLd={[
-		breadcrumbJsonLd([
-			{ name: 'Home', path: '/' },
-			{ name: 'Glossary', path: '/glossary/' },
-		]),
-	]}
-	wide
+  title="Glossary"
+  description="Browse every word the site has generated"
+  jsonLd={[
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Glossary', path: '/glossary/' },
+    ]),
+  ]}
+  wide
 >
-	<div class="flex flex-col gap-4 pt-4">
-		<div class="flex items-baseline justify-between gap-4">
-			<h1 class="text-h1">Glossary</h1>
-			<span class="text-small uppercase tracking-widest text-muted-foreground">
-				{`${words.length} ${words.length === 1 ? 'word' : 'words'}`}
-			</span>
-		</div>
-	</div>
-	<div class="grid gap-8 lg:grid-cols-[3.5rem_1fr] xl:grid-cols-[3.5rem_1fr_16rem]">
-		<nav class="themed-scrollbar sticky top-24 hidden max-h-[calc(100dvh-8rem)] flex-col items-center gap-1 self-start overflow-y-auto lg:flex" aria-label="Word letters">
-			{letters.map((letter) => (
-				<a
-					data-letter-link
-					data-letter={letter}
-					href={`#section-${letter}`}
-					class="flex h-8 w-8 items-center justify-center rounded text-sm text-muted-foreground transition-colors hover:text-primary motion-reduce:transition-none"
-				>
-					{letter}
-				</a>
-			))}
-		</nav>
-		<div class="flex min-w-0 flex-col gap-6">
-			<div class="flex flex-col gap-3">
-				<div class="relative">
-					<Search aria-hidden="true" class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-					<Input type="search" id="glossary-search" placeholder="Search words…" aria-label="Search words" class="pl-9" />
-				</div>
-				<div class="flex flex-wrap gap-2">
-					{posFilters.map((pos) => (
-						<button
-							data-pos-filter={pos}
-							class:list={[
-								'rounded border px-3 py-1 text-small font-semibold uppercase tracking-wider transition-colors motion-reduce:transition-none',
-								pos === 'all'
-									? 'border-primary bg-primary/5 text-primary'
-									: 'border-border text-muted-foreground hover:border-input hover:text-foreground',
-							]}
-						>
-							{pos === 'all' ? 'All Words' : `${capitalize(pos)}s`}
-						</button>
-					))}
-				</div>
-			</div>
-			{letters.map((letter) => (
-				<section data-letter-section data-letter={letter} id={`section-${letter}`} class="relative flex scroll-mt-24 flex-col gap-4">
-					<span
-						aria-hidden="true"
-						class="pointer-events-none absolute -top-8 right-0 z-0 font-script text-[8rem] leading-none text-primary/10 select-none"
-					>
-						{letter}
-					</span>
-					<div class="relative z-10 flex items-baseline justify-between border-b border-border pb-2">
-						<h2 class="text-h3 text-primary">
-							{letter}
-						</h2>
-						<span class="text-small uppercase tracking-widest text-muted-foreground">
-							{groups[letter]!.length} {groups[letter]!.length === 1 ? 'Entry' : 'Entries'}
-						</span>
-					</div>
-					<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-						{groups[letter]!.map((w) => (
-							<a
-								data-id={w.id}
-								data-pos={w.data.pos_tags[0]?.toLowerCase() ?? ''}
-								href={`/words/${slugify(w.data.word)}`}
-								class="group flex flex-col gap-2 rounded-lg border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-glow motion-reduce:transition-none motion-reduce:transform-none"
-							>
-								<div class="flex items-start justify-between gap-3">
-									<div class="flex flex-col gap-1">
-										<h3 class="font-heading text-2xl text-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">
-											{w.data.word}
-										</h3>
-										<div class="flex flex-wrap gap-1.5">
-											{w.data.pos_tags.map((pos) => (
-												<span class="text-small uppercase tracking-widest text-primary">{capitalize(pos)}</span>
-											))}
-										</div>
-									</div>
-									<span class="font-mono text-small text-muted-foreground">{shortDate(w.data.generation_date)}</span>
-								</div>
-								<p class="font-serif leading-relaxed text-muted-foreground transition-colors line-clamp-3 group-hover:text-foreground motion-reduce:transition-none">
-									{w.data.senses[0]?.definition}
-								</p>
-							</a>
-						))}
-					</div>
-				</section>
-			))}
-			<p data-search-empty class="hidden text-muted-foreground">No words match your search.</p>
-		</div>
-		<aside class="themed-scrollbar sticky top-24 hidden max-h-[calc(100dvh-8rem)] flex-col gap-6 self-start overflow-y-auto xl:flex">
-			{wotd && (
-				<a
-					href={`/words/${slugify(wotd.word)}`}
-					class="group relative overflow-hidden rounded-lg border border-border bg-gradient-to-br from-secondary to-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-glow"
-				>
-					<span aria-hidden="true" class="pointer-events-none absolute -top-4 -right-2 font-script text-8xl text-primary/10 select-none">
-						{wotd.word.charAt(0).toUpperCase()}
-					</span>
-					<p class="text-small font-semibold uppercase tracking-widest text-primary">Word of the day</p>
-					<p class="mt-2 font-heading text-2xl text-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">{wotd.word}</p>
-					<p class="mt-1 font-serif text-sm leading-relaxed text-muted-foreground line-clamp-2">{wotd.senses[0]?.definition}</p>
-				</a>
-			)}
-			<div class="flex flex-col gap-3 rounded-lg border border-border bg-secondary p-6">
-				<h3 class="border-b border-border pb-2 font-heading text-lg font-semibold text-foreground">Today's words</h3>
-				<ul class="flex flex-col gap-3">
-					{today.map((w) => (
-						<li>
-							<a class="group flex items-center justify-between gap-3" href={`/words/${slugify(w.data.word)}`}>
-								<span class="flex flex-col">
-									<span class="font-heading text-base text-muted-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">
-										{w.data.word}
-									</span>
-									<span class="text-small uppercase text-muted-foreground">
-										{w.data.pos_tags.map((pos) => capitalize(pos)).join(', ')}
-									</span>
-								</span>
-								<ArrowUpRight class="size-4 shrink-0 text-primary/40 transition-colors group-hover:text-primary motion-reduce:transition-none" />
-							</a>
-						</li>
-					))}
-				</ul>
-			</div>
-		</aside>
-	</div>
+  <div class="flex flex-col gap-4 pt-4">
+    <div class="flex items-baseline justify-between gap-4">
+      <h1 class="text-h1">Glossary</h1>
+      <span class="text-small uppercase tracking-widest text-muted-foreground">
+        {`${words.length} ${words.length === 1 ? 'word' : 'words'}`}
+      </span>
+    </div>
+  </div>
+  <div class="grid gap-8 lg:grid-cols-[3.5rem_1fr] xl:grid-cols-[3.5rem_1fr_16rem]">
+    <nav
+      class="themed-scrollbar sticky top-24 hidden max-h-[calc(100dvh-8rem)] flex-col items-center gap-1 self-start overflow-y-auto lg:flex"
+      aria-label="Word letters"
+    >
+      {
+        letters.map((letter) => (
+          <a
+            data-letter-link
+            data-letter={letter}
+            href={`#section-${letter}`}
+            class="flex h-8 w-8 items-center justify-center rounded text-sm text-muted-foreground transition-colors hover:text-primary motion-reduce:transition-none"
+          >
+            {letter}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="flex min-w-0 flex-col gap-6">
+      <div class="flex flex-col gap-3">
+        <div class="relative">
+          <Search
+            aria-hidden="true"
+            class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+          />
+          <Input
+            type="search"
+            id="glossary-search"
+            placeholder="Search words…"
+            aria-label="Search words"
+            class="pl-9"
+          />
+        </div>
+        <div class="flex flex-wrap gap-2">
+          {
+            posFilters.map((pos) => (
+              <button
+                data-pos-filter={pos}
+                class:list={[
+                  'rounded border px-3 py-1 text-small font-semibold uppercase tracking-wider transition-colors motion-reduce:transition-none',
+                  pos === 'all'
+                    ? 'border-primary bg-primary/5 text-primary'
+                    : 'border-border text-muted-foreground hover:border-input hover:text-foreground',
+                ]}
+              >
+                {pos === 'all' ? 'All Words' : `${capitalize(pos)}s`}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+      {
+        letters.map((letter) => (
+          <section
+            data-letter-section
+            data-letter={letter}
+            id={`section-${letter}`}
+            class="relative flex scroll-mt-24 flex-col gap-4"
+          >
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute -top-8 right-0 z-0 font-script text-[8rem] leading-none text-primary/10 select-none"
+            >
+              {letter}
+            </span>
+            <div class="relative z-10 flex items-baseline justify-between border-b border-border pb-2">
+              <h2 class="text-h3 text-primary">{letter}</h2>
+              <span class="text-small uppercase tracking-widest text-muted-foreground">
+                {groups[letter]!.length} {groups[letter]!.length === 1 ? 'Entry' : 'Entries'}
+              </span>
+            </div>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {groups[letter]!.map((w) => (
+                <a
+                  data-id={w.id}
+                  data-pos={w.data.pos_tags[0]?.toLowerCase() ?? ''}
+                  href={`/words/${slugify(w.data.word)}`}
+                  class="group flex flex-col gap-2 rounded-lg border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-glow motion-reduce:transition-none motion-reduce:transform-none"
+                >
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="flex flex-col gap-1">
+                      <h3 class="font-heading text-2xl text-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">
+                        {w.data.word}
+                      </h3>
+                      <div class="flex flex-wrap gap-1.5">
+                        {w.data.pos_tags.map((pos) => (
+                          <span class="text-small uppercase tracking-widest text-primary">{capitalize(pos)}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <span class="font-mono text-small text-muted-foreground">{shortDate(w.data.generation_date)}</span>
+                  </div>
+                  <p class="font-serif leading-relaxed text-muted-foreground transition-colors line-clamp-3 group-hover:text-foreground motion-reduce:transition-none">
+                    {w.data.senses[0]?.definition}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+      <p data-search-empty class="hidden text-muted-foreground">No words match your search.</p>
+    </div>
+    <aside
+      class="themed-scrollbar sticky top-24 hidden max-h-[calc(100dvh-8rem)] flex-col gap-6 self-start overflow-y-auto xl:flex"
+    >
+      {
+        wotd && (
+          <a
+            href={`/words/${slugify(wotd.word)}`}
+            class="group relative overflow-hidden rounded-lg border border-border bg-gradient-to-br from-secondary to-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-glow"
+          >
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute -top-4 -right-2 font-script text-8xl text-primary/10 select-none"
+            >
+              {wotd.word.charAt(0).toUpperCase()}
+            </span>
+            <p class="text-small font-semibold uppercase tracking-widest text-primary">Word of the day</p>
+            <p class="mt-2 font-heading text-2xl text-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">
+              {wotd.word}
+            </p>
+            <p class="mt-1 font-serif text-sm leading-relaxed text-muted-foreground line-clamp-2">
+              {wotd.senses[0]?.definition}
+            </p>
+          </a>
+        )
+      }
+      <div class="flex flex-col gap-3 rounded-lg border border-border bg-secondary p-6">
+        <h3 class="border-b border-border pb-2 font-heading text-lg font-semibold text-foreground">Today's words</h3>
+        <ul class="flex flex-col gap-3">
+          {
+            today.map((w) => (
+              <li>
+                <a class="group flex items-center justify-between gap-3" href={`/words/${slugify(w.data.word)}`}>
+                  <span class="flex flex-col">
+                    <span class="font-heading text-base text-muted-foreground transition-colors group-hover:text-primary motion-reduce:transition-none">
+                      {w.data.word}
+                    </span>
+                    <span class="text-small uppercase text-muted-foreground">
+                      {w.data.pos_tags.map((pos) => capitalize(pos)).join(', ')}
+                    </span>
+                  </span>
+                  <ArrowUpRight class="size-4 shrink-0 text-primary/40 transition-colors group-hover:text-primary motion-reduce:transition-none" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </aside>
+  </div>
 </BaseLayout>
 <script>
-	import { searchIndexClient as index } from '@/lib/search/client';
+  import { searchIndexClient as index } from '@/lib/search/client';
 
-	const input = document.querySelector<HTMLInputElement>('#glossary-search');
-	const cards = [...document.querySelectorAll<HTMLElement>('[data-id]')];
-	const sections = [...document.querySelectorAll<HTMLElement>('[data-letter-section]')];
-	const links = [...document.querySelectorAll<HTMLElement>('[data-letter-link]')];
-	const empty = document.querySelector<HTMLElement>('[data-search-empty]');
-	const posButtons = [...document.querySelectorAll<HTMLElement>('[data-pos-filter]')];
-	const chipActive = 'border-primary bg-primary/5 text-primary';
-	const chipIdle = 'border-border text-muted-foreground hover:border-input hover:text-foreground';
-	const validLetters = new Set(sections.map((section) => section.dataset.letter));
+  const input = document.querySelector<HTMLInputElement>('#glossary-search');
+const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-id]'));
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-letter-section]'));
+  const links = Array.from(document.querySelectorAll<HTMLElement>('[data-letter-link]'));
+  const posButtons = Array.from(document.querySelectorAll<HTMLElement>('[data-pos-filter]'));
+  const chipActive = 'border-primary bg-primary/5 text-primary';
+  const chipIdle = 'border-border text-muted-foreground hover:border-input hover:text-foreground';
+  const validLetters = new Set(sections.map((section) => section.dataset.letter));
 
-	const readState = () => {
-		const params = new URLSearchParams(window.location.search);
-		const letter = (params.get('letter') ?? '').toUpperCase();
-		const pos = (params.get('pos') ?? 'all').toLowerCase();
-		return {
-			letter: validLetters.has(letter) ? letter : '',
-			pos: posButtons.some((button) => button.dataset.posFilter === pos) ? pos : 'all',
-			q: params.get('q') ?? '',
-		};
-	};
-	const state = readState();
-	if (input) input.value = state.q;
+  const readState = () => {
+    const params = new URLSearchParams(window.location.search);
+    const letter = (params.get('letter') ?? '').toUpperCase();
+    const pos = (params.get('pos') ?? 'all').toLowerCase();
+    return {
+      letter: validLetters.has(letter) ? letter : '',
+      pos: posButtons.some((button) => button.dataset.posFilter === pos) ? pos : 'all',
+      q: params.get('q') ?? '',
+    };
+  };
+  const state = readState();
+  if (input) input.value = state.q;
 
-	const writeUrl = (replace: boolean) => {
-		const params = new URLSearchParams();
-		if (state.letter) params.set('letter', state.letter);
-		if (state.pos !== 'all') params.set('pos', state.pos);
-		if (state.q) params.set('q', state.q);
-		const url = params.size > 0 ? `${location.pathname}?${params}` : location.pathname;
-		history[replace ? 'replaceState' : 'pushState'](null, '', url);
-	};
+  const writeUrl = (replace: boolean) => {
+    const params = new URLSearchParams();
+    if (state.letter) params.set('letter', state.letter);
+    if (state.pos !== 'all') params.set('pos', state.pos);
+    if (state.q) params.set('q', state.q);
+    const url = params.size > 0 ? `${location.pathname}?${params}` : location.pathname;
+    history[replace ? 'replaceState' : 'pushState'](null, '', url);
+  };
 
-	const applyFilters = () => {
-		const query = state.q.trim();
-		const matches = new Set<string>();
-		if (query) {
-			const results = index.search(query) as { result: string[] }[];
-			for (const field of results) {
-				for (const id of field.result) {
-					matches.add(id);
-				}
-			}
-		}
-		for (const card of cards) {
-			const section = sections.find((s) => s.contains(card));
-			const letterOk = !state.letter || section?.dataset.letter === state.letter;
-			const posOk = state.pos === 'all' || card.dataset.pos === state.pos;
-			card.hidden = (!!query && !matches.has(card.dataset.id ?? '')) || !letterOk || !posOk;
-		}
-		let visible = 0;
-		for (const section of sections) {
-			const count = section.querySelectorAll<HTMLElement>('[data-id]:not([hidden])').length;
-			section.hidden = count === 0;
-			visible += count;
-		}
-		for (const link of links) {
-			const section = sections.find((s) => s.dataset.letter === link.dataset.letter);
-			link.hidden = section?.hidden ?? false;
-			const active = link.dataset.letter === state.letter;
-			for (const cls of ['bg-primary/10', 'font-semibold', 'text-primary']) link.classList.toggle(cls, active);
-			for (const cls of ['text-muted-foreground', 'hover:text-primary']) link.classList.toggle(cls, !active);
-		}
-		for (const button of posButtons) {
-			button.classList.remove(...chipActive.split(' '), ...chipIdle.split(' '));
-			button.classList.add(...(button.dataset.posFilter === state.pos ? chipActive : chipIdle).split(' '));
-		}
-		if (empty) empty.hidden = visible > 0;
-	};
+  const applyFilters = () => {
+    const query = state.q.trim();
+    const matches = new Set<string>();
+    if (query) {
+      const results = index.search(query) as { result: string[] }[];
+      for (const field of results) {
+        for (const id of field.result) {
+          matches.add(id);
+        }
+      }
+    }
+    for (const card of cards) {
+      const section = sections.find((s) => s.contains(card));
+      const letterOk = !state.letter || section?.dataset.letter === state.letter;
+      const posOk = state.pos === 'all' || card.dataset.pos === state.pos;
+      card.hidden = (!!query && !matches.has(card.dataset.id ?? '')) || !letterOk || !posOk;
+    }
+    let visible = 0;
+    for (const section of sections) {
+      const count = section.querySelectorAll<HTMLElement>('[data-id]:not([hidden])').length;
+      section.hidden = count === 0;
+      visible += count;
+    }
+    for (const link of links) {
+      const section = sections.find((s) => s.dataset.letter === link.dataset.letter);
+      link.hidden = section?.hidden ?? false;
+      const active = link.dataset.letter === state.letter;
+      for (const cls of ['bg-primary/10', 'font-semibold', 'text-primary']) link.classList.toggle(cls, active);
+      for (const cls of ['text-muted-foreground', 'hover:text-primary']) link.classList.toggle(cls, !active);
+    }
+    for (const button of posButtons) {
+      button.classList.remove(...chipActive.split(' '), ...chipIdle.split(' '));
+      button.classList.add(...(button.dataset.posFilter === state.pos ? chipActive : chipIdle).split(' '));
+    }
+    const empty = document.querySelector<HTMLElement>('[data-search-empty]');
+  };
 
-	let urlTimer: number | undefined;
-	input?.addEventListener('input', () => {
-		state.q = input.value;
-		applyFilters();
-		window.clearTimeout(urlTimer);
-		urlTimer = window.setTimeout(() => writeUrl(true), 300);
-	});
-	for (const button of posButtons) {
-		button.addEventListener('click', () => {
-			state.pos = button.dataset.posFilter ?? 'all';
-			applyFilters();
-			writeUrl(false);
-		});
-	}
-	for (const link of links) {
-		link.addEventListener('click', (event) => {
-			event.preventDefault();
-			state.letter = link.dataset.letter === state.letter ? '' : link.dataset.letter ?? '';
-			applyFilters();
-			writeUrl(false);
-		});
-	}
-	window.addEventListener('popstate', () => {
-		Object.assign(state, readState());
-		if (input) input.value = state.q;
-		applyFilters();
-	});
+  let urlTimer: number | undefined;
+  input?.addEventListener('input', () => {
+    state.q = input.value;
+    applyFilters();
+    window.clearTimeout(urlTimer);
+    urlTimer = window.setTimeout(() => writeUrl(true), 300);
+  });
+  for (const button of posButtons) {
+    button.addEventListener('click', () => {
+      state.pos = button.dataset.posFilter ?? 'all';
+      applyFilters();
+      writeUrl(false);
+    });
+  }
+  for (const link of links) {
+    link.addEventListener('click', (event: MouseEvent) => {
+      event.preventDefault();
+      state.letter = link.dataset.letter === state.letter ? '' : (link.dataset.letter ?? '');
+      applyFilters();
+      writeUrl(false);
+    });
+  }
+  window.addEventListener('popstate', () => {
+    Object.assign(state, readState());
+    if (input) input.value = state.q;
+    applyFilters();
+  });
 
-	applyFilters();
+  applyFilters();
 </script>

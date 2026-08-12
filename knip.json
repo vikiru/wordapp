@@ -21,7 +21,9 @@
         "tailwind-merge",
         "tailwind-variants",
         "tailwindcss",
-        "tw-animate-css"
+        "tw-animate-css",
+        "prettier",
+        "prettier-plugin-astro"
       ]
     }
   },

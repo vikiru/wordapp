@@ -5,19 +5,22 @@ import SectionHeader from '@/components/SectionHeader.astro';
 import { capitalize } from '@/lib/functions/string';
 
 interface Props {
-	synonyms: WordRelation[];
+  synonyms: WordRelation[];
 }
 
 const { synonyms } = Astro.props;
 ---
+
 <section class="flex flex-col gap-3">
-	<SectionHeader title="Synonyms" help="Words with the same or closely related meanings." />
-	<ul class="flex flex-col gap-2">
-		{synonyms.map((syn) => (
-			<Item as="li" variant="outline">
-				<ItemTitle>{syn.word}</ItemTitle>
-				<ItemDescription>{syn.differentiator ?? capitalize(syn.part_of_speech)}</ItemDescription>
-			</Item>
-		))}
-	</ul>
+  <SectionHeader title="Synonyms" help="Words with the same or closely related meanings." />
+  <ul class="flex flex-col gap-2">
+    {
+      synonyms.map((syn) => (
+        <Item as="li" variant="outline">
+          <ItemTitle>{syn.word}</ItemTitle>
+          <ItemDescription>{syn.differentiator ?? capitalize(syn.part_of_speech)}</ItemDescription>
+        </Item>
+      ))
+    }
+  </ul>
 </section>

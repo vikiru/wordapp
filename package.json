@@ -13,12 +13,16 @@
 		"build-frontend": "pnpm --filter frontend build",
 		"preview": "pnpm --filter frontend preview",
 		"astro": "pnpm --filter frontend astro",
-		"lint": "biome lint",
-		"format": "biome check --write",
-		"unused": "knip",
+		"lint": "pnpm oxlint && pnpm biome check",
+		"lint:oxlint": "pnpm oxlint",
+		"lint:biome": "pnpm biome check",
+		"format": "pnpm exec prettier --write 'src/' '*.astro' '*/*.json' '*/*.yaml' '*/*.yml' '*/*.md' && pnpm biome format",
+		"format:check": "pnpm exec prettier --check 'src/' '*.astro' '*/*.json' '*/*.yaml' '*/*.yml' '*/*.md' && pnpm biome check",
 		"typecheck": "tsc --noEmit",
 		"astro-check": "pnpm --filter frontend astro-check",
-    "postinstall": "lefthook install"
+		"unused": "knip",
+		"validate": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm astro-check",
+		"postinstall": "lefthook install"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.7",
@@ -29,6 +33,10 @@
 		"knip": "^5.88.1",
 		"lefthook": "^2.1.10",
 		"lint-staged": "^15.5.2",
+		"oxlint": "^1.78.0",
+		"oxlint-tsgolint": "^7.0.2001",
+		"prettier": "^3.3.3",
+		"prettier-plugin-astro": "^0.14.1",
 		"semantic-release": "^24.2.9",
 		"tsx": "^4.23.8",
 		"typescript": "^5.9.3"

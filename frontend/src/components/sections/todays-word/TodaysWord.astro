@@ -4,21 +4,25 @@ import WordOfDay from '@/components/sections/word-of-day/WordOfDay.astro';
 import { ArrowUpRight } from '@lucide/astro';
 
 interface Props {
-	word: GeneratedWord;
+  word: GeneratedWord;
 }
 
 const { word } = Astro.props;
 ---
+
 <section class="flex flex-col gap-4">
-	<div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-border pb-2">
-		<h2 class="text-h3">Today's word</h2>
-		<a
-			href="/words/today/"
-			class="group inline-flex items-center gap-2 text-small font-semibold uppercase tracking-widest text-primary"
-		>
-			All of today's words
-			<ArrowUpRight class="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:transform-none" aria-hidden="true" />
-		</a>
-	</div>
-	<WordOfDay word={word} />
+  <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-border pb-2">
+    <h2 class="text-h3">Today's word</h2>
+    <a
+      href="/words/today/"
+      class="group inline-flex items-center gap-2 text-small font-semibold uppercase tracking-widest text-primary"
+    >
+      All of today's words
+      <ArrowUpRight
+        class="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:transform-none"
+        aria-hidden="true"
+      />
+    </a>
+  </div>
+  <WordOfDay word={word} />
 </section>

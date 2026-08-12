@@ -6,10 +6,10 @@ import Footer from '@/components/layout/footer/Footer.astro';
 import '@/styles/globals.css';
 
 interface Props {
-	title: string;
-	description: string;
-	jsonLd?: Array<WithContext<WebSite | DefinedTerm | BreadcrumbList | ItemList>>;
-	wide?: boolean;
+  title: string;
+  description: string;
+  jsonLd?: Array<WithContext<WebSite | DefinedTerm | BreadcrumbList | ItemList>>;
+  wide?: boolean;
 }
 
 const { title, description, jsonLd = [], wide = false } = Astro.props;
@@ -17,56 +17,55 @@ const site = import.meta.env.SITE;
 const canonical = new URL(Astro.url.pathname, site).href;
 const image = new URL('/og.png', site).href;
 ---
+
 <html lang="en" class="scroll-smooth">
-	<head>
-		<script is:inline>
-			let dark = false;
-			try {
-				const stored = localStorage.getItem('theme');
-				dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-			} catch {
-				dark = matchMedia('(prefers-color-scheme: dark)').matches;
-			}
-			document.documentElement.classList.toggle('dark', dark);
-		</script>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="robots" content="index, follow, max-image-preview:large" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="alternate" type="application/rss+xml" title="Wordapp RSS" href="/feed.xml" />
-		<SEO
-			title={title}
-			description={description}
-			canonical={canonical}
-			openGraph={{
-				basic: {
-					title,
-					type: 'website',
-					url: canonical,
-					image,
-				},
-				optional: {
-					description,
-					locale: 'en_US',
-					siteName: 'Wordapp',
-				},
-			}}
-			twitter={{
-				card: 'summary',
-				title,
-				description,
-				image,
-			}}
-		/>
-		{jsonLd.map((data) => (
-			<script type="application/ld+json" set:html={JSON.stringify(data)} />
-		))}
-	</head>
-	<body class="flex min-h-dvh flex-col bg-background text-foreground">
-		<Navbar />
-		<main class:list={['mx-auto flex w-full flex-1 flex-col gap-6 px-4 py-8', wide ? 'max-w-6xl' : 'max-w-3xl']}>
-			<slot />
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <script is:inline>
+      let dark = false;
+      try {
+        const stored = localStorage.getItem('theme');
+        dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      } catch {
+        dark = matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.documentElement.classList.toggle('dark', dark);
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Wordapp RSS" href="/feed.xml" />
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      openGraph={{
+        basic: {
+          title,
+          type: 'website',
+          url: canonical,
+          image,
+        },
+        optional: {
+          description,
+          locale: 'en_US',
+          siteName: 'Wordapp',
+        },
+      }}
+      twitter={{
+        card: 'summary',
+        title,
+        description,
+        image,
+      }}
+    />
+    {jsonLd.map((data) => <script is:inline type="application/ld+json" set:html={JSON.stringify(data)} />)}
+  </head>
+  <body class="flex min-h-dvh flex-col bg-background text-foreground">
+    <Navbar />
+    <main class:list={['mx-auto flex w-full flex-1 flex-col gap-6 px-4 py-8', wide ? 'max-w-6xl' : 'max-w-3xl']}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
