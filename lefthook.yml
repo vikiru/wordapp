@@ -1,11 +1,11 @@
 pre-commit:
   jobs:
     - name: Lint JS/TS with Biome
-      glob: "**/*.{ts,js,jsx,tsx,cjs,mjs}"
+      glob: "**/*.{ts,js,jsx,tsx,cjs,mjs,astro}"
       exclude:
         - "frontend/src/components/starwind/**"
         - "packages/**"
-      run: pnpm lint --colors=off {staged_files}
+      run: pnpm astro-check --colors=off {staged_files}
     - name: Lint and format Python with Ruff
       root: packages
       glob: "**/*.py"
