@@ -1,0 +1,13 @@
+---
+interface Props {
+	mistakes: string[];
+}
+
+const { mistakes } = Astro.props;
+---
+<section class="flex flex-col gap-3">
+	<h2 class="text-h3">Common mistakes</h2>
+	<ul class="ml-5 list-disc [&>li]:mt-2">
+		{mistakes.map((mistake) => <li class="text-sm leading-relaxed">{mistake}</li>)}
+	</ul>
+</section>
