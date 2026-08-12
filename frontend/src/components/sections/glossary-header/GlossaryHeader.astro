@@ -1,0 +1,17 @@
+---
+import { Badge } from '@/components/starwind/badge';
+
+interface Props {
+	count?: number;
+}
+
+const { count } = Astro.props;
+---
+<div class="flex items-baseline justify-between gap-4">
+	<h1 class="text-h1">Glossary</h1>
+	{count !== undefined && (
+		<span class="text-small uppercase tracking-widest text-muted-foreground">
+			{`${count} ${count === 1 ? 'word' : 'words'}`}
+		</span>
+	)}
+</div>
