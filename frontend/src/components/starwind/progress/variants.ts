@@ -10,7 +10,7 @@ export const progress = tv({
 });
 
 export const progressIndicator = tv({
-  base: ["starwind-progress-indicator", "h-full w-full flex-1 transition-transform"],
+  base: ["starwind-progress-indicator", "h-full w-full flex-1 transition-transform motion-reduce:transition-none"],
   variants: {
     variant: {
       indeterminate: "absolute inset-y-0 start-0 w-3/4",

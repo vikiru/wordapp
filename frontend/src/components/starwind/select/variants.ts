@@ -4,8 +4,8 @@ export const selectContent = tv({
   base: [
     "starwind-select-content",
     "bg-popover text-popover-foreground absolute z-50 min-w-[8rem] rounded-md border shadow-md",
-    "data-[state=open]:animate-in fade-in zoom-in-95 overflow-hidden will-change-transform",
-    "data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards fade-out zoom-out-95",
+    "data-[state=open]:animate-in fade-in zoom-in-95 overflow-hidden will-change-transform motion-reduce:animate-none",
+    "data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards fade-out zoom-out-95 motion-reduce:animate-none",
   ],
   variants: {
     side: {
@@ -58,7 +58,7 @@ export const selectTrigger = tv({
   base: [
     "starwind-select-trigger",
     "border-input dark:bg-input/30 text-foreground ring-offset-background flex items-center justify-between gap-2 rounded-md border bg-transparent shadow-xs",
-    "focus-visible:border-outline focus-visible:ring-outline/50 transition-[color,box-shadow] outline-none focus-visible:ring-3",
+    "focus-visible:border-outline focus-visible:ring-outline/50 transition-[color,box-shadow] outline-none focus-visible:ring-3 motion-reduce:transition-none",
     "disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
     "aria-invalid:border-error aria-invalid:focus:ring-error/40 aria-invalid:focus:ring-3",
   ],

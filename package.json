@@ -17,7 +17,8 @@
 		"format": "biome check --write",
 		"unused": "knip",
 		"typecheck": "tsc --noEmit",
-		"postinstall": "lefthook install"
+		"astro-check": "pnpm --filter frontend astro-check",
+    "postinstall": "lefthook install"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.7",

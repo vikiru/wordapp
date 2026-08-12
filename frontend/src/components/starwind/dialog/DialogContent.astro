@@ -35,7 +35,7 @@ const { class: className, animationDuration = 200, ...rest } = Astro.props;
   <slot />
   <button type="button" class={dialogCloseButton()} data-dialog-close aria-label="Close dialog">
     <slot name="icon">
-      <X class="size-5 transition-opacity" />
+      <X class="size-5 transition-opacity motion-reduce:transition-none" />
     </slot>
     <span class="sr-only">Close</span>
   </button>

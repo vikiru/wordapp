@@ -2,7 +2,7 @@ import { tv } from "tailwind-variants";
 
 export const item = tv({
   base: [
-    "group/item flex flex-wrap items-center rounded-md border border-transparent text-sm transition-colors",
+    "group/item flex flex-wrap items-center rounded-md border border-transparent text-sm transition-colors motion-reduce:transition-none",
     "[a]:hover:bg-accent/50 [a]:transition-colors",
     "focus-visible:border-ring focus-visible:ring-outline/50 outline-none focus-visible:ring-[3px]",
   ],
