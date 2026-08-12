@@ -344,7 +344,7 @@ REVIEWED_LEAK_EXCLUSIONS = frozenset(
 )
 
 EXCLUDED_WORDS = (
-    {'ascii', 'neve'}
+    {'ascii', 'neve', 'amorous'}
     | LOW_FLAIR_EXCLUSIONS
     | {
         # occupation / politics / religion / currency buckets (curated audit)

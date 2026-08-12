@@ -32,10 +32,7 @@ def _async_main() -> int:
 
             all_words = await fetch_all_words()
 
-            payload = {
-                iso_date: [w.model_dump(mode='json') for w in words]
-                for iso_date, words in grouped.items()
-            }
+            payload = {iso_date: [w.model_dump(mode='json') for w in words] for iso_date, words in grouped.items()}
             ArchiveFile.model_validate(payload)
             words_payload = [w.model_dump(mode='json') for w in all_words]
             WordsFile.model_validate(words_payload)
