@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ArchiveDayCard from '@/components/sections/archive-day-card/ArchiveDayCard.astro';
+
+interface Props {
+	label: string;
+	days: CollectionEntry<'archive'>[];
+}
+
+const { label, days } = Astro.props;
+const wordCount = days.reduce((sum, day) => sum + day.data.length, 0);
+---
+
+<section class="relative flex flex-col gap-4">
+	<span
+		aria-hidden="true"
+		class="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 font-script text-[8rem] leading-none text-primary/10 select-none"
+	>
+		{label.split(' ')[0]}
+	</span>
+	<div class="relative z-10 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-border pb-2">
+		<h2 class="text-h3">{label}</h2>
+		<span class="text-small uppercase tracking-widest text-muted-foreground">
+			{`${days.length} ${days.length === 1 ? 'day' : 'days'} · ${wordCount} ${wordCount === 1 ? 'word' : 'words'}`}
+		</span>
+	</div>
+	<div class="relative z-10 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+		{days.map((day) => <ArchiveDayCard day={day} />)}
+	</div>
+</section>
