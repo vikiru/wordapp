@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 /**
  * Word domain contract mirroring `packages/data/src/data/models/word.py`
@@ -7,15 +7,15 @@ import { z } from "zod";
  */
 
 export const PronunciationSchema = z.object({
-  ipa: z.string().optional(),
-  phonetic: z.string().optional(),
+  ipa: z.string().nullable().optional(),
+  phonetic: z.string().nullable().optional(),
 });
 
 export const EtymologySchema = z.object({
-  origin_language: z.string().optional(),
-  original_word: z.string().optional(),
-  first_recorded: z.string().optional(),
-  explanation: z.string().optional(),
+  origin_language: z.string().nullable().optional(),
+  original_word: z.string().nullable().optional(),
+  first_recorded: z.string().nullable().optional(),
+  explanation: z.string().nullable().optional(),
 });
 
 export const WordSenseSchema = z.object({
@@ -28,22 +28,22 @@ export const WordSenseSchema = z.object({
 export const WordRelationSchema = z.object({
   word: z.string(),
   part_of_speech: z.string(),
-  differentiator: z.string().optional(),
+  differentiator: z.string().nullable().optional(),
 });
 
 export const WordFormSchema = z.object({
   word: z.string(),
-  part_of_speech: z.string().optional(),
-  ipa: z.string().optional(),
+  part_of_speech: z.string().nullable().optional(),
+  ipa: z.string().nullable().optional(),
 });
 
 export const InflectionsSchema = z.object({
-  past: z.string().optional(),
-  past_participle: z.string().optional(),
-  present_participle: z.string().optional(),
-  plural: z.string().optional(),
-  comparative: z.string().optional(),
-  superlative: z.string().optional(),
+  past: z.string().nullable().optional(),
+  past_participle: z.string().nullable().optional(),
+  present_participle: z.string().nullable().optional(),
+  plural: z.string().nullable().optional(),
+  comparative: z.string().nullable().optional(),
+  superlative: z.string().nullable().optional(),
 });
 
 export const GeneratedWordSchema = z.object({
@@ -60,6 +60,7 @@ export const GeneratedWordSchema = z.object({
   common_mistakes: z.array(z.string()).max(3),
   interesting_fact: z.string().nullable(),
   is_wotd: z.boolean(),
+  past_wotd: z.boolean(),
   generation_date: z.string(),
 });
 
