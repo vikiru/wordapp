@@ -1,0 +1,38 @@
+---
+import type { Inflections as InflectionsType } from '@/types/word';
+import { Badge } from '@/components/starwind/badge';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { inflectionEntries } from '@/lib/functions/word';
+
+const LABELS: Record<string, string> = {
+	past: 'Past',
+	past_participle: 'Past participle',
+	present_participle: 'Present participle',
+	plural: 'Plural',
+	comparative: 'Comparative',
+	superlative: 'Superlative',
+};
+
+interface Props {
+	inflections: InflectionsType | null;
+}
+
+const { inflections } = Astro.props;
+const entries = inflectionEntries(inflections);
+---
+{entries.length > 0 && (
+	<section class="flex flex-col gap-3">
+		<SectionHeader title="Inflections" help="The word's grammatical forms, such as plurals and tenses." />
+		<div class="flex flex-wrap gap-2">
+			{entries.map(([form, value]) => (
+				<Badge variant="outline">
+					<span>
+						<span class="text-muted-foreground">{LABELS[form] ?? form}</span>
+						<span class="text-muted-foreground">: </span>
+						<span class="font-medium">{value}</span>
+					</span>
+				</Badge>
+			))}
+		</div>
+	</section>
+)}

@@ -1,0 +1,48 @@
+---
+import type { WordSense } from '@/types/word';
+import { Badge } from '@/components/starwind/badge';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { highlightParts } from '@/lib/functions/highlight';
+import { capitalize } from '@/lib/functions/string';
+
+interface Props {
+	senses: WordSense[];
+	word: string;
+}
+
+const { senses, word } = Astro.props;
+---
+<section class="flex flex-col gap-3">
+	<SectionHeader title="Senses" help="Each distinct meaning of the word, with examples of how it is used." />
+	<ol class="flex flex-col gap-5">
+		{senses.map((sense, i) => (
+			<li class="flex gap-3">
+				<span class="pt-1 font-mono text-small text-primary" aria-hidden="true">{i + 1}</span>
+				<div class="flex min-w-0 flex-col gap-2">
+					<div class="flex flex-wrap items-center gap-2">
+						<Badge variant="secondary">{capitalize(sense.part_of_speech)}</Badge>
+						{sense.usage_notes.length > 0 && (
+							<span class="text-sm text-muted-foreground">{sense.usage_notes.join(' ')}</span>
+						)}
+					</div>
+					<p class="font-serif text-lg leading-relaxed">{sense.definition}</p>
+					{sense.examples.length > 0 && (
+						<div class="flex flex-col gap-1.5 border-l-2 border-border pl-4">
+							{sense.examples.map((example) => (
+								<p class="text-sm italic leading-relaxed text-muted-foreground">
+									{highlightParts(example, word).map((part) =>
+										part.match ? (
+											<em class="font-semibold not-italic text-foreground">{part.text}</em>
+										) : (
+											part.text
+										),
+									)}
+								</p>
+							))}
+						</div>
+					)}
+				</div>
+			</li>
+		))}
+	</ol>
+</section>
