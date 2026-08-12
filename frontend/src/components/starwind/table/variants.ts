@@ -29,5 +29,5 @@ export const tableHeader = tv({
 });
 
 export const tableRow = tv({
-  base: "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors",
+  base: "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors motion-reduce:transition-none",
 });

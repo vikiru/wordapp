@@ -18,6 +18,6 @@ const { class: className, ...rest } = Astro.props;
 >
   <slot />
   <slot name="icon">
-    <ChevronDown class="size-5 shrink-0 transition-transform duration-200" />
+    <ChevronDown class="size-5 shrink-0 transition-transform duration-200 motion-reduce:transition-none motion-reduce:transform-none" />
   </slot>
 </button>

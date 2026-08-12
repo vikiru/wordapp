@@ -6,7 +6,7 @@ export const sidebar = tv({
 
 export const sidebarGap = tv({
   base: [
-    "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
+    "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear motion-reduce:transition-none",
     "group-data-[collapsible=offcanvas]:w-0",
     "group-data-[side=right]:rotate-180",
   ],
@@ -24,7 +24,7 @@ export const sidebarGap = tv({
 
 export const sidebarContainer = tv({
   base: [
-    "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
+    "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex motion-reduce:transition-none",
   ],
   variants: {
     side: {
@@ -87,7 +87,7 @@ export const sidebarGroupLabel = tv({
   base: [
     "text-sidebar-foreground/70 ring-sidebar-outline",
     "flex h-10 shrink-0 items-center rounded-md px-2 text-sm font-medium",
-    "outline-hidden transition-[margin,opacity] duration-200 ease-linear",
+    "outline-hidden transition-[margin,opacity] duration-200 ease-linear motion-reduce:transition-none",
     "focus-visible:ring-2",
     "[&>svg]:size-4.5 [&>svg]:shrink-0",
     "group-data-[collapsible=icon]:-mt-10 group-data-[collapsible=icon]:opacity-0",
@@ -119,7 +119,7 @@ export const sidebarMenuAction = tv({
   base: [
     "text-sidebar-foreground ring-sidebar-outline",
     "absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md p-0",
-    "outline-hidden transition-transform",
+    "outline-hidden transition-transform motion-reduce:transition-none",
     "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
     "peer-hover/menu-button:text-sidebar-accent-foreground",
     "[&>svg]:size-4 [&>svg]:shrink-0",
@@ -157,7 +157,7 @@ export const sidebarMenuBadge = tv({
 export const sidebarMenuButton = tv({
   base: [
     "peer/menu-button flex w-full items-center gap-3 overflow-hidden rounded-md p-2.5 text-left",
-    "ring-sidebar-outline outline-hidden transition-[width,height,padding]",
+    "ring-sidebar-outline outline-hidden transition-[width,height,padding] motion-reduce:transition-none",
     "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
     "focus-visible:ring-2",
     "active:bg-sidebar-accent active:text-sidebar-accent-foreground",
@@ -239,7 +239,7 @@ export const sidebarProvider = tv({
 export const sidebarRail = tv({
   base: [
     "starwind-sidebar-rail",
-    "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear sm:flex",
+    "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear sm:flex motion-reduce:transition-none",
     "group-data-[side=left]:-right-4 group-data-[side=right]:left-0",
     "after:absolute after:inset-y-0 after:left-1/2 after:w-[2px]",
     "hover:after:bg-sidebar-border",

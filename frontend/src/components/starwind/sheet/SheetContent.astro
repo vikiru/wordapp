@@ -37,7 +37,7 @@ const { side = "right", class: className, ...rest } = Astro.props;
     aria-label="Close dialog"
   >
     <slot name="icon">
-      <X class="size-5 transition-opacity" />
+      <X class="size-5 transition-opacity motion-reduce:transition-none" />
     </slot>
     <span class="sr-only">Close</span>
   </button>

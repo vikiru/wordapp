@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ArchiveHeader from '@/components/sections/archive-header/ArchiveHeader.astro';
+import ArchiveListing from '@/components/sections/archive-listing/ArchiveListing.astro';
+import { breadcrumbJsonLd } from '@/lib/seo/jsonld';
+import { ARCHIVE_CARDS_PER_PAGE } from '@/lib/functions/pagination';
+
+const archive = (await getCollection('archive')).sort((a, b) => a.id.localeCompare(b.id));
+const totalWords = archive.reduce((sum, day) => sum + day.data.length, 0);
+const totalPages = Math.max(1, Math.ceil(archive.length / ARCHIVE_CARDS_PER_PAGE));
+const pageHref = (n: number) => (n === 1 ? '/archive/' : `/archive/page/${n}`);
+---
+<BaseLayout
+	title="Archive"
+	description="Daily generation archive"
+	jsonLd={[
+		breadcrumbJsonLd([
+			{ name: 'Home', path: '/' },
+			{ name: 'Archive', path: '/archive/' },
+		]),
+	]}
+	wide
+>
+	<ArchiveHeader dayCount={archive.length} wordCount={totalWords} />
+	<ArchiveListing archive={archive} page={1} totalPages={totalPages} pageHref={pageHref} />
+</BaseLayout>

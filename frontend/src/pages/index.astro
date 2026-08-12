@@ -1,17 +1,20 @@
 ---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { webSiteJsonLd } from '@/lib/seo/jsonld';
+import Hero from '@/components/sections/hero/Hero.astro';
+import TodaysWord from '@/components/sections/todays-word/TodaysWord.astro';
+import Explore from '@/components/sections/explore/Explore.astro';
 
+const wotd = (await getCollection('wotd'))[0]?.data;
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+	title="Wordapp: A scholarly dictionary, grown one word at a time"
+	description="A scholarly dictionary grown one word at a time. Every day a new word is coined, defined, pronounced, and added to the lexicon."
+	jsonLd={[webSiteJsonLd()]}
+	wide
+>
+	<Hero />
+	{wotd && <TodaysWord word={wotd} />}
+	<Explore />
+</BaseLayout>

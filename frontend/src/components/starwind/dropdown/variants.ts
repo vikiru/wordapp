@@ -2,7 +2,7 @@ import { tv } from "tailwind-variants";
 
 export const dropdownCheckboxItem = tv({
   base: [
-    "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 transition-colors outline-none select-none",
+    "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 transition-colors outline-none select-none motion-reduce:transition-none",
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
     "group/dropdown-item [&>svg]:size-4 [&>svg]:shrink-0",
   ],
@@ -24,8 +24,8 @@ export const dropdownContent = tv({
   base: [
     "starwind-dropdown-content",
     "bg-popover text-popover-foreground z-50 min-w-[9rem] overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md",
-    "data-[state=open]:animate-in fade-in zoom-in-95 outline-none",
-    "data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards fade-out zoom-out-95",
+    "data-[state=open]:animate-in fade-in zoom-in-95 outline-none motion-reduce:animate-none",
+    "data-[state=closed]:animate-out data-[state=closed]:fill-mode-forwards fade-out zoom-out-95 motion-reduce:animate-none",
     "pointer-events-auto fixed isolate will-change-transform",
   ],
   variants: {
@@ -61,7 +61,7 @@ export const dropdownContent = tv({
 
 export const dropdownItem = tv({
   base: [
-    "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 transition-colors outline-none select-none",
+    "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 transition-colors outline-none select-none motion-reduce:transition-none",
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
     "group/dropdown-item [&>svg]:size-4 [&>svg]:shrink-0",
   ],
@@ -97,7 +97,7 @@ export const dropdownSeparator = tv({
 
 export const dropdownShortcut = tv({
   base: [
-    "group-focus/dropdown-item:text-accent-foreground text-muted-foreground ml-auto text-sm tracking-widest transition-colors",
+    "group-focus/dropdown-item:text-accent-foreground text-muted-foreground ml-auto text-sm tracking-widest transition-colors motion-reduce:transition-none",
   ],
 });
 
@@ -105,7 +105,7 @@ export const dropdownTrigger = tv({
   base: [
     "starwind-dropdown-trigger",
     "inline-flex items-center justify-center",
-    "focus-visible:ring-outline/50 transition-[color,box-shadow] outline-none focus-visible:ring-3",
+    "focus-visible:ring-outline/50 transition-[color,box-shadow] outline-none focus-visible:ring-3 motion-reduce:transition-none",
     "disabled:pointer-events-none",
   ],
 });
