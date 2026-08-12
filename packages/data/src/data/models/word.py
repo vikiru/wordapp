@@ -6,7 +6,7 @@ from datetime import date
 from typing import Any
 
 from beanie import Document
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_serializer
 from pymongo import IndexModel
 
 
@@ -54,12 +54,18 @@ class WordFormDoc(BaseModel):
 class InflectionsDoc(BaseModel):
     """Embedded inflections document."""
 
-    past: list[str] | None = None
-    past_participle: list[str] | None = None
-    present_participle: list[str] | None = None
-    plural: list[str] | None = None
-    comparative: list[str] | None = None
-    superlative: list[str] | None = None
+    past: str | list[str] | None = None
+    past_participle: str | list[str] | None = None
+    present_participle: str | list[str] | None = None
+    plural: str | list[str] | None = None
+    comparative: str | list[str] | None = None
+    superlative: str | list[str] | None = None
+
+    @field_serializer('past', 'past_participle', 'present_participle', 'plural', 'comparative', 'superlative')
+    def _flatten_to_string(self, v: str | list[str] | None) -> str | None:
+        if isinstance(v, list):
+            return ', '.join(v)
+        return v
 
 
 class WordDocument(Document):
@@ -77,6 +83,7 @@ class WordDocument(Document):
     common_mistakes: list[str] = Field(max_length=3)
     interesting_fact: str | None = None
     is_wotd: bool = False
+    past_wotd: bool = False
     generation_date: date
 
     class Settings:
@@ -84,7 +91,12 @@ class WordDocument(Document):
         use_revision = False
         indexes = [
             IndexModel('word', unique=True),
-            IndexModel([('generation_date', 1), ('is_wotd', 1)]),
+            IndexModel([('generation_date', 1)]),
+            IndexModel(
+                [('is_wotd', 1)],
+                unique=True,
+                partialFilterExpression={'is_wotd': True},
+            ),
         ]
 
     @classmethod
