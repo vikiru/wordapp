@@ -165,6 +165,7 @@ LEMMA_GATES: tuple[Gate, ...] = (
 def _rejected(ctx: Context, gates: tuple[Gate, ...]) -> bool:
     return any(gate.applies(ctx) for gate in gates)
 
+
 def keep_base_lemma(word: str, cache: dict[str, WordRecord], raw_word_set: set[str]) -> str | None:
     """Return the base form to keep, or None when any gate rejects the word."""
     if word in WHITELIST:

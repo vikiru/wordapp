@@ -340,7 +340,8 @@ REVIEWED_LEAK_EXCLUSIONS = frozenset(
         'subcutaneous',
         'translational',
         'uterine',
-    })
+    }
+)
 
 EXCLUDED_WORDS = (
     {'ascii', 'neve', 'amorous'}
