@@ -142,6 +142,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+pyrefly.toml
 openspec
 .agents
 .agent
