@@ -19,7 +19,9 @@ from wordfreq import zipf_frequency
 from ..constants import (
     DEFINITION_ORIGIN_MARKERS,
     EXCLUDED_HYPERNYMS,
+    EXCLUDED_POS,
     EXCLUDED_RELATED_TARGETS,
+    EXCLUDED_SUFFIXES,
     EXCLUDED_WORDS,
     MAX_WORD_LENGTH,
     MIN_WORD_LENGTH,
@@ -123,6 +125,10 @@ def _g_excluded_word_lemma(ctx: Context) -> bool:
     return ctx.base_lemma in EXCLUDED_WORDS
 
 
+def _g_excluded_suffix_lemma(ctx: Context) -> bool:
+    return any(ctx.base_lemma.endswith(suffix) for suffix in EXCLUDED_SUFFIXES)
+
+
 def _g_redundant_derivation(ctx: Context) -> bool:
     return has_redundant_derivation(ctx.base_lemma, ctx.raw_word_set)
 
@@ -148,6 +154,7 @@ LEMMA_GATES: tuple[Gate, ...] = (
     Gate('invalid_wn', _g_invalid_wn),
     Gate('excluded_related_targets', _g_related_targets_lemma),
     Gate('excluded_words', _g_excluded_word_lemma),
+    Gate('excluded_suffix', _g_excluded_suffix_lemma),
     Gate('redundant_derivation', _g_redundant_derivation),
     Gate('targeted_leaks', _g_targeted_leaks),
     Gate('zipf_window', _g_zipf_window),
@@ -158,7 +165,6 @@ LEMMA_GATES: tuple[Gate, ...] = (
 def _rejected(ctx: Context, gates: tuple[Gate, ...]) -> bool:
     return any(gate.applies(ctx) for gate in gates)
 
-
 def keep_base_lemma(word: str, cache: dict[str, WordRecord], raw_word_set: set[str]) -> str | None:
     """Return the base form to keep, or None when any gate rejects the word."""
     if word in WHITELIST:
@@ -167,9 +173,13 @@ def keep_base_lemma(word: str, cache: dict[str, WordRecord], raw_word_set: set[s
     ctx = Context(word=word, record=cache.get(word) or _blank_record(), raw_word_set=raw_word_set)
     if _rejected(ctx, RAW_GATES):
         return None
+    if ctx.record.pos_set and ctx.record.pos_set & EXCLUDED_POS:
+        return None
 
     base_lemma = resolve_base_lemma(word, ctx.record)
     if not base_lemma or not base_lemma.isalpha() or not (MIN_WORD_LENGTH <= len(base_lemma) <= MAX_WORD_LENGTH):
+        return None
+    if ctx.record.pos_set and ctx.record.pos_set & EXCLUDED_POS:
         return None
 
     ctx = replace(ctx, base_lemma=base_lemma, lemma_record=cache.get(base_lemma) or _blank_record())

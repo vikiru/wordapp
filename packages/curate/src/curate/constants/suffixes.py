@@ -57,5 +57,15 @@ EXCLUDED_SUFFIXES = (
         'phobic',
         'ical',
         'ly',
+        'ist',
+        'ism',
+        'ship',
+        'hood',
+        'ward',
+        'wards',
+        'wise',
+        'ify',
+        'ze',
+        'ive',
     )
 )

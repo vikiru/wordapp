@@ -254,9 +254,10 @@ def _process_chunk(
     n_wn = 0
     out: dict[str, WordRecord] = {}
     for w in words:
-        # Profanity for every word: main.py re-checks it on base lemmas later.
         t0 = time.perf_counter()
         is_profane = _profanity_filter.check_profanity(w).get('contains_profanity', False)
+        if is_profane:
+            continue
         t_prof += time.perf_counter() - t0
 
         t0 = time.perf_counter()

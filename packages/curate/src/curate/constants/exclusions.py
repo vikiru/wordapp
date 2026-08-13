@@ -340,8 +340,7 @@ REVIEWED_LEAK_EXCLUSIONS = frozenset(
         'subcutaneous',
         'translational',
         'uterine',
-    }
-)
+    })
 
 EXCLUDED_WORDS = (
     {'ascii', 'neve', 'amorous'}
@@ -418,6 +417,10 @@ EXCLUDED_WORDS = (
         'subversion',
         'taxonomy',
         'transcendence',
+        'dilettante',
+        'fizz',
+        'pomp',
+        'lunacy',
         # ---- aggressive audit batch (non-whitelist trait groups) ----
         # archaic / function adverbs
         'abed',
