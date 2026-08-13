@@ -1,15 +1,14 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import type { VariantProps } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import type { VariantProps } from 'tailwind-variants';
 
-import { alert } from "./variants";
+import { alert } from './variants';
 
-type Props = HTMLAttributes<"div"> & VariantProps<typeof alert>;
+type Props = HTMLAttributes<'div'> & VariantProps<typeof alert>;
 
 const { variant, class: className, ...rest } = Astro.props;
 
-const inferredRole =
-  rest.role ?? (variant === "error" || variant === "warning" ? "alert" : "status");
+const inferredRole = rest.role ?? (variant === 'error' || variant === 'warning' ? 'alert' : 'status');
 ---
 
 <div class={alert({ variant, class: className })} role={inferredRole} {...rest} data-slot="alert">

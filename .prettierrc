@@ -8,8 +8,5 @@
   "trailingComma": "es5",
   "bracketSpacing": true,
   "arrowParens": "always",
-  "overrides": [
-    { "files": "*.astro", "options": { "parser": "astro" } },
-    { "files": "*.{json,yaml,yml,md,css}", "options": { "parser": "json" } }
-  ]
+  "overrides": [{ "files": "*.astro", "options": { "parser": "astro" } }]
 }

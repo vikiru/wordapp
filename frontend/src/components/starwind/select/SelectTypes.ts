@@ -8,6 +8,5 @@ export interface SelectChangeEvent extends CustomEvent {
 
 export interface SelectEvent extends CustomEvent {
   detail:
-    | { value: string; selectId: string; selectName?: string }
-    | { value: string; selectId?: string; selectName: string };
+    { value: string; selectId: string; selectName?: string } | { value: string; selectId?: string; selectName: string };
 }

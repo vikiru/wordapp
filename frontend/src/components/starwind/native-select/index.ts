@@ -1,7 +1,7 @@
-import NativeSelect from "./NativeSelect.astro";
-import NativeSelectOptGroup from "./NativeSelectOptGroup.astro";
-import NativeSelectOption from "./NativeSelectOption.astro";
-import { nativeSelect, nativeSelectIcon, nativeSelectWrapper } from "./variants";
+import NativeSelect from './NativeSelect.astro';
+import NativeSelectOptGroup from './NativeSelectOptGroup.astro';
+import NativeSelectOption from './NativeSelectOption.astro';
+import { nativeSelect, nativeSelectIcon, nativeSelectWrapper } from './variants';
 
 const NativeSelectVariants = {
   nativeSelect,

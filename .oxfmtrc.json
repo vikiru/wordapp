@@ -1,13 +1,29 @@
 {
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "quoteProps": "as-needed",
+  "sortImports": true,
   "sortTailwindcss": {
     "stylesheet": "frontend/src/styles/globals.css",
     "functions": ["cn", "clsx"],
     "preserveWhitespace": false
   },
-  "plugins": [],
-  "rules": {
-    "sort-imports": "error",
-    "sort-keys": "off",
-    "sort-html-attributes": "off"
-  }
+  "ignorePatterns": [
+    "frontend/src/components/starwind",
+    "frontend/src/lib/utils/starwind",
+    "frontend/node_modules",
+    "frontend/dist",
+    "frontend/.astro",
+    "frontend/src/data",
+    "frontend/**/*.astro",
+    "frontend/**/*.css",
+    "frontend/**/*.json"
+  ]
 }

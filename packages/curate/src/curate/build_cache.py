@@ -67,8 +67,7 @@ def _load_wordnet() -> wn.Wordnet:
         return wn.Wordnet('oewn:2025+')
     except wn.Error:
         logger.error(
-            'curate: Failed to load WordNet data (oewn:2025+); '
-            'run `python -m wn download oewn:2025+` to install it.'
+            'curate: Failed to load WordNet data (oewn:2025+); run `python -m wn download oewn:2025+` to install it.'
         )
         raise
 

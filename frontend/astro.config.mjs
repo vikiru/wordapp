@@ -5,9 +5,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://wordapp.pages.dev', // change once Cloudflare Pages is setup
-  integrations: [
-    sitemap(),
-  ],
+  integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
     build: {

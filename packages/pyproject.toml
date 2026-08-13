@@ -6,12 +6,7 @@ requires-python = ">=3.13"
 dependencies = []
 
 [dependency-groups]
-dev = [
-  "poethepoet>=0.48.0",
-  "pyrefly>=1.1.1",
-  "ruff>=0.16.0",
-  "ty>=0.0.65",
-]
+dev = ["poethepoet>=0.48.0", "pyrefly>=1.1.1", "ruff>=0.16.0", "ty>=0.0.65"]
 
 [tool.uv]
 package = false
@@ -29,12 +24,7 @@ select = ["E", "F", "UP", "B", "SIM", "I"]
 ignore = ["E501", "W291"]
 
 [tool.ruff.lint.isort]
-known-first-party = [
-  "config",
-  "curate",
-  "data",
-  "generate",
-]
+known-first-party = ["config", "curate", "data", "generate"]
 known-third-party = [
   "beanie",
   "english_words",
@@ -66,12 +56,7 @@ python = ".venv"
 root = ["config/src", "curate/src", "generate/src", "data/src"]
 
 [tool.ty.src]
-include = [
-  "config/**/*.py",
-  "curate/**/*.py",
-  "data/**/*.py",
-  "generate/src/**/*.py",
-]
+include = ["config/**/*.py", "curate/**/*.py", "data/**/*.py", "generate/src/**/*.py"]
 
 [tool.poe.tasks]
 format = "ruff format ."

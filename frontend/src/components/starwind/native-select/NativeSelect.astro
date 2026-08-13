@@ -1,11 +1,11 @@
 ---
-import ChevronDown from "@tabler/icons/outline/chevron-down.svg";
-import type { HTMLAttributes } from "astro/types";
-import type { VariantProps } from "tailwind-variants";
+import ChevronDown from '@tabler/icons/outline/chevron-down.svg';
+import type { HTMLAttributes } from 'astro/types';
+import type { VariantProps } from 'tailwind-variants';
 
-import { nativeSelect, nativeSelectIcon, nativeSelectWrapper } from "./variants";
+import { nativeSelect, nativeSelectIcon, nativeSelectWrapper } from './variants';
 
-type Props = Omit<HTMLAttributes<"select">, "size"> & VariantProps<typeof nativeSelect>;
+type Props = Omit<HTMLAttributes<'select'>, 'size'> & VariantProps<typeof nativeSelect>;
 
 const { class: className, size, ...rest } = Astro.props;
 ---
@@ -15,10 +15,6 @@ const { class: className, size, ...rest } = Astro.props;
     <slot />
   </select>
   <slot name="icon">
-    <ChevronDown
-      class={nativeSelectIcon({ size })}
-      aria-hidden="true"
-      data-slot="native-select-icon"
-    />
+    <ChevronDown class={nativeSelectIcon({ size })} aria-hidden="true" data-slot="native-select-icon" />
   </slot>
 </div>

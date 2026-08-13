@@ -3,7 +3,7 @@ run-name: Automate release using semantic-release
 on:
   workflow_run:
     workflows:
-      - "Format Files"
+      - 'Format Files'
     types:
       - completed
 jobs:
@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: 'lts/*'
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:

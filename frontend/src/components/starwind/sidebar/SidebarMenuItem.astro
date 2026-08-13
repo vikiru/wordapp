@@ -1,18 +1,13 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-import { sidebarMenuItem } from "./variants";
+import { sidebarMenuItem } from './variants';
 
-type Props = HTMLAttributes<"li">;
+type Props = HTMLAttributes<'li'>;
 
 const { class: className, ...rest } = Astro.props;
 ---
 
-<li
-  class={sidebarMenuItem({ class: className })}
-  data-sidebar="menu-item"
-  {...rest}
-  data-slot="sidebar-menu-item"
->
+<li class={sidebarMenuItem({ class: className })} data-sidebar="menu-item" {...rest} data-slot="sidebar-menu-item">
   <slot />
 </li>

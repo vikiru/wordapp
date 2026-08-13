@@ -1,9 +1,9 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-import { sidebarRail } from "./variants";
+import { sidebarRail } from './variants';
 
-type Props = HTMLAttributes<"button">;
+type Props = HTMLAttributes<'button'>;
 
 const { class: className, ...rest } = Astro.props;
 ---
@@ -29,12 +29,12 @@ const { class: className, ...rest } = Astro.props;
     }
 
     private init() {
-      this.rail.addEventListener("click", this.handleClick.bind(this));
+      this.rail.addEventListener('click', this.handleClick.bind(this));
     }
 
     private handleClick() {
       if (this.provider) {
-        this.provider.dispatchEvent(new CustomEvent("sidebar:toggle"));
+        this.provider.dispatchEvent(new CustomEvent('sidebar:toggle'));
       }
     }
   }
@@ -42,13 +42,13 @@ const { class: className, ...rest } = Astro.props;
   const railInstances = new WeakMap<HTMLElement, SidebarRailHandler>();
 
   const setupSidebarRails = () => {
-    document.querySelectorAll<HTMLElement>(".starwind-sidebar-rail").forEach((rail) => {
+    document.querySelectorAll<HTMLElement>('.starwind-sidebar-rail').forEach((rail) => {
       if (railInstances.has(rail)) return;
       railInstances.set(rail, new SidebarRailHandler(rail));
     });
   };
 
   setupSidebarRails();
-  document.addEventListener("astro:after-swap", setupSidebarRails);
-  document.addEventListener("starwind:init", setupSidebarRails);
+  document.addEventListener('astro:after-swap', setupSidebarRails);
+  document.addEventListener('starwind:init', setupSidebarRails);
 </script>

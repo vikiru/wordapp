@@ -1,17 +1,17 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-import { buttonGroup } from "./variants";
+import { buttonGroup } from './variants';
 
-type Props = HTMLAttributes<"div"> & {
+type Props = HTMLAttributes<'div'> & {
   /**
    * The orientation of the button group.
    * @default "horizontal"
    */
-  orientation?: "horizontal" | "vertical";
+  orientation?: 'horizontal' | 'vertical';
 };
 
-const { class: className, orientation = "horizontal", ...rest } = Astro.props;
+const { class: className, orientation = 'horizontal', ...rest } = Astro.props;
 ---
 
 <div

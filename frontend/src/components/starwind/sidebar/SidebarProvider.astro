@@ -1,9 +1,9 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-import { sidebarProvider } from "./variants";
+import { sidebarProvider } from './variants';
 
-type Props = HTMLAttributes<"div"> & {
+type Props = HTMLAttributes<'div'> & {
   /**
    * Default open state of the sidebar
    * @default true
@@ -16,29 +16,23 @@ type Props = HTMLAttributes<"div"> & {
   keyboardShortcut?: string;
 };
 
-const {
-  defaultOpen = true,
-  keyboardShortcut = "b",
-  class: className,
-  style,
-  ...rest
-} = Astro.props;
+const { defaultOpen = true, keyboardShortcut = 'b', class: className, style, ...rest } = Astro.props;
 
-const SIDEBAR_WIDTH = "18rem";
-const SIDEBAR_WIDTH_ICON = "3.5rem";
+const SIDEBAR_WIDTH = '18rem';
+const SIDEBAR_WIDTH_ICON = '3.5rem';
 
 // Parse style prop to extract CSS variable overrides
-const styleObj = typeof style === "string" ? {} : ((style as Record<string, string>) ?? {});
+const styleObj = typeof style === 'string' ? {} : ((style as Record<string, string>) ?? {});
 const mergedStyle = {
-  "--sidebar-width": styleObj["--sidebar-width"] ?? SIDEBAR_WIDTH,
-  "--sidebar-width-icon": styleObj["--sidebar-width-icon"] ?? SIDEBAR_WIDTH_ICON,
+  '--sidebar-width': styleObj['--sidebar-width'] ?? SIDEBAR_WIDTH,
+  '--sidebar-width-icon': styleObj['--sidebar-width-icon'] ?? SIDEBAR_WIDTH_ICON,
   ...styleObj,
 };
 ---
 
 <div
   class={sidebarProvider({ class: className })}
-  data-state={defaultOpen ? "expanded" : "collapsed"}
+  data-state={defaultOpen ? 'expanded' : 'collapsed'}
   data-mobile-open="false"
   data-keyboard-shortcut={keyboardShortcut}
   style={mergedStyle}
@@ -71,9 +65,9 @@ const mergedStyle = {
       if (target) {
         const tagName = target.tagName.toLowerCase();
         if (
-          tagName === "input" ||
-          tagName === "textarea" ||
-          tagName === "select" ||
+          tagName === 'input' ||
+          tagName === 'textarea' ||
+          tagName === 'select' ||
           target.isContentEditable ||
           target.closest("[contenteditable='true']")
         ) {
@@ -81,7 +75,7 @@ const mergedStyle = {
         }
       }
 
-      const shortcut = this.provider.getAttribute("data-keyboard-shortcut") || "b";
+      const shortcut = this.provider.getAttribute('data-keyboard-shortcut') || 'b';
       if (e.key === shortcut && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         this.toggle();
@@ -89,17 +83,17 @@ const mergedStyle = {
     }
 
     private setupKeyboardShortcut() {
-      document.removeEventListener("keydown", this.boundKeyHandler);
-      document.addEventListener("keydown", this.boundKeyHandler);
+      document.removeEventListener('keydown', this.boundKeyHandler);
+      document.addEventListener('keydown', this.boundKeyHandler);
     }
 
     private setupCustomEvents() {
-      this.provider.addEventListener("sidebar:toggle", () => this.toggle());
-      this.provider.addEventListener("sidebar:open", () => this.setOpen(true));
-      this.provider.addEventListener("sidebar:close", () => this.setOpen(false));
-      this.provider.addEventListener("sidebar:toggle-mobile", () => this.toggleMobile());
-      this.provider.addEventListener("sidebar:open-mobile", () => this.setMobileOpen(true));
-      this.provider.addEventListener("sidebar:close-mobile", () => this.setMobileOpen(false));
+      this.provider.addEventListener('sidebar:toggle', () => this.toggle());
+      this.provider.addEventListener('sidebar:open', () => this.setOpen(true));
+      this.provider.addEventListener('sidebar:close', () => this.setOpen(false));
+      this.provider.addEventListener('sidebar:toggle-mobile', () => this.toggleMobile());
+      this.provider.addEventListener('sidebar:open-mobile', () => this.setMobileOpen(true));
+      this.provider.addEventListener('sidebar:close-mobile', () => this.setMobileOpen(false));
     }
 
     private handleResize() {
@@ -112,27 +106,27 @@ const mergedStyle = {
     }
 
     private setupResizeListener() {
-      window.removeEventListener("resize", this.boundResizeHandler);
-      window.addEventListener("resize", this.boundResizeHandler);
+      window.removeEventListener('resize', this.boundResizeHandler);
+      window.addEventListener('resize', this.boundResizeHandler);
     }
 
     isMobile(): boolean {
       // Check if desktop sidebar is hidden (has display: none from hidden class)
       const desktopSidebar = this.provider.querySelector<HTMLElement>('[data-slot="sidebar"]');
       if (!desktopSidebar) return false;
-      return getComputedStyle(desktopSidebar).display === "none";
+      return getComputedStyle(desktopSidebar).display === 'none';
     }
 
-    getState(): "expanded" | "collapsed" {
-      return this.provider.getAttribute("data-state") as "expanded" | "collapsed";
+    getState(): 'expanded' | 'collapsed' {
+      return this.provider.getAttribute('data-state') as 'expanded' | 'collapsed';
     }
 
     isOpen(): boolean {
-      return this.getState() === "expanded";
+      return this.getState() === 'expanded';
     }
 
     isMobileOpen(): boolean {
-      return this.provider.getAttribute("data-mobile-open") === "true";
+      return this.provider.getAttribute('data-mobile-open') === 'true';
     }
 
     toggle() {
@@ -144,36 +138,36 @@ const mergedStyle = {
     }
 
     setOpen(open: boolean) {
-      const state = open ? "expanded" : "collapsed";
-      this.provider.setAttribute("data-state", state);
-      this.provider.dispatchEvent(new CustomEvent("sidebar:change", { detail: { open, state } }));
+      const state = open ? 'expanded' : 'collapsed';
+      this.provider.setAttribute('data-state', state);
+      this.provider.dispatchEvent(new CustomEvent('sidebar:change', { detail: { open, state } }));
     }
 
     toggleMobile() {
       // Check the actual dialog state instead of our tracked state
-      const mobileSheet = this.provider.querySelector<HTMLElement>(".starwind-sheet");
-      const dialogContent = mobileSheet?.querySelector<HTMLElement>(".starwind-dialog-content");
-      const isCurrentlyOpen = dialogContent?.dataset.state === "open";
+      const mobileSheet = this.provider.querySelector<HTMLElement>('.starwind-sheet');
+      const dialogContent = mobileSheet?.querySelector<HTMLElement>('.starwind-dialog-content');
+      const isCurrentlyOpen = dialogContent?.dataset.state === 'open';
 
       this.setMobileOpen(!isCurrentlyOpen);
     }
 
     setMobileOpen(open: boolean) {
-      this.provider.setAttribute("data-mobile-open", String(open));
+      this.provider.setAttribute('data-mobile-open', String(open));
 
       // Find the mobile sidebar Sheet and use Dialog's programmatic API
-      const mobileSheet = this.provider.querySelector<HTMLElement>(".starwind-sheet");
+      const mobileSheet = this.provider.querySelector<HTMLElement>('.starwind-sheet');
       if (mobileSheet) {
-        const eventName = open ? "dialog:open" : "dialog:close";
+        const eventName = open ? 'dialog:open' : 'dialog:close';
         mobileSheet.dispatchEvent(new CustomEvent(eventName));
       }
 
-      this.provider.dispatchEvent(new CustomEvent("sidebar:mobile-change", { detail: { open } }));
+      this.provider.dispatchEvent(new CustomEvent('sidebar:mobile-change', { detail: { open } }));
     }
 
     destroy() {
-      document.removeEventListener("keydown", this.boundKeyHandler);
-      window.removeEventListener("resize", this.boundResizeHandler);
+      document.removeEventListener('keydown', this.boundKeyHandler);
+      window.removeEventListener('resize', this.boundResizeHandler);
     }
   }
 
@@ -191,7 +185,7 @@ const mergedStyle = {
   };
 
   const setupSidebars = () => {
-    document.querySelectorAll<HTMLElement>(".starwind-sidebar-provider").forEach((provider) => {
+    document.querySelectorAll<HTMLElement>('.starwind-sidebar-provider').forEach((provider) => {
       if (!sidebarInstances.has(provider)) {
         sidebarInstances.set(provider, new SidebarController(provider));
         trackedProviders.add(provider);
@@ -200,7 +194,7 @@ const mergedStyle = {
   };
 
   setupSidebars();
-  document.addEventListener("astro:before-swap", cleanupSidebars);
-  document.addEventListener("astro:after-swap", setupSidebars);
-  document.addEventListener("starwind:init", setupSidebars);
+  document.addEventListener('astro:before-swap', cleanupSidebars);
+  document.addEventListener('astro:after-swap', setupSidebars);
+  document.addEventListener('starwind:init', setupSidebars);
 </script>
