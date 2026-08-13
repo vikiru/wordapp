@@ -1,0 +1,54 @@
+name: Generate Words
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date (YYYY-MM-DD, default: today)'
+        required: false
+        default: ''
+  schedule:
+    - cron: '0 0 * * *'  # midnight UTC daily
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup UV (v10.0.0)
+        uses: astral-sh/setup-uv@v1
+        with:
+          cache: ""
+
+      - name: Install deps (selective)
+        run: uv sync generate data config
+
+      - name: Generate with Gemini
+        run: python -m generate.main
+
+      - name: Upload to MongoDB
+        run: python -m data.upload
+
+      - name: Check for staged changes
+        id: changes
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit generated files (only if changes exist)
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: generate new words $(date -u +%Y-%m-%d)" || true
+          git push
