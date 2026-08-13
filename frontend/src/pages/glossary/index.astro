@@ -267,7 +267,6 @@ const today = (await getCollection('words_today')).sort((a, b) => a.data.word.lo
       button.classList.remove(...chipActive.split(' '), ...chipIdle.split(' '));
       button.classList.add(...(button.dataset.posFilter === state.pos ? chipActive : chipIdle).split(' '));
     }
-    const empty = document.querySelector<HTMLElement>('[data-search-empty]');
   };
 
   let urlTimer: number | undefined;
