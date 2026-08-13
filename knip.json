@@ -2,10 +2,7 @@
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "workspaces": {
     "frontend": {
-      "entry": [
-        "src/pages/**/*.astro",
-        "src/types/**"
-      ],
+      "entry": ["src/pages/**/*.astro", "src/types/**"],
       "project": [
         "**/*.{js,mjs,cjs,ts,jsx,tsx,astro}",
         "!node_modules/**",

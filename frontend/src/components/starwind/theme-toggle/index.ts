@@ -1,5 +1,5 @@
-import ThemeToggle from "./ThemeToggle.astro";
-import { themeToggle } from "./variants";
+import ThemeToggle from './ThemeToggle.astro';
+import { themeToggle } from './variants';
 const ThemeToggleVariants = { themeToggle };
 
 export { ThemeToggle, ThemeToggleVariants };

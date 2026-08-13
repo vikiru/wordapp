@@ -1,18 +1,18 @@
 ---
-import ChevronRight from "@tabler/icons/outline/chevron-right.svg";
-import type { HTMLAttributes } from "astro/types";
-import type { VariantProps } from "tailwind-variants";
+import ChevronRight from '@tabler/icons/outline/chevron-right.svg';
+import type { HTMLAttributes } from 'astro/types';
+import type { VariantProps } from 'tailwind-variants';
 
-import { ButtonVariants } from "@/components/starwind/button";
+import { ButtonVariants } from '@/components/starwind/button';
 
-import PaginationLink from "./PaginationLink.astro";
-import { paginationNext } from "./variants";
+import PaginationLink from './PaginationLink.astro';
+import { paginationNext } from './variants';
 
-type Props = HTMLAttributes<"a"> & {
-  size?: VariantProps<typeof ButtonVariants.button>["size"];
+type Props = HTMLAttributes<'a'> & {
+  size?: VariantProps<typeof ButtonVariants.button>['size'];
 };
 
-const { class: className, size = "md", ...rest } = Astro.props;
+const { class: className, size = 'md', ...rest } = Astro.props;
 ---
 
 <PaginationLink
@@ -24,6 +24,8 @@ const { class: className, size = "md", ...rest } = Astro.props;
 >
   <slot />
   <slot name="icon">
-    <ChevronRight class="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:transform-none" />
+    <ChevronRight
+      class="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:transform-none"
+    />
   </slot>
 </PaginationLink>

@@ -1,16 +1,16 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-import { selectValue } from "./variants";
+import { selectValue } from './variants';
 
-type Props = HTMLAttributes<"span"> & {
+type Props = HTMLAttributes<'span'> & {
   /**
    * The text to display when no value is selected
    */
   placeholder?: string;
 };
 
-const { placeholder = "select", class: className, ...rest } = Astro.props;
+const { placeholder = 'select', class: className, ...rest } = Astro.props;
 ---
 
 <span class={selectValue({ class: className })} {...rest} data-slot="select-value">

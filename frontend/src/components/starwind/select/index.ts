@@ -1,13 +1,13 @@
-import Select from "./Select.astro";
-import SelectContent from "./SelectContent.astro";
-import SelectGroup from "./SelectGroup.astro";
-import SelectItem from "./SelectItem.astro";
-import SelectLabel from "./SelectLabel.astro";
-import SelectSearch from "./SelectSearch.astro";
-import SelectSeparator from "./SelectSeparator.astro";
-import SelectTrigger from "./SelectTrigger.astro";
-import type { SelectChangeEvent, SelectEvent } from "./SelectTypes";
-import SelectValue from "./SelectValue.astro";
+import Select from './Select.astro';
+import SelectContent from './SelectContent.astro';
+import SelectGroup from './SelectGroup.astro';
+import SelectItem from './SelectItem.astro';
+import SelectLabel from './SelectLabel.astro';
+import SelectSearch from './SelectSearch.astro';
+import SelectSeparator from './SelectSeparator.astro';
+import SelectTrigger from './SelectTrigger.astro';
+import type { SelectChangeEvent, SelectEvent } from './SelectTypes';
+import SelectValue from './SelectValue.astro';
 import {
   selectContent,
   selectContentInner,
@@ -18,7 +18,7 @@ import {
   selectSeparator,
   selectTrigger,
   selectValue,
-} from "./variants";
+} from './variants';
 const SelectVariants = {
   selectContent,
   selectContentInner,

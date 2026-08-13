@@ -1,16 +1,16 @@
 ---
-import X from "@tabler/icons/outline/x.svg";
-import type { HTMLAttributes } from "astro/types";
+import X from '@tabler/icons/outline/x.svg';
+import type { HTMLAttributes } from 'astro/types';
 
-import { toastItem } from "./variants";
+import { toastItem } from './variants';
 
-type Variant = "default" | "success" | "error" | "warning" | "info";
+type Variant = 'default' | 'success' | 'error' | 'warning' | 'info';
 
-type Props = HTMLAttributes<"div"> & {
+type Props = HTMLAttributes<'div'> & {
   variant?: Variant;
 };
 
-const { class: className, variant = "default", ...rest } = Astro.props;
+const { class: className, variant = 'default', ...rest } = Astro.props;
 ---
 
 <div

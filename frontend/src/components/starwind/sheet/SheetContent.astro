@@ -1,17 +1,17 @@
 ---
-import X from "@tabler/icons/outline/x.svg";
-import type { HTMLAttributes } from "astro/types";
+import X from '@tabler/icons/outline/x.svg';
+import type { HTMLAttributes } from 'astro/types';
 
-import { dialogBackdrop, sheetCloseButton, sheetContent } from "./variants";
+import { dialogBackdrop, sheetCloseButton, sheetContent } from './variants';
 
-type Props = HTMLAttributes<"dialog"> & {
+type Props = HTMLAttributes<'dialog'> & {
   /**
    * Side of the page the sheet opens from
    */
-  side?: "top" | "right" | "bottom" | "left";
+  side?: 'top' | 'right' | 'bottom' | 'left';
 };
 
-const { side = "right", class: className, ...rest } = Astro.props;
+const { side = 'right', class: className, ...rest } = Astro.props;
 ---
 
 <!-- dialog overlay -->
@@ -30,12 +30,7 @@ const { side = "right", class: className, ...rest } = Astro.props;
   data-slot="sheet-content"
 >
   <slot />
-  <button
-    type="button"
-    class={sheetCloseButton()}
-    data-slot="sheet-close"
-    aria-label="Close dialog"
-  >
+  <button type="button" class={sheetCloseButton()} data-slot="sheet-close" aria-label="Close dialog">
     <slot name="icon">
       <X class="size-5 transition-opacity motion-reduce:transition-none" />
     </slot>

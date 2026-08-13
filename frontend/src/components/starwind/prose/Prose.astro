@@ -1,9 +1,9 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-import { prose } from "./variants";
+import { prose } from './variants';
 
-type Props = HTMLAttributes<"div">;
+type Props = HTMLAttributes<'div'>;
 
 const { class: className, ...rest } = Astro.props;
 ---
@@ -65,10 +65,7 @@ const { class: className, ...rest } = Astro.props;
      * Links
      * =================== */
     --sw-prose-link-color: var(--prose-link-color, var(--color-foreground));
-    --sw-prose-link-decoration-color: var(
-      --prose-link-decoration-color,
-      var(--color-primary-accent)
-    );
+    --sw-prose-link-decoration-color: var(--prose-link-decoration-color, var(--color-primary-accent));
     --sw-prose-link-hover-color: var(--prose-link-hover-color, var(--color-primary-accent));
 
     /* ===================
@@ -115,10 +112,7 @@ const { class: className, ...rest } = Astro.props;
      * Mark/Highlight
      * =================== */
     --sw-prose-highlight-color: var(--prose-highlight-color, var(--color-foreground));
-    --sw-prose-highlight-bg-color: var(
-      --prose-highlight-bg-color,
-      --alpha(var(--color-warning) / 30%)
-    );
+    --sw-prose-highlight-bg-color: var(--prose-highlight-bg-color, --alpha(var(--color-warning) / 30%));
 
     /* ===================
      * Base styles
@@ -135,9 +129,7 @@ const { class: className, ...rest } = Astro.props;
   }
 
   /* Headings after non-headings have more spacing */
-  .sw-prose
-    :not(h1, h2, h3, h4, h5, h6)
-    + :is(h1, h2, h3, h4, h5, h6):not(:where(.not-sw-prose *)) {
+  .sw-prose :not(h1, h2, h3, h4, h5, h6) + :is(h1, h2, h3, h4, h5, h6):not(:where(.not-sw-prose *)) {
     margin-top: var(--sw-prose-heading-spacing);
   }
 
@@ -311,8 +303,7 @@ const { class: className, ...rest } = Astro.props;
   .sw-prose blockquote:not(:where(.not-sw-prose *)) {
     font-style: italic;
     color: var(--sw-prose-blockquote-color);
-    border-inline-start: var(--sw-prose-blockquote-border-width) solid
-      var(--sw-prose-blockquote-border-color);
+    border-inline-start: var(--sw-prose-blockquote-border-width) solid var(--sw-prose-blockquote-border-color);
     padding-inline-start: 1rem;
     margin-top: var(--sw-prose-spacing);
     margin-bottom: var(--sw-prose-spacing);
@@ -557,7 +548,7 @@ const { class: className, ...rest } = Astro.props;
     --sw-details-marker-size: 1.25rem;
 
     background-color: currentColor;
-    content: "";
+    content: '';
     display: inline-block;
     height: var(--sw-details-marker-size);
     width: var(--sw-details-marker-size);
@@ -579,8 +570,8 @@ const { class: className, ...rest } = Astro.props;
     transform: rotateZ(90deg);
   }
 
-  [dir="rtl"] .sw-prose summary:not(:where(.not-sw-prose *))::before,
-  .sw-prose [dir="rtl"] summary:not(:where(.not-sw-prose *))::before {
+  [dir='rtl'] .sw-prose summary:not(:where(.not-sw-prose *))::before,
+  .sw-prose [dir='rtl'] summary:not(:where(.not-sw-prose *))::before {
     transform: rotateZ(180deg);
   }
 

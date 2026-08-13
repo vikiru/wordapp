@@ -1,9 +1,9 @@
 ---
-import ToastDescription from "./ToastDescription.astro";
-import ToastItem from "./ToastItem.astro";
-import ToastTitle from "./ToastTitle.astro";
+import ToastDescription from './ToastDescription.astro';
+import ToastItem from './ToastItem.astro';
+import ToastTitle from './ToastTitle.astro';
 
-type Variant = "default" | "success" | "error" | "warning" | "info" | "loading";
+type Variant = 'default' | 'success' | 'error' | 'warning' | 'info' | 'loading';
 
 interface Props {
   variant: Variant;
@@ -12,7 +12,7 @@ interface Props {
 const { variant } = Astro.props;
 
 // Loading variant uses default item styling but loading title styling
-const itemVariant = variant === "loading" ? "default" : variant;
+const itemVariant = variant === 'loading' ? 'default' : variant;
 ---
 
 <template data-toast-template={variant}>

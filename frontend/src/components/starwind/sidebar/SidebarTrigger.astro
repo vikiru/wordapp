@@ -1,14 +1,14 @@
 ---
-import PanelLeft from "@tabler/icons/outline/layout-sidebar.svg";
-import type { ComponentProps } from "astro/types";
+import PanelLeft from '@tabler/icons/outline/layout-sidebar.svg';
+import type { ComponentProps } from 'astro/types';
 
-import { Button } from "@/components/starwind/button";
+import { Button } from '@/components/starwind/button';
 
-import { sidebarTrigger } from "./variants";
+import { sidebarTrigger } from './variants';
 
 type Props = ComponentProps<typeof Button>;
 
-const { class: className, size = "icon-sm", variant = "ghost", ...rest } = Astro.props;
+const { class: className, size = 'icon-sm', variant = 'ghost', ...rest } = Astro.props;
 ---
 
 <Button
@@ -38,12 +38,12 @@ const { class: className, size = "icon-sm", variant = "ghost", ...rest } = Astro
     }
 
     private init() {
-      this.trigger.addEventListener("click", this.handleClick.bind(this));
+      this.trigger.addEventListener('click', this.handleClick.bind(this));
     }
 
     private handleClick() {
       if (this.provider) {
-        this.provider.dispatchEvent(new CustomEvent("sidebar:toggle"));
+        this.provider.dispatchEvent(new CustomEvent('sidebar:toggle'));
       }
     }
   }
@@ -51,13 +51,13 @@ const { class: className, size = "icon-sm", variant = "ghost", ...rest } = Astro
   const triggerInstances = new WeakMap<HTMLElement, SidebarTriggerHandler>();
 
   const setupSidebarTriggers = () => {
-    document.querySelectorAll<HTMLElement>(".starwind-sidebar-trigger").forEach((trigger) => {
+    document.querySelectorAll<HTMLElement>('.starwind-sidebar-trigger').forEach((trigger) => {
       if (triggerInstances.has(trigger)) return;
       triggerInstances.set(trigger, new SidebarTriggerHandler(trigger));
     });
   };
 
   setupSidebarTriggers();
-  document.addEventListener("astro:after-swap", setupSidebarTriggers);
-  document.addEventListener("starwind:init", setupSidebarTriggers);
+  document.addEventListener('astro:after-swap', setupSidebarTriggers);
+  document.addEventListener('starwind:init', setupSidebarTriggers);
 </script>

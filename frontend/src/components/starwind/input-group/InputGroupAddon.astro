@@ -1,10 +1,10 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import type { VariantProps } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import type { VariantProps } from 'tailwind-variants';
 
-import { inputGroupAddon } from "./variants";
+import { inputGroupAddon } from './variants';
 
-type Props = HTMLAttributes<"div"> & VariantProps<typeof inputGroupAddon>;
+type Props = HTMLAttributes<'div'> & VariantProps<typeof inputGroupAddon>;
 
 const { align, class: className, ...rest } = Astro.props;
 ---
@@ -29,15 +29,14 @@ const { align, class: className, ...rest } = Astro.props;
     }
 
     private setupEventListeners(): void {
-      this.addon.addEventListener("click", (e) => this.handleClick(e));
+      this.addon.addEventListener('click', (e) => this.handleClick(e));
     }
 
     private handleClick(e: MouseEvent): void {
-      if ((e.target as HTMLElement).closest("button")) return;
+      if ((e.target as HTMLElement).closest('button')) return;
 
-      const input = this.addon.parentElement?.querySelector("input, textarea") as
-        | HTMLInputElement
-        | HTMLTextAreaElement;
+      const input = this.addon.parentElement?.querySelector('input, textarea') as
+        HTMLInputElement | HTMLTextAreaElement;
 
       if (input) {
         input.focus();
@@ -56,6 +55,6 @@ const { align, class: className, ...rest } = Astro.props;
   };
 
   setupAddons();
-  document.addEventListener("astro:after-swap", setupAddons);
-  document.addEventListener("starwind:init", setupAddons);
+  document.addEventListener('astro:after-swap', setupAddons);
+  document.addEventListener('starwind:init', setupAddons);
 </script>

@@ -1,7 +1,7 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-type Props = HTMLAttributes<"div"> & {
+type Props = HTMLAttributes<'div'> & {
   /**
    * The name for the hidden <select> element - used for standard form handling
    */
@@ -22,7 +22,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 ---
 
 <div
-  class:list={["starwind-select", "relative", className]}
+  class:list={['starwind-select', 'relative', className]}
   data-name={name}
   data-value={defaultValue}
   data-required={required}
@@ -33,7 +33,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 </div>
 
 <script>
-  import type { SelectChangeEvent, SelectEvent } from "./SelectTypes";
+  import type { SelectChangeEvent, SelectEvent } from './SelectTypes';
 
   class SelectHandler {
     private select: HTMLElement;
@@ -46,26 +46,26 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
     private activeItem: HTMLElement | null = null;
     private animationDuration = 150;
     private typeaheadTimerRef: number | null = null;
-    private typeaheadSearch = "";
+    private typeaheadSearch = '';
     private returnFocusOnClose: boolean = true;
     private required: boolean = false;
 
     constructor(select: HTMLElement, selectIdx: number) {
       this.select = select;
-      this.trigger = select.querySelector(".starwind-select-trigger");
-      this.content = select.querySelector(".starwind-select-content");
+      this.trigger = select.querySelector('.starwind-select-trigger');
+      this.content = select.querySelector('.starwind-select-content');
       this.searchInput = select.querySelector('[data-slot="select-search"]');
       this.emptyElement = select.querySelector('[data-slot="select-empty"]');
 
       if (!this.trigger || !this.content) return;
 
-      this.required = this.select.getAttribute("data-required") === "true";
+      this.required = this.select.getAttribute('data-required') === 'true';
 
       // animationDuration is set with inline styles through passed prop to SelectContent
       const animationDurationString = this.content.style.animationDuration;
-      if (animationDurationString.endsWith("ms")) {
+      if (animationDurationString.endsWith('ms')) {
         this.animationDuration = parseFloat(animationDurationString);
-      } else if (animationDurationString.endsWith("s")) {
+      } else if (animationDurationString.endsWith('s')) {
         // using something like @playform/compress might optimize to use "s" instead of "ms"
         this.animationDuration = parseFloat(animationDurationString) * 1000;
       }
@@ -83,11 +83,11 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
     private setupSelectField() {
       if (!this.trigger || !this.content) return;
       // build the standard select field
-      const selectField = document.createElement("select");
+      const selectField = document.createElement('select');
       selectField.tabIndex = -1;
-      selectField.setAttribute("aria-hidden", "true");
-      selectField.setAttribute("placeholder", "select");
-      const selectName = this.select.getAttribute("data-name");
+      selectField.setAttribute('aria-hidden', 'true');
+      selectField.setAttribute('placeholder', 'select');
+      const selectName = this.select.getAttribute('data-name');
 
       if (this.required) {
         selectField.required = true;
@@ -98,23 +98,23 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       }
 
       // you can comment out this "sr-only" class line below if you want to see the native select in action
-      selectField.classList.add("starwind-sr-only");
+      selectField.classList.add('starwind-sr-only');
 
       // The first option is a placeholder
-      const placeholderOption = document.createElement("option");
-      placeholderOption.value = "";
-      placeholderOption.textContent = "Select";
+      const placeholderOption = document.createElement('option');
+      placeholderOption.value = '';
+      placeholderOption.textContent = 'Select';
       placeholderOption.disabled = true;
       placeholderOption.selected = true;
       selectField.appendChild(placeholderOption);
 
       // add all options to the select field
       this.content.querySelectorAll('[role="option"]').forEach((option) => {
-        const optionValue = option.getAttribute("data-value");
+        const optionValue = option.getAttribute('data-value');
         const optionText = option.textContent;
-        const optionElement = document.createElement("option");
-        optionElement.value = optionValue || "";
-        optionElement.textContent = optionText || "";
+        const optionElement = document.createElement('option');
+        optionElement.value = optionValue || '';
+        optionElement.textContent = optionText || '';
         selectField.appendChild(optionElement);
       });
       this.trigger.appendChild(selectField);
@@ -124,14 +124,14 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 
       // Intercept invalid event to show error on trigger instead of hidden select
       if (this.required) {
-        selectField.addEventListener("invalid", (e) => {
+        selectField.addEventListener('invalid', (e) => {
           this.showValidationError();
           e.preventDefault();
         });
       }
 
       this.setSize();
-      this.content.style.width = "var(--starwind-select-trigger-width)";
+      this.content.style.width = 'var(--starwind-select-trigger-width)';
     }
 
     private setupAccessibility(selectIdx: number) {
@@ -142,9 +142,9 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       this.content.id = `starwind-select${selectIdx}-content`;
 
       // Set up additional ARIA attributes
-      this.trigger.setAttribute("aria-controls", this.content.id);
-      this.trigger.setAttribute("aria-required", this.required ? "true" : "false");
-      this.content.setAttribute("aria-labelledby", this.trigger.id);
+      this.trigger.setAttribute('aria-controls', this.content.id);
+      this.trigger.setAttribute('aria-required', this.required ? 'true' : 'false');
+      this.content.setAttribute('aria-labelledby', this.trigger.id);
 
       // If search input exists, add IDs to all items for aria-activedescendant
       if (this.searchInput) {
@@ -152,7 +152,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
           this.searchInput.id = `starwind-select${selectIdx}-search`;
         }
         // Link search input to the listbox it filters
-        this.searchInput.setAttribute("aria-controls", this.content.id);
+        this.searchInput.setAttribute('aria-controls', this.content.id);
 
         const items = this.content.querySelectorAll('[role="option"]');
         items.forEach((item, index) => {
@@ -172,7 +172,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       }
 
       // Handle pointerdown
-      this.trigger.addEventListener("pointerdown", (e) => {
+      this.trigger.addEventListener('pointerdown', (e) => {
         // prevent implicit pointer capture
         // https://www.w3.org/TR/pointerevents3/#implicit-pointer-capture
         const target = e.target as HTMLElement;
@@ -186,15 +186,15 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
         // only call handler if it's the left button (mousedown gets triggered by all mouse buttons)
         // but not when the control key is pressed (avoiding MacOS right click); also not for touch
         // devices because that would open the menu on scroll. (pen devices behave as touch on iOS).
-        if (e.button === 0 && e.ctrlKey === false && e.pointerType === "mouse") {
+        if (e.button === 0 && e.ctrlKey === false && e.pointerType === 'mouse') {
           this.returnFocusOnClose = true;
           this.toggleSelect();
         }
       });
 
       // Handle click event for mobile devices
-      this.trigger.addEventListener("click", (e) => {
-        if (window.matchMedia("(pointer: coarse)").matches) {
+      this.trigger.addEventListener('click', (e) => {
+        if (window.matchMedia('(pointer: coarse)').matches) {
           e.preventDefault();
           this.returnFocusOnClose = true;
           this.toggleSelect();
@@ -202,8 +202,8 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       });
 
       // add enter or space key to select trigger to toggle select
-      this.trigger.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
+      this.trigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           this.returnFocusOnClose = true;
           this.toggleSelect();
@@ -211,11 +211,11 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       });
 
       // Handle keyboard navigation inside select content
-      this.content.addEventListener("keydown", (e) => {
+      this.content.addEventListener('keydown', (e) => {
         // Check if the event originated from the search input
         const isFromSearchInput = e.target === this.searchInput;
 
-        if (e.key === "Enter" || e.key === " ") {
+        if (e.key === 'Enter' || e.key === ' ') {
           // Only handle selection if not typing in search input
           if (!isFromSearchInput) {
             e.preventDefault();
@@ -225,7 +225,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
             this.handleSelection(activeElement as HTMLElement);
           }
           // If from search input, don't handle it here - let the input handle it naturally
-        } else if (e.key === "Escape" && this.isOpen) {
+        } else if (e.key === 'Escape' && this.isOpen) {
           this.returnFocusOnClose = true;
           this.closeSelect();
         }
@@ -235,14 +235,14 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
         // "End" goes to last element
         // "ArrowUp" goes to previous element
         // "ArrowDown" goes to next element
-        else if (["ArrowUp", "ArrowDown", "Home", "End"].includes(e.key)) {
+        else if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) {
           this.handleNavigationKeys(e);
           e.preventDefault();
         } else {
           const isModifierKey = e.ctrlKey || e.altKey || e.metaKey;
 
           // select should not be navigated using tab key so we prevent it
-          if (e.key === "Tab") e.preventDefault();
+          if (e.key === 'Tab') e.preventDefault();
 
           if (!isModifierKey && e.key.length === 1 && !this.searchInput) {
             this.handleTypeahead(e.key);
@@ -251,7 +251,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       });
 
       // Handle hover on select items
-      this.content.addEventListener("mouseover", (e) => {
+      this.content.addEventListener('mouseover', (e) => {
         const target = e.target as HTMLElement;
         const option = target.closest('[role="option"]');
         if (option && option instanceof HTMLElement && this.isOpen === true) {
@@ -260,15 +260,10 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       });
 
       // handle pointerdown outside select content to close
-      document.addEventListener("pointerdown", (e) => {
+      document.addEventListener('pointerdown', (e) => {
         // only close if not a mouse pointer
-        if (!window.matchMedia("(pointer: coarse)").matches) {
-          if (
-            !(
-              this.trigger?.contains(e.target as Node) || this.content?.contains(e.target as Node)
-            ) &&
-            this.isOpen
-          ) {
+        if (!window.matchMedia('(pointer: coarse)').matches) {
+          if (!(this.trigger?.contains(e.target as Node) || this.content?.contains(e.target as Node)) && this.isOpen) {
             this.returnFocusOnClose = false;
             this.closeSelect();
           }
@@ -276,18 +271,15 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       });
 
       // Handle click outside select content to close
-      document.addEventListener("click", (e) => {
-        if (
-          !(this.trigger?.contains(e.target as Node) || this.content?.contains(e.target as Node)) &&
-          this.isOpen
-        ) {
+      document.addEventListener('click', (e) => {
+        if (!(this.trigger?.contains(e.target as Node) || this.content?.contains(e.target as Node)) && this.isOpen) {
           this.returnFocusOnClose = false;
           this.closeSelect();
         }
       });
 
       // Handle selection of items
-      this.content?.addEventListener("click", (e) => {
+      this.content?.addEventListener('click', (e) => {
         const item = (e.target as HTMLElement).closest("[role='option']");
         if (item instanceof HTMLElement) {
           this.returnFocusOnClose = true;
@@ -296,10 +288,10 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       });
 
       // passive resize listener to call setSize()
-      window.addEventListener("resize", () => this.setSize(), { passive: true });
+      window.addEventListener('resize', () => this.setSize(), { passive: true });
 
       // Listen for programmatic selection events
-      document.addEventListener("starwind-select:select", (e: Event) => {
+      document.addEventListener('starwind-select:select', (e: Event) => {
         const selectEvent = e as SelectEvent;
         const selectId = selectEvent.detail.selectId;
         const selectName = selectEvent.detail.selectName;
@@ -308,7 +300,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
         // Check if this event is for this select
         if (
           (selectId && this.select.id === selectId) ||
-          (selectName && this.select.getAttribute("data-name") === selectName)
+          (selectName && this.select.getAttribute('data-name') === selectName)
         ) {
           this.programmaticallySelect(selectValue);
         }
@@ -320,45 +312,42 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 
       // Remove active state from previous item
       if (this.activeItem) {
-        this.activeItem.removeAttribute("data-active");
+        this.activeItem.removeAttribute('data-active');
       }
 
       // Set new active item
       this.activeItem = item;
       if (item) {
-        item.setAttribute("data-active", "true");
+        item.setAttribute('data-active', 'true');
 
         // Scroll item into view if needed
-        item.scrollIntoView({ block: "nearest" });
+        item.scrollIntoView({ block: 'nearest' });
 
         // For search mode, set aria-activedescendant for assistive technologies
         if (this.searchInput) {
           // Item should already have an ID from setupAccessibility
-          this.searchInput.setAttribute("aria-activedescendant", item.id);
+          this.searchInput.setAttribute('aria-activedescendant', item.id);
         } else {
           // For non-search mode, set focus for keyboard accessibility
           item.focus();
         }
       } else if (this.searchInput) {
         // Clear aria-activedescendant when no item is active
-        this.searchInput.removeAttribute("aria-activedescendant");
+        this.searchInput.removeAttribute('aria-activedescendant');
       }
     }
 
     private findNavigableItem(
       items: NodeListOf<Element>,
       startIndex: number,
-      direction: "forward" | "backward",
+      direction: 'forward' | 'backward'
     ): HTMLElement | null {
-      const step = direction === "forward" ? 1 : -1;
-      const end = direction === "forward" ? items.length : -1;
+      const step = direction === 'forward' ? 1 : -1;
+      const end = direction === 'forward' ? items.length : -1;
 
       for (let i = startIndex; i !== end; i += step) {
         const item = items[i] as HTMLElement;
-        if (
-          item.getAttribute("data-disabled") !== "true" &&
-          item.getAttribute("data-filtered") !== "true"
-        ) {
+        if (item.getAttribute('data-disabled') !== 'true' && item.getAttribute('data-filtered') !== 'true') {
           return item;
         }
       }
@@ -373,23 +362,23 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       let targetItem: HTMLElement | null = null;
 
       switch (e.key) {
-        case "Home":
-          targetItem = this.findNavigableItem(items, 0, "forward");
+        case 'Home':
+          targetItem = this.findNavigableItem(items, 0, 'forward');
           break;
 
-        case "End":
-          targetItem = this.findNavigableItem(items, items.length - 1, "backward");
+        case 'End':
+          targetItem = this.findNavigableItem(items, items.length - 1, 'backward');
           break;
 
-        case "ArrowUp":
+        case 'ArrowUp':
           if (currentIndex > 0) {
-            targetItem = this.findNavigableItem(items, currentIndex - 1, "backward");
+            targetItem = this.findNavigableItem(items, currentIndex - 1, 'backward');
           }
           break;
 
-        case "ArrowDown":
+        case 'ArrowDown':
           if (currentIndex < items.length - 1) {
-            targetItem = this.findNavigableItem(items, currentIndex + 1, "forward");
+            targetItem = this.findNavigableItem(items, currentIndex + 1, 'forward');
           }
           break;
       }
@@ -402,27 +391,27 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
     private setupSearchInput() {
       if (!this.searchInput || !this.content) return;
 
-      this.searchInput.addEventListener("input", (e) => {
+      this.searchInput.addEventListener('input', (e) => {
         const target = e.target as HTMLInputElement;
         const searchValue = target.value.toLowerCase().trim();
         this.filterItems(searchValue);
       });
 
       // Handle keyboard navigation from search input
-      this.searchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
+      this.searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
           e.stopPropagation();
           this.returnFocusOnClose = true;
           this.closeSelect();
         }
         // Allow arrow keys to navigate to items
-        else if (["ArrowUp", "ArrowDown", "Home", "End"].includes(e.key)) {
+        else if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) {
           e.preventDefault();
           e.stopPropagation();
           this.handleNavigationKeys(e);
         }
         // Handle Enter to select the active or first visible item
-        else if (e.key === "Enter") {
+        else if (e.key === 'Enter') {
           e.preventDefault();
           const itemToSelect = this.activeItem || this.getFirstVisibleItem();
           if (itemToSelect) {
@@ -431,7 +420,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
           }
         }
         // Prevent space from scrolling the page, but allow it to be typed
-        else if (e.key === " ") {
+        else if (e.key === ' ') {
           e.stopPropagation();
         }
       });
@@ -441,11 +430,8 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       if (!this.content) return null;
 
       const items = this.content.querySelectorAll('[role="option"]');
-      for (const item of items) {
-        if (
-          item.getAttribute("data-disabled") !== "true" &&
-          item.getAttribute("data-filtered") !== "true"
-        ) {
+      for (const item of Array.from(items)) {
+        if (item.getAttribute('data-disabled') !== 'true' && item.getAttribute('data-filtered') !== 'true') {
           return item as HTMLElement;
         }
       }
@@ -460,19 +446,19 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       let firstVisibleItem: HTMLElement | null = null;
 
       items.forEach((item) => {
-        const itemText = item.textContent?.toLowerCase().trim() || "";
+        const itemText = item.textContent?.toLowerCase().trim() || '';
         const matches = itemText.includes(searchValue);
 
-        if (matches || searchValue === "") {
-          item.classList.remove("starwind-sr-only");
-          item.removeAttribute("data-filtered");
+        if (matches || searchValue === '') {
+          item.classList.remove('starwind-sr-only');
+          item.removeAttribute('data-filtered');
           visibleCount++;
           if (!firstVisibleItem) {
             firstVisibleItem = item as HTMLElement;
           }
         } else {
-          item.classList.add("starwind-sr-only");
-          item.setAttribute("data-filtered", "true");
+          item.classList.add('starwind-sr-only');
+          item.setAttribute('data-filtered', 'true');
         }
       });
 
@@ -485,10 +471,10 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 
       // Show/hide empty message
       if (this.emptyElement) {
-        if (visibleCount === 0 && searchValue !== "") {
-          this.emptyElement.classList.remove("hidden");
+        if (visibleCount === 0 && searchValue !== '') {
+          this.emptyElement.classList.remove('hidden');
         } else {
-          this.emptyElement.classList.add("hidden");
+          this.emptyElement.classList.add('hidden');
         }
       }
     }
@@ -500,7 +486,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 
       // find and set active the first matching option
       const matches = Array.from(items).filter((item) =>
-        item.textContent?.toLowerCase().trim().startsWith(search.toLowerCase()),
+        item.textContent?.toLowerCase().trim().startsWith(search.toLowerCase())
       ) as HTMLElement[];
       if (matches.length > 0) {
         this.setActiveItem(matches[0]!);
@@ -514,22 +500,16 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 
       // set a timer to clear the search after 1 second
       this.typeaheadTimerRef = window.setTimeout(() => {
-        this.typeaheadSearch = "";
+        this.typeaheadSearch = '';
         this.typeaheadTimerRef = null;
       }, 1000);
     }
 
     private setSize() {
       if (!this.trigger || !this.content) return;
-      this.content.style.setProperty(
-        "--starwind-select-content-width",
-        `${this.content.offsetWidth}px`,
-      );
+      this.content.style.setProperty('--starwind-select-content-width', `${this.content.offsetWidth}px`);
 
-      this.content.style.setProperty(
-        "--starwind-select-trigger-width",
-        `${this.trigger.offsetWidth}px`,
-      );
+      this.content.style.setProperty('--starwind-select-trigger-width', `${this.trigger.offsetWidth}px`);
     }
 
     private toggleSelect() {
@@ -544,14 +524,14 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       if (!this.content || !this.trigger || this.trigger.disabled) return;
 
       this.isOpen = true;
-      this.content.setAttribute("data-state", "open");
-      this.trigger.setAttribute("aria-expanded", "true");
-      this.content.style.removeProperty("display");
+      this.content.setAttribute('data-state', 'open');
+      this.trigger.setAttribute('aria-expanded', 'true');
+      this.content.style.removeProperty('display');
 
       // If search input exists, focus it and clear any previous search
       if (this.searchInput) {
-        this.searchInput.value = "";
-        this.filterItems("");
+        this.searchInput.value = '';
+        this.filterItems('');
 
         // Set the selected item or first item as active
         const initialItem = this.selectedItem || this.getFirstVisibleItem();
@@ -559,9 +539,8 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
           this.setActiveItem(initialItem);
         }
 
-        const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-        const focusOnTouch =
-          this.searchInput?.getAttribute("data-focus-on-touch-devices") === "true";
+        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+        const focusOnTouch = this.searchInput?.getAttribute('data-focus-on-touch-devices') === 'true';
         if (!isTouchDevice || focusOnTouch) {
           requestAnimationFrame(() => {
             this.searchInput?.focus();
@@ -585,7 +564,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       if (!this.content || !this.trigger) return;
 
       this.isOpen = false;
-      this.content.setAttribute("data-state", "closed");
+      this.content.setAttribute('data-state', 'closed');
 
       // Remove focus from any currently focused element
       const activeElement = document.activeElement;
@@ -604,17 +583,17 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       // give the content time to animate before hiding
       setTimeout(() => {
         if (!this.content) return;
-        this.content.style.display = "none";
+        this.content.style.display = 'none';
 
         // Clear search and show all items after animation completes
         if (this.searchInput) {
-          this.searchInput.value = "";
-          this.filterItems("");
+          this.searchInput.value = '';
+          this.filterItems('');
           this.setActiveItem(null);
         }
       }, this.animationDuration);
 
-      this.trigger.setAttribute("aria-expanded", "false");
+      this.trigger.setAttribute('aria-expanded', 'false');
     }
 
     private handleSelection(item: HTMLElement) {
@@ -624,14 +603,14 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       this.clearValidationError();
 
       // update the hidden select field
-      const selectField = this.select.querySelector("select");
+      const selectField = this.select.querySelector('select');
       if (selectField) {
-        const newValue = item.getAttribute("data-value") || "";
+        const newValue = item.getAttribute('data-value') || '';
         selectField.value = newValue;
 
         // Dispatch custom event with the new value
-        const event = new CustomEvent<SelectChangeEvent["detail"]>("starwind-select:change", {
-          detail: { value: newValue, selectId: this.select.id, label: item.textContent || "" },
+        const event = new CustomEvent<SelectChangeEvent['detail']>('starwind-select:change', {
+          detail: { value: newValue, selectId: this.select.id, label: item.textContent || '' },
           bubbles: true,
           cancelable: true,
         });
@@ -648,9 +627,9 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       // Update selected states after select finishes closing
       setTimeout(() => {
         if (this.selectedItem) {
-          this.selectedItem.setAttribute("aria-selected", "false");
+          this.selectedItem.setAttribute('aria-selected', 'false');
         }
-        item.setAttribute("aria-selected", "true");
+        item.setAttribute('aria-selected', 'true');
         this.selectedItem = item;
       }, this.animationDuration);
 
@@ -681,7 +660,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       if (!this.content) return;
 
       // Skip if already selected (prevents infinite loops with synced selects)
-      if (this.selectedItem?.getAttribute("data-value") === value) return;
+      if (this.selectedItem?.getAttribute('data-value') === value) return;
 
       const item = this.content.querySelector(`[data-value="${value}"]`);
       if (item instanceof HTMLElement) {
@@ -689,9 +668,9 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 
         // Update aria-selected attributes immediately
         if (this.selectedItem) {
-          this.selectedItem.setAttribute("aria-selected", "false");
+          this.selectedItem.setAttribute('aria-selected', 'false');
         }
-        item.setAttribute("aria-selected", "true");
+        item.setAttribute('aria-selected', 'true');
 
         // Then call handleSelection which will update the rest
         this.handleSelection(item);
@@ -705,10 +684,10 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
       if (!this.trigger) return;
 
       // Add error state to trigger
-      this.trigger.setAttribute("aria-invalid", "true");
+      this.trigger.setAttribute('aria-invalid', 'true');
 
       // scroll trigger into view
-      this.trigger.scrollIntoView({ behavior: "auto", block: "center" });
+      this.trigger.scrollIntoView({ behavior: 'auto', block: 'center' });
 
       // Focus the trigger so user knows where the error is
       this.trigger.focus();
@@ -720,7 +699,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
     private clearValidationError(): void {
       if (!this.trigger) return;
 
-      this.trigger.setAttribute("aria-invalid", "false");
+      this.trigger.setAttribute('aria-invalid', 'false');
     }
   }
 
@@ -730,7 +709,7 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
 
   // Initialize selects
   const initSelects = () => {
-    document.querySelectorAll(".starwind-select").forEach((select) => {
+    document.querySelectorAll('.starwind-select').forEach((select) => {
       if (select instanceof HTMLElement && !selectInstances.has(select)) {
         selectInstances.set(select, new SelectHandler(select, selectCounter++));
       }
@@ -738,8 +717,8 @@ const { class: className, name, defaultValue, required, ...rest } = Astro.props;
   };
 
   initSelects();
-  document.addEventListener("astro:after-swap", initSelects);
-  document.addEventListener("starwind:init", initSelects);
+  document.addEventListener('astro:after-swap', initSelects);
+  document.addEventListener('starwind:init', initSelects);
 </script>
 
 <style is:global>

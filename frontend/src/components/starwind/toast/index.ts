@@ -1,11 +1,11 @@
-import type { PromiseOptions, PromiseStateOption, ToastOptions, Variant } from "./toast-manager";
-import { toast } from "./toast-manager";
-import ToastDescription from "./ToastDescription.astro";
-import Toaster from "./Toaster.astro";
-import ToastItem from "./ToastItem.astro";
-import ToastTemplate from "./ToastTemplate.astro";
-import ToastTitle from "./ToastTitle.astro";
-import { toastDescription, toastItem, toastTitle, toastViewport } from "./variants";
+import type { PromiseOptions, PromiseStateOption, ToastOptions, Variant } from './toast-manager';
+import { toast } from './toast-manager';
+import ToastDescription from './ToastDescription.astro';
+import Toaster from './Toaster.astro';
+import ToastItem from './ToastItem.astro';
+import ToastTemplate from './ToastTemplate.astro';
+import ToastTitle from './ToastTitle.astro';
+import { toastDescription, toastItem, toastTitle, toastViewport } from './variants';
 const ToastVariants = {
   toastViewport,
   toastDescription,

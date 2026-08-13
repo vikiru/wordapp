@@ -5,16 +5,16 @@ description = "Word curation pipeline"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "config",
-    "english-words>=2.0.2",
-    "glin-profanity>=3.4.0",
-    "loguru>=0.7.3",
-    "msgspec>=0.21.1",
-    "orjson>=3.11.9",
-    "pycountry>=26.2.16",
-    "simplemma>=1.2.0",
-    "wn>=1.1.0",
-    "wordfreq>=3.1.1",
+  "config",
+  "english-words>=2.0.2",
+  "glin-profanity>=3.4.0",
+  "loguru>=0.7.3",
+  "msgspec>=0.21.1",
+  "orjson>=3.11.9",
+  "pycountry>=26.2.16",
+  "simplemma>=1.2.0",
+  "wn>=1.1.0",
+  "wordfreq>=3.1.1",
 ]
 
 [project.scripts]

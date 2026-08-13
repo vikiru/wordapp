@@ -1,10 +1,10 @@
 ---
-import Search from "@tabler/icons/outline/search.svg";
-import type { HTMLAttributes } from "astro/types";
+import Search from '@tabler/icons/outline/search.svg';
+import type { HTMLAttributes } from 'astro/types';
 
-import { selectSearch } from "./variants";
+import { selectSearch } from './variants';
 
-type Props = Omit<HTMLAttributes<"input">, "type" | "autocomplete"> & {
+type Props = Omit<HTMLAttributes<'input'>, 'type' | 'autocomplete'> & {
   /**
    * The text to display when no results are found
    * @default "No results found."
@@ -19,17 +19,14 @@ type Props = Omit<HTMLAttributes<"input">, "type" | "autocomplete"> & {
 
 const {
   class: className,
-  placeholder = "Search...",
-  emptyText = "No results found.",
+  placeholder = 'Search...',
+  emptyText = 'No results found.',
   focusOnTouchDevices = false,
   ...rest
 } = Astro.props;
 ---
 
-<div
-  data-slot="select-search-wrapper"
-  class="-mx-1 -mt-1 mb-1 flex items-center gap-2 border-b px-3"
->
+<div data-slot="select-search-wrapper" class="-mx-1 -mt-1 mb-1 flex items-center gap-2 border-b px-3">
   <slot name="icon">
     <Search class="text-muted-foreground size-4.5 shrink-0" />
   </slot>

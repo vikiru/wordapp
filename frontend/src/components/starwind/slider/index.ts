@@ -1,5 +1,5 @@
-import Slider from "./Slider.astro";
-import { slider } from "./variants";
+import Slider from './Slider.astro';
+import { slider } from './variants';
 const SliderVariants = {
   slider,
 };

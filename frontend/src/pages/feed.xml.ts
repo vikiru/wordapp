@@ -1,6 +1,7 @@
-import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
+
 import { slugify } from '@/lib/slugify';
 
 export const GET: APIRoute = async (context) => {
