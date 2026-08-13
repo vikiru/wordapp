@@ -1,4 +1,4 @@
-<h1 align="center">Wordapp <br> An AI-powered Word of the Day App </h1>
+<h1 align="center">Wordapp <br> AI-powered Word of the Day Web App </h1>
 
 <div align="center" id="badges">
   <a href="https://github.com/vikiru/wordapp/blob/main/LICENSE">
@@ -19,7 +19,7 @@
 
 **Wordapp** is an AI-powered Word of the Day web app which presents a curated collection of high quality words that have a certain flair and elegance, potentially allowing someone to enrich their grammar.
 
-Starting from an initial word set ([english-words](https://github.com/mwiens91/english-words-py) / web-2) of around 235,970 words, words are filtered by various conditions such as a [Zipf-frequency window](https://en.wikipedia.org/wiki/Zipf%27s_law) (roughly how often the word is used — excluding both rare and overly common words), [WordNet synset](https://en.wikipedia.org/wiki/WordNet#Structure) validity (part of speech, hypernyms, taxonomy), word length, and suffix/derivation rules, while excluding profanity, named individuals and places, clinical or technical jargon, culturally-specific terms, and an explicit blocklist (archaic, low-flair, and occupation/politics/religion/currency words). A small curated whitelist bypasses the filters. 
+Starting from an initial word set ([english-words](https://github.com/mwiens91/english-words-py) / web-2) of around 235,970 words, words are filtered by various conditions such as a [Zipf-frequency window](https://en.wikipedia.org/wiki/Zipf%27s_law) (roughly how often the word is used: excluding both rare and overly common words), [WordNet synset](https://en.wikipedia.org/wiki/WordNet#Structure) validity (part of speech, hypernyms, taxonomy), word length, and suffix/derivation rules, while excluding profanity, named individuals and places, clinical or technical jargon, culturally-specific terms, and an explicit blocklist (archaic, low-flair, and occupation/politics/religion/currency words). A small curated whitelist bypasses the filters. 
 
 The curated collection of words is then assessed daily and a selection of 10 words is chosen at random, passed onto Gemini AI which will generate word metadata according to a given [prompt](packages/generate/src/generate/prompts/prompt.py) and finally, this metadata is saved to a database so it can be fetched later by the front end as a pre-build step.
 
@@ -36,26 +36,26 @@ The curated collection of words is then assessed daily and a selection of 10 wor
 
 ## 🌟 Features
 
-- **Curated collection of words** that can be adapted and improved at any time
-- **Random word generation** — 10 new words a day, powered by Gemini AI
-- **RSS feeds** — two feeds: `/feed.xml` (today's words) and `/all_words.xml` (the full archive)
-- **Glossary** of all words present
-- **Archive** of words, showing when they were generated
-- **Words of the day** — a set of daily words with one main word of the day, selected randomly / based on some conditions
+- **Curated collection of words** that can be adapted and improved at any time.
+- **Random word generation**: 10 new words a day, powered by Gemini AI.
+- **RSS feeds**: two feeds, `/feed.xml` (today's words) and `/all_words.xml` (the full collection).
+- **Glossary** of all words present.
+- **Archive** of words, showing when they were generated.
+- **Words of the day**: a set of daily words with one main word of the day, selected randomly / based on some conditions.
 
 ## 🛠️ Tech Stack
 
 - Frontend: [Astro](https://astro.build/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), [Starwind UI](https://github.com/starwind-ui/starwind-ui), [FlexSearch](https://github.com/nextapps-de/flexsearch), [Lucide Icons](https://lucide.dev/), [@fontsource](https://fontsource.org/), [astro-seo](https://github.com/jonasmerlin/astro-seo)
 
-- Data & AI Engine: [Python](https://www.python.org/), [uv](https://docs.astral.sh/uv/), [poethepoet](https://github.com/nat-n/poethepoet), [Beanie](https://beanie-odm.dev/), [PyMongo](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/), [Google GenAI SDK](https://ai.google.dev/gemini-api/docs) (Gemini), [loguru](https://github.com/Delgan/loguru), [python-dotenv](https://github.com/theskumar/python-dotenv), [orjson](https://github.com/ijl/orjson)
+- Data & AI Engine: [Python](https://www.python.org/), [uv](https://docs.astral.sh/uv/), [poethepoet](https://github.com/nat-n/poethepoet), [Google GenAI SDK](https://ai.google.dev/gemini-api/docs) (Gemini), [Beanie](https://beanie-odm.dev/), [PyMongo](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/), [orjson](https://github.com/ijl/orjson), [loguru](https://github.com/Delgan/loguru), [python-dotenv](https://github.com/theskumar/python-dotenv)
 
-- Validation: [zod](https://zod.dev/), [Pydantic](https://docs.pydantic.dev/), [msgspec](https://github.com/jcrist/msgspec)
+- Validation: [Pydantic](https://docs.pydantic.dev/), [msgspec](https://github.com/msgspec/msgspec), [zod](https://zod.dev/)
 
 - Database & Hosting: [MongoDB Atlas](https://www.mongodb.com/atlas), [Cloudflare Pages](https://pages.cloudflare.com/)
 
-- Linting & Formatting: [oxlint](https://oxc.rs/docs/guide/usage/linter/oxlint.html), [Biome](https://biomejs.dev/), [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Prettier](https://prettier.io/), [prettier-plugin-astro](https://github.com/withastro/prettier-plugin-astro), [Ruff](https://docs.astral.sh/ruff/)
+- Linting & Formatting: [oxlint](https://oxc.rs/docs/guide/usage/linter), [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Biome](https://biomejs.dev/), [Prettier](https://prettier.io/), [prettier-plugin-astro](https://github.com/withastro/prettier-plugin-astro), [Ruff](https://docs.astral.sh/ruff/)
 
-- Dev Tools: [pnpm](https://pnpm.io/), [lefthook](https://github.com/evilmartians/lefthook), [commitlint](https://commitlint.js.org/), [Knip](https://github.com/webpro-nl/knip), [semantic-release](https://github.com/semantic-release/semantic-release)
+- Dev Tools: [pnpm](https://pnpm.io/), [Knip](https://github.com/webpro-nl/knip), [lefthook](https://github.com/evilmartians/lefthook), [commitlint](https://commitlint.js.org/), [semantic-release](https://github.com/semantic-release/semantic-release)
 
 ## 📝 Prerequisites
 
@@ -99,6 +99,8 @@ MONGODB_URI=
 ```
 
 5. Download the [Open English WordNet](https://en-word.net/) corpus.
+
+   Open English WordNet is derived from Princeton WordNet by the Open English Wordnet Community and released under the [Creative Commons Attribution (CC-BY) 4.0 License](https://creativecommons.org/licenses/by/4.0/).
 
 ```bash
 uv run poe download-wordnet
@@ -175,7 +177,7 @@ pnpm build
 pnpm preview
 ```
 
-4. Lint files using [oxlint](https://oxc.rs/docs/guide/usage/linter/oxlint.html), [Biome](https://biomejs.dev/), and [Ruff](https://docs.astral.sh/ruff/).
+4. Lint files using [oxlint](https://oxc.rs/docs/guide/usage/linter), [Biome](https://biomejs.dev/), and [Ruff](https://docs.astral.sh/ruff/).
 
 ```bash
 pnpm lint
@@ -219,7 +221,7 @@ pnpm unused
 - [Beanie](https://beanie-odm.dev/)
 - [PyMongo](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/)
 - [Pydantic](https://docs.pydantic.dev/)
-- [msgspec](https://github.com/jcrist/msgspec)
+- [msgspec](https://github.com/msgspec/msgspec)
 - [orjson](https://github.com/ijl/orjson)
 - [loguru](https://github.com/Delgan/loguru)
 - [python-dotenv](https://github.com/theskumar/python-dotenv)
