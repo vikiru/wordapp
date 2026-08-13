@@ -7,18 +7,16 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "lint": "pnpm oxlint && pnpm biome lint",
+    "lint": "pnpm oxlint && pnpm biome check",
     "lint:oxlint": "oxlint",
-    "lint:biome": "biome lint",
-    "format": "pnpm prettier --write . && pnpm biome format --write .",
-    "format:oxlint": "oxlint --fix .",
-    "format:prettier": "prettier --write .",
-    "format:biome": "biome format --write .",
-    "format:check": "pnpm prettier --check . && pnpm biome format --check .",
-    "build": "astro check && tsx src/lib/validation/validate-data.ts && tsx src/lib/search/build-index.ts && astro build",
+    "lint:biome": "biome check",
+    "format": "pnpm prettier --write \"**/*.astro\" && pnpm oxfmt --write . && pnpm biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "tsx src/lib/validation/validate-data.ts && tsx src/lib/search/build-index.ts",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "astro-check": "astro-check ."
+    "astro-check": "astro check"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

@@ -1,21 +1,12 @@
-import Table from "./Table.astro";
-import TableBody from "./TableBody.astro";
-import TableCaption from "./TableCaption.astro";
-import TableCell from "./TableCell.astro";
-import TableFoot from "./TableFoot.astro";
-import TableHead from "./TableHead.astro";
-import TableHeader from "./TableHeader.astro";
-import TableRow from "./TableRow.astro";
-import {
-  table,
-  tableBody,
-  tableCaption,
-  tableCell,
-  tableFoot,
-  tableHead,
-  tableHeader,
-  tableRow,
-} from "./variants";
+import Table from './Table.astro';
+import TableBody from './TableBody.astro';
+import TableCaption from './TableCaption.astro';
+import TableCell from './TableCell.astro';
+import TableFoot from './TableFoot.astro';
+import TableHead from './TableHead.astro';
+import TableHeader from './TableHeader.astro';
+import TableRow from './TableRow.astro';
+import { table, tableBody, tableCaption, tableCell, tableFoot, tableHead, tableHeader, tableRow } from './variants';
 const TableVariants = {
   table,
   tableBody,
@@ -27,17 +18,7 @@ const TableVariants = {
   tableRow,
 };
 
-export {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFoot,
-  TableHead,
-  TableHeader,
-  TableRow,
-  TableVariants,
-};
+export { Table, TableBody, TableCaption, TableCell, TableFoot, TableHead, TableHeader, TableRow, TableVariants };
 
 export default {
   Root: Table,

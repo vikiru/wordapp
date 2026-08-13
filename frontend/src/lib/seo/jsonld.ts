@@ -1,4 +1,5 @@
 import type { BreadcrumbList, DefinedTerm, ItemList, WebSite, WithContext } from 'schema-dts';
+
 import { slugify } from '@/lib/slugify';
 
 const site = import.meta.env.SITE.replace(/\/$/, '');
@@ -28,7 +29,7 @@ export const breadcrumbJsonLd = (crumbs: Array<{ name: string; path: string }>):
 export const wordPageJsonLd = (
   word: string,
   path: string,
-  definition: string
+  definition: string,
 ): Array<WithContext<DefinedTerm | BreadcrumbList>> => [
   {
     '@context': 'https://schema.org',

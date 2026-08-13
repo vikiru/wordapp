@@ -25,10 +25,7 @@ def _async_main() -> int:
                 logger.warning('data: No words found in database.')
                 return 0
 
-            payload = {
-                iso_date: [w.model_dump(mode='json') for w in words]
-                for iso_date, words in grouped.items()
-            }
+            payload = {iso_date: [w.model_dump(mode='json') for w in words] for iso_date, words in grouped.items()}
             ArchiveFile.model_validate(payload)
             write_archive_json(payload)
             logger.info('data: Exported {} days to frontend/src/data/archive.json.', len(payload))

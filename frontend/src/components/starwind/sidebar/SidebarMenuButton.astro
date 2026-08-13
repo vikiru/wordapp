@@ -1,13 +1,13 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import type { VariantProps } from "tailwind-variants";
+import type { HTMLAttributes } from 'astro/types';
+import type { VariantProps } from 'tailwind-variants';
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/starwind/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/starwind/tooltip';
 
-import { sidebarMenuButton } from "./variants";
+import { sidebarMenuButton } from './variants';
 
-type Props = HTMLAttributes<"button"> &
-  Omit<HTMLAttributes<"a">, "type"> &
+type Props = HTMLAttributes<'button'> &
+  Omit<HTMLAttributes<'a'>, 'type'> &
   VariantProps<typeof sidebarMenuButton> & {
     /**
      * Render as a child element wrapper instead of a button
@@ -23,24 +23,16 @@ type Props = HTMLAttributes<"button"> &
     tooltip?: string;
   };
 
-const {
-  asChild = false,
-  isActive = false,
-  tooltip,
-  variant,
-  size,
-  class: className,
-  ...rest
-} = Astro.props;
+const { asChild = false, isActive = false, tooltip, variant, size, class: className, ...rest } = Astro.props;
 
-const Tag = Astro.props.href ? "a" : "button";
+const Tag = Astro.props.href ? 'a' : 'button';
 
 const buttonClasses = sidebarMenuButton({ variant, size, class: className });
 const buttonDataAttrs = {
-  "data-slot": "sidebar-menu-button",
-  "data-sidebar": "menu-button",
-  "data-size": size || "default",
-  "data-active": isActive,
+  'data-slot': 'sidebar-menu-button',
+  'data-sidebar': 'menu-button',
+  'data-size': size || 'default',
+  'data-active': isActive,
 };
 ---
 
@@ -58,11 +50,7 @@ const buttonDataAttrs = {
           </Tag>
         )}
       </TooltipTrigger>
-      <TooltipContent
-        side="right"
-        align="center"
-        class="starwind-sidebar-tooltip-content whitespace-nowrap"
-      >
+      <TooltipContent side="right" align="center" class="starwind-sidebar-tooltip-content whitespace-nowrap">
         {tooltip}
       </TooltipContent>
     </Tooltip>
@@ -78,7 +66,7 @@ const buttonDataAttrs = {
 }
 
 <style is:global>
-  :root:not([data-starwind-sidebar-tooltips="enabled"]) .starwind-sidebar-tooltip-content {
+  :root:not([data-starwind-sidebar-tooltips='enabled']) .starwind-sidebar-tooltip-content {
     display: none !important;
   }
 </style>

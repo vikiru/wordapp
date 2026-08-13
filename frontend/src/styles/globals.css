@@ -1,6 +1,17 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@plugin "@tailwindcss/forms";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@fontsource-variable/newsreader';
+@import '@fontsource-variable/inter';
+@import '@fontsource/crimson-text/400.css';
+@import '@fontsource/crimson-text/400-italic.css';
+@import '@fontsource/crimson-text/600.css';
+@import '@fontsource/crimson-text/700.css';
+@import '@fontsource/fragment-mono/400.css';
+@import '@fontsource/fragment-mono/400-italic.css';
+@import '@fontsource/pinyon-script';
+@import '@fontsource/charis-sil/400.css';
+@import '@fontsource/charis-sil/700.css';
+@plugin '@tailwindcss/forms';
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
@@ -50,25 +61,13 @@
   --color-sidebar-outline: var(--sidebar-outline);
 }
 
-@import "@fontsource-variable/newsreader";
-@import "@fontsource-variable/inter";
-@import "@fontsource/crimson-text/400.css";
-@import "@fontsource/crimson-text/400-italic.css";
-@import "@fontsource/crimson-text/600.css";
-@import "@fontsource/crimson-text/700.css";
-@import "@fontsource/fragment-mono/400.css";
-@import "@fontsource/fragment-mono/400-italic.css";
-@import "@fontsource/pinyon-script";
-@import "@fontsource/charis-sil/400.css";
-@import "@fontsource/charis-sil/700.css";
-
 @theme {
-  --font-heading: "Newsreader Variable", Georgia, serif;
-  --font-sans: "Inter Variable", system-ui, sans-serif;
-  --font-serif: "Crimson Text", Georgia, serif;
-  --font-script: "Pinyon Script", cursive;
-  --font-mono: "Fragment Mono", ui-monospace, monospace;
-  --font-ipa: "Charis SIL", "Gentium Plus", serif;
+  --font-heading: 'Newsreader Variable', Georgia, serif;
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --font-serif: 'Crimson Text', Georgia, serif;
+  --font-script: 'Pinyon Script', cursive;
+  --font-mono: 'Fragment Mono', ui-monospace, monospace;
+  --font-ipa: 'Charis SIL', 'Gentium Plus', serif;
 
   --text-small: clamp(0.75rem, 0.72rem + 0.2vw, 0.813rem);
   --text-p: 1rem;
@@ -99,28 +98,56 @@
   --animate-slide-out: slide-out 0.3s ease-in;
 
   @keyframes accordion-down {
-    from { height: 0; }
-    to { height: var(--starwind-accordion-content-height); }
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--starwind-accordion-content-height);
+    }
   }
   @keyframes accordion-up {
-    from { height: var(--starwind-accordion-content-height); }
-    to { height: 0; }
+    from {
+      height: var(--starwind-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
   }
   @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
   @keyframes fade-out {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
   }
   @keyframes slide-in {
-    from { transform: translateY(-0.5rem); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+      transform: translateY(-0.5rem);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
   @keyframes slide-out {
-    from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(-0.5rem); opacity: 0; }
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-0.5rem);
+      opacity: 0;
+    }
   }
 }
 
@@ -199,7 +226,12 @@
   * {
     @apply border-border outline-outline/50;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading text-balance;
   }
   body {

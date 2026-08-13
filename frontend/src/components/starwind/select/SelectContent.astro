@@ -1,19 +1,19 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-import { selectContent, selectContentInner } from "./variants";
+import { selectContent, selectContentInner } from './variants';
 
-type Props = HTMLAttributes<"div"> & {
+type Props = HTMLAttributes<'div'> & {
   /**
    * Side of the tooltip
    * @default bottom
    */
-  side?: "top" | "bottom";
+  side?: 'top' | 'bottom';
   /**
    * Alignment of the dropdown
    * @default start
    */
-  align?: "start" | "center" | "end";
+  align?: 'start' | 'center' | 'end';
   /**
    * Offset distance in pixels
    * @default 4
@@ -28,14 +28,14 @@ type Props = HTMLAttributes<"div"> & {
    * Size of the select content
    * @default md
    */
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg';
 };
 
 const {
   class: className,
-  side = "bottom",
-  align = "start",
-  size = "md",
+  side = 'bottom',
+  align = 'start',
+  size = 'md',
   sideOffset = 4,
   animationDuration = 150,
   ...rest
@@ -51,10 +51,10 @@ const {
   tabindex="-1"
   style={{
     // hide the content initially. Script will remove this
-    display: "none",
+    display: 'none',
     animationDuration: `${animationDuration}ms`,
-    marginTop: side === "bottom" ? `${sideOffset}px` : undefined,
-    marginBottom: side === "top" ? `${sideOffset}px` : undefined,
+    marginTop: side === 'bottom' ? `${sideOffset}px` : undefined,
+    marginBottom: side === 'top' ? `${sideOffset}px` : undefined,
   }}
   {...rest}
   data-slot="select-content"

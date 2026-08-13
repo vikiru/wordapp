@@ -1,20 +1,20 @@
 ---
-import WarningIcon from "@tabler/icons/outline/alert-triangle.svg";
-import SuccessIcon from "@tabler/icons/outline/circle-check.svg";
-import ErrorIcon from "@tabler/icons/outline/circle-x.svg";
-import InfoIcon from "@tabler/icons/outline/info-circle.svg";
-import LoaderIcon from "@tabler/icons/outline/loader-2.svg";
-import type { HTMLAttributes } from "astro/types";
+import WarningIcon from '@tabler/icons/outline/alert-triangle.svg';
+import SuccessIcon from '@tabler/icons/outline/circle-check.svg';
+import ErrorIcon from '@tabler/icons/outline/circle-x.svg';
+import InfoIcon from '@tabler/icons/outline/info-circle.svg';
+import LoaderIcon from '@tabler/icons/outline/loader-2.svg';
+import type { HTMLAttributes } from 'astro/types';
 
-import { toastTitle } from "./variants";
+import { toastTitle } from './variants';
 
-type Variant = "default" | "success" | "error" | "warning" | "info" | "loading";
+type Variant = 'default' | 'success' | 'error' | 'warning' | 'info' | 'loading';
 
-type Props = HTMLAttributes<"div"> & {
+type Props = HTMLAttributes<'div'> & {
   variant?: Variant;
 };
 
-const { class: className, variant = "default", ...rest } = Astro.props;
+const { class: className, variant = 'default', ...rest } = Astro.props;
 
 const icons = {
   default: null,
@@ -28,14 +28,9 @@ const icons = {
 const Icon = icons[variant];
 ---
 
-<div
-  class={toastTitle({ variant, class: className })}
-  data-slot="toast-title"
-  data-toast-title
-  {...rest}
->
+<div class={toastTitle({ variant, class: className })} data-slot="toast-title" data-toast-title {...rest}>
   <slot name="icon">
-    {Icon && (variant === "loading" ? <Icon class="animate-spin motion-reduce:animate-none" /> : <Icon />)}
+    {Icon && (variant === 'loading' ? <Icon class="animate-spin motion-reduce:animate-none" /> : <Icon />)}
   </slot>
   <span data-toast-title-text><slot /></span>
 </div>

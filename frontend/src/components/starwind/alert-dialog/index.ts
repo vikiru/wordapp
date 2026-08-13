@@ -1,12 +1,12 @@
-import AlertDialog from "./AlertDialog.astro";
-import AlertDialogAction from "./AlertDialogAction.astro";
-import AlertDialogCancel from "./AlertDialogCancel.astro";
-import AlertDialogContent from "./AlertDialogContent.astro";
-import AlertDialogDescription from "./AlertDialogDescription.astro";
-import AlertDialogFooter from "./AlertDialogFooter.astro";
-import AlertDialogHeader from "./AlertDialogHeader.astro";
-import AlertDialogTitle from "./AlertDialogTitle.astro";
-import AlertDialogTrigger from "./AlertDialogTrigger.astro";
+import AlertDialog from './AlertDialog.astro';
+import AlertDialogAction from './AlertDialogAction.astro';
+import AlertDialogCancel from './AlertDialogCancel.astro';
+import AlertDialogContent from './AlertDialogContent.astro';
+import AlertDialogDescription from './AlertDialogDescription.astro';
+import AlertDialogFooter from './AlertDialogFooter.astro';
+import AlertDialogHeader from './AlertDialogHeader.astro';
+import AlertDialogTitle from './AlertDialogTitle.astro';
+import AlertDialogTrigger from './AlertDialogTrigger.astro';
 import {
   alertDialogBackdrop,
   alertDialogContent,
@@ -14,7 +14,7 @@ import {
   alertDialogFooter,
   alertDialogHeader,
   alertDialogTitle,
-} from "./variants";
+} from './variants';
 
 const AlertDialogVariants = {
   alertDialogBackdrop,

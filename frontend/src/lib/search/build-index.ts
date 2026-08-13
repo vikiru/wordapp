@@ -5,7 +5,9 @@
  * link to detail pages without any runtime data access.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+
 import { Document } from 'flexsearch';
+
 import { INDEX_VERSION, type SearchHit, searchIndexOptions } from '@/lib/search/config';
 import type { GeneratedWord } from '@/types/word';
 

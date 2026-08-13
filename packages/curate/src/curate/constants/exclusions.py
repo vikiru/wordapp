@@ -1236,7 +1236,7 @@ EXCLUDED_WORDS = (
 
 # Archaic/obsolete words that leak through every gate (zipf cannot catch
 # them: whence=3.1, wherefore=2.79 sit inside the 2.75-3.20 keep band, and
-# oewn:2025+ does not tag archaic/obsolete). 
+# oewn:2025+ does not tag archaic/obsolete).
 ARCHAIC_OBSOLETE_BLOCKLIST = {
     'whence',
     'wherefore',

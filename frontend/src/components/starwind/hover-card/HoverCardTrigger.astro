@@ -1,9 +1,9 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types';
 
-import { hoverCardTrigger } from "./variants";
+import { hoverCardTrigger } from './variants';
 
-type Props = Omit<HTMLAttributes<"button">, "type"> & {
+type Props = Omit<HTMLAttributes<'button'>, 'type'> & {
   /**
    * When true, the component will render its child element with a simple wrapper instead of a button component
    */
@@ -13,19 +13,14 @@ type Props = Omit<HTMLAttributes<"button">, "type"> & {
 const { class: className, asChild = false, ...rest } = Astro.props;
 
 let hasChildren = false;
-if (Astro.slots.has("default")) {
+if (Astro.slots.has('default')) {
   hasChildren = true;
 }
 ---
 
 {
   asChild && hasChildren ? (
-    <div
-      class:list={["starwind-hover-card-trigger", className]}
-      data-as-child
-      {...rest}
-      data-slot="hover-card-trigger"
-    >
+    <div class:list={['starwind-hover-card-trigger', className]} data-as-child {...rest} data-slot="hover-card-trigger">
       <slot />
     </div>
   ) : (

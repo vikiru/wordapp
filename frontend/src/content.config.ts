@@ -1,6 +1,7 @@
-import { defineCollection } from 'astro:content';
 import { file } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { defineCollection } from 'astro:content';
+
 import { GeneratedWordSchema } from '@/types/word';
 
 const words = defineCollection({

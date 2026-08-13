@@ -3,11 +3,11 @@ on:
   workflow_dispatch:
     inputs:
       date:
-        description: 'Date (YYYY-MM-DD, default: today)'
+        description: 'Date (MM/DD/YYYY, default: today)'
         required: false
         default: ''
   schedule:
-    - cron: '0 0 * * *'  # midnight UTC daily
+    - cron: '0 0 * * *' # midnight UTC daily
 
 jobs:
   generate:
@@ -24,7 +24,7 @@ jobs:
       - name: Setup UV (v10.0.0)
         uses: astral-sh/setup-uv@v1
         with:
-          cache: ""
+          cache: ''
 
       - name: Install deps (selective)
         run: uv sync generate data config

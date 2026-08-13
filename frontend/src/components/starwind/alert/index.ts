@@ -1,7 +1,7 @@
-import Alert from "./Alert.astro";
-import AlertDescription from "./AlertDescription.astro";
-import AlertTitle from "./AlertTitle.astro";
-import { alert, alertDescription, alertTitle } from "./variants";
+import Alert from './Alert.astro';
+import AlertDescription from './AlertDescription.astro';
+import AlertTitle from './AlertTitle.astro';
+import { alert, alertDescription, alertTitle } from './variants';
 const AlertVariants = { alert, alertDescription, alertTitle };
 
 export { Alert, AlertDescription, AlertTitle, AlertVariants };

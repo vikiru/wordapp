@@ -35,13 +35,13 @@
   document.addEventListener("astro:after-swap", initTheme);
 </script>
 */
-import Moon from "@tabler/icons/outline/moon.svg";
-import Sun from "@tabler/icons/outline/sun.svg";
-import type { VariantProps } from "tailwind-variants";
+import Moon from '@tabler/icons/outline/moon.svg';
+import Sun from '@tabler/icons/outline/sun.svg';
+import type { VariantProps } from 'tailwind-variants';
 
-import { Toggle, ToggleVariants } from "@/components/starwind/toggle";
+import { Toggle, ToggleVariants } from '@/components/starwind/toggle';
 
-import { themeToggle } from "./variants";
+import { themeToggle } from './variants';
 
 type Props = VariantProps<typeof ToggleVariants.toggle> & {
   /**
@@ -55,10 +55,10 @@ type Props = VariantProps<typeof ToggleVariants.toggle> & {
 };
 
 const {
-  class: className = "",
-  variant = "outline",
-  size = "md",
-  ariaLabel = "Toggle theme",
+  class: className = '',
+  variant = 'outline',
+  size = 'md',
+  ariaLabel = 'Toggle theme',
   ...rest
 } = Astro.props as Props;
 ---
@@ -84,7 +84,7 @@ const {
 </Toggle>
 
 <script>
-  import type { ToggleChangeEvent } from "@/components/starwind/toggle";
+  import type { ToggleChangeEvent } from '@/components/starwind/toggle';
 
   class ThemeToggleHandler {
     private toggle: HTMLButtonElement;
@@ -105,21 +105,19 @@ const {
     private initializeState(): void {
       // Determine if dark mode is active based on the document class
       // This handles "system" correctly since initTheme already applied the right class
-      const isDark = document.documentElement.classList.contains("dark");
+      const isDark = document.documentElement.classList.contains('dark');
 
-      this.toggle.setAttribute("data-state", isDark ? "on" : "off");
-      this.toggle.setAttribute("aria-pressed", isDark.toString());
+      this.toggle.setAttribute('data-state', isDark ? 'on' : 'off');
+      this.toggle.setAttribute('aria-pressed', isDark.toString());
 
       // Mark icons as ready to show (prevents flash of wrong icon)
-      this.toggle.querySelectorAll("[data-theme-icon]").forEach((icon) => {
-        icon.setAttribute("data-ready", "");
+      this.toggle.querySelectorAll('[data-theme-icon]').forEach((icon) => {
+        icon.setAttribute('data-ready', '');
       });
     }
 
     private setupEventListeners(): void {
-      this.toggle.addEventListener("starwind-toggle:change", (event: Event) =>
-        this.handleToggleChange(event),
-      );
+      this.toggle.addEventListener('starwind-toggle:change', (event: Event) => this.handleToggleChange(event));
     }
 
     private handleToggleChange(event: Event): void {
@@ -131,33 +129,33 @@ const {
       const { pressed } = (event as ToggleChangeEvent).detail;
 
       // Update theme based on toggle state
-      const newTheme = pressed ? "dark" : "light";
+      const newTheme = pressed ? 'dark' : 'light';
 
-      document.documentElement.classList.toggle("dark", pressed);
-      localStorage.setItem("colorTheme", newTheme);
+      document.documentElement.classList.toggle('dark', pressed);
+      localStorage.setItem('colorTheme', newTheme);
 
       // Dispatch custom event to sync other theme toggles
       document.dispatchEvent(
-        new CustomEvent("theme:change", {
+        new CustomEvent('theme:change', {
           detail: { theme: newTheme },
-        }),
+        })
       );
     }
 
     public syncState(theme: string): void {
       let shouldBeOn: boolean;
-      if (theme === "system") {
-        shouldBeOn = document.documentElement.classList.contains("dark");
+      if (theme === 'system') {
+        shouldBeOn = document.documentElement.classList.contains('dark');
       } else {
-        shouldBeOn = theme === "dark";
+        shouldBeOn = theme === 'dark';
       }
 
-      const newState = shouldBeOn ? "on" : "off";
+      const newState = shouldBeOn ? 'on' : 'off';
 
       // Only update if state actually changed to prevent loops
-      if (this.toggle.getAttribute("data-state") !== newState) {
-        this.toggle.setAttribute("data-state", newState);
-        this.toggle.setAttribute("aria-pressed", shouldBeOn.toString());
+      if (this.toggle.getAttribute('data-state') !== newState) {
+        this.toggle.setAttribute('data-state', newState);
+        this.toggle.setAttribute('aria-pressed', shouldBeOn.toString());
       }
     }
   }
@@ -173,7 +171,7 @@ const {
       activeToggles.clear();
     }
 
-    document.querySelectorAll<HTMLButtonElement>(".starwind-theme-toggle").forEach((toggle) => {
+    document.querySelectorAll<HTMLButtonElement>('.starwind-theme-toggle').forEach((toggle) => {
       if (!themeToggleInstances.has(toggle)) {
         themeToggleInstances.set(toggle, new ThemeToggleHandler(toggle));
       }
@@ -193,9 +191,9 @@ const {
     });
   };
 
-  document.addEventListener("theme:change", handleThemeChange);
+  document.addEventListener('theme:change', handleThemeChange);
 
   setupThemeToggles();
-  document.addEventListener("astro:after-swap", () => setupThemeToggles(true));
-  document.addEventListener("starwind:init", () => setupThemeToggles());
+  document.addEventListener('astro:after-swap', () => setupThemeToggles(true));
+  document.addEventListener('starwind:init', () => setupThemeToggles());
 </script>

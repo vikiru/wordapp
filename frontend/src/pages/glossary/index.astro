@@ -203,7 +203,7 @@ const today = (await getCollection('words_today')).sort((a, b) => a.data.word.lo
   import { searchIndexClient as index } from '@/lib/search/client';
 
   const input = document.querySelector<HTMLInputElement>('#glossary-search');
-const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-id]'));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-id]'));
   const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-letter-section]'));
   const links = Array.from(document.querySelectorAll<HTMLElement>('[data-letter-link]'));
   const posButtons = Array.from(document.querySelectorAll<HTMLElement>('[data-pos-filter]'));
