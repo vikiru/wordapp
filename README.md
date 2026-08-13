@@ -57,6 +57,8 @@ The curated collection of words is then assessed daily and a selection of 10 wor
 
 - Dev Tools: [pnpm](https://pnpm.io/), [Knip](https://github.com/webpro-nl/knip), [lefthook](https://github.com/evilmartians/lefthook), [commitlint](https://commitlint.js.org/), [semantic-release](https://github.com/semantic-release/semantic-release)
 
+- AI Tools: [Google AI Studio](https://aistudio.google.com/), Spec-driven development using [OpenSpec](https://github.com/opencode/openspec)
+
 ## 📝 Prerequisites
 
 Ensure that the following prerequisites are installed on your system by following the [Setup Instructions](#-setup-instructions):
