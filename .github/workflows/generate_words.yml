@@ -17,6 +17,9 @@ jobs:
     env:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
+    defaults:
+      run:
+        working-directory: packages
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -27,7 +30,7 @@ jobs:
           enable-cache: false
 
       - name: Install deps (selective)
-        run: uv sync generate data config
+        run: uv sync --all-packages --no-install-package curate
 
       - name: Generate with Gemini
         run: python -m generate.main
