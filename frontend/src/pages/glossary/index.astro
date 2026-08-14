@@ -8,11 +8,14 @@ import { ArrowUpRight, Search } from '@lucide/astro';
 
 const capitalize = (value: string) => (value ? value.charAt(0).toUpperCase() + value.slice(1) : '');
 const shortDate = (iso: string) => {
-  const [year, month, day] = iso.split('-') as [string, string, string];
+  const parts = iso.split('-');
+  const year = parts[0] ?? '00';
+  const month = parts[1] ?? '00';
+  const day = parts[2] ?? '00';
   return `${month}.${day}.${year.slice(2)}`;
 };
 
-const words = (await getCollection('words')).sort((a, b) => a.data.word.localeCompare(b.data.word));
+const words = (await getCollection('words')).toSorted((a, b) => a.data.word.localeCompare(b.data.word));
 const groups = words.reduce(
   (acc, w) => {
     const letter = w.data.word.charAt(0).toUpperCase();
@@ -21,10 +24,10 @@ const groups = words.reduce(
   },
   {} as Record<string, typeof words>
 );
-const letters = Object.keys(groups).sort();
+const letters = Object.keys(groups).toSorted();
 const posFilters = ['all', ...new Set(words.flatMap((w) => w.data.pos_tags.map((p) => p.toLowerCase())))].slice(0, 4);
 const wotd = (await getCollection('wotd'))[0]?.data;
-const today = (await getCollection('words_today')).sort((a, b) => a.data.word.localeCompare(b.data.word));
+const today = (await getCollection('words_today')).toSorted((a, b) => a.data.word.localeCompare(b.data.word));
 ---
 
 <BaseLayout
@@ -203,10 +206,10 @@ const today = (await getCollection('words_today')).sort((a, b) => a.data.word.lo
   import { searchIndexClient as index } from '@/lib/search/client';
 
   const input = document.querySelector<HTMLInputElement>('#glossary-search');
-  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-id]'));
-  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-letter-section]'));
-  const links = Array.from(document.querySelectorAll<HTMLElement>('[data-letter-link]'));
-  const posButtons = Array.from(document.querySelectorAll<HTMLElement>('[data-pos-filter]'));
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-id]')];
+  const sections = [...document.querySelectorAll<HTMLElement>('[data-letter-section]')];
+  const links = [...document.querySelectorAll<HTMLElement>('[data-letter-link]')];
+  const posButtons = [...document.querySelectorAll<HTMLElement>('[data-pos-filter]')];
   const chipActive = 'border-primary bg-primary/5 text-primary';
   const chipIdle = 'border-border text-muted-foreground hover:border-input hover:text-foreground';
   const validLetters = new Set(sections.map((section) => section.dataset.letter));
@@ -252,7 +255,7 @@ const today = (await getCollection('words_today')).sort((a, b) => a.data.word.lo
     }
     let visible = 0;
     for (const section of sections) {
-      const count = section.querySelectorAll<HTMLElement>('[data-id]:not([hidden])').length;
+      const count = section.querySelectorAll('[data-id]:not([hidden])').length;
       section.hidden = count === 0;
       visible += count;
     }

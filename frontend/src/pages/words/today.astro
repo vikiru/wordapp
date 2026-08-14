@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { dayListJsonLd, breadcrumbJsonLd } from '@/lib/seo/jsonld';
 import WordOfDay from '@/components/sections/word-of-day/WordOfDay.astro';
@@ -7,7 +7,9 @@ import TodayHeader from '@/components/sections/today-header/TodayHeader.astro';
 import TodayWords from '@/components/sections/today-words/TodayWords.astro';
 
 const wotd = (await getCollection('wotd'))[0]?.data;
-const words = (await getCollection('words_today')).sort((a, b) => a.data.word.localeCompare(b.data.word));
+const words: CollectionEntry<'words_today'>[] = (await getCollection('words_today')).toSorted((a, b) =>
+  a.data.word.localeCompare(b.data.word)
+);
 ---
 
 <BaseLayout

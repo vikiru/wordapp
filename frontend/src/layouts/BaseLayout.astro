@@ -8,7 +8,7 @@ import '@/styles/globals.css';
 interface Props {
   title: string;
   description: string;
-  jsonLd?: Array<WithContext<WebSite | DefinedTerm | BreadcrumbList | ItemList>>;
+  jsonLd?: WithContext<WebSite | DefinedTerm | BreadcrumbList | ItemList>[];
   wide?: boolean;
 }
 

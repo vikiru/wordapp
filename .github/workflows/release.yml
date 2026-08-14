@@ -26,8 +26,8 @@ jobs:
         with:
           version: 10
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile # Install from frozen lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Release
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm dlx semantic-release

@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { Document } from 'flexsearch';
 
 import { INDEX_VERSION, type SearchHit, searchIndexOptions } from '@/lib/search/config';
+import { ArchiveFileSchema, WordsFileSchema } from '@/types/data-files';
 import type { GeneratedWord } from '@/types/word';
 
 const DATA_DIR = new URL('../../data/', import.meta.url);
@@ -16,14 +17,20 @@ const OUT_FILE = new URL('search-index.json', DATA_DIR);
 
 function readWordFile(fileName: string): GeneratedWord[] {
   const raw = readFileSync(new URL(fileName, DATA_DIR), 'utf8');
-  // shapes guaranteed by validate-data.ts, which runs earlier in the build
-  return JSON.parse(raw) as GeneratedWord[];
+  const parsed = WordsFileSchema.safeParse(JSON.parse(raw));
+  if (!parsed.success) {
+    throw new Error(`Failed to parse ${fileName}: ${parsed.error.message}`);
+  }
+  return parsed.data;
 }
 
 function readArchiveDays(): GeneratedWord[] {
   const raw = readFileSync(new URL('archive.json', DATA_DIR), 'utf8');
-  const days = JSON.parse(raw) as Record<string, GeneratedWord[]>;
-  return Object.values(days).flat();
+  const parsed = ArchiveFileSchema.safeParse(JSON.parse(raw));
+  if (!parsed.success) {
+    throw new Error(`Failed to parse archive.json: ${parsed.error.message}`);
+  }
+  return Object.values(parsed.data).flat();
 }
 
 function buildSearchHits(): SearchHit[] {
