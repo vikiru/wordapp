@@ -16,10 +16,10 @@
     "lint:oxlint": "pnpm oxlint",
     "lint:biome": "pnpm biome check",
     "lint:astro": "pnpm --filter frontend astro-check",
-    "lint:python": "uv --directory packages run ruff check .",
+    "lint:python": "uv --directory packages run --no-sync ruff check .",
     "format": "pnpm format:frontend && pnpm format:python",
     "format:frontend": "pnpm --filter frontend format",
-    "format:python": "uv --directory packages run ruff format .",
+    "format:python": "uv --directory packages run --no-sync ruff format .",
     "typecheck": "pnpm --filter frontend typecheck",
     "unused": "knip",
     "postinstall": "lefthook install"
