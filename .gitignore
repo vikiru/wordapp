@@ -195,9 +195,7 @@ skills-lock.json
 
 frontend/src/data/*.json
 packages/curate/web2_wordnet_cache.json
-packages/curate/web2_wn_pos_partitions/
 packages/curate/curated_words_cache_analysis.json
-packages/curate/filtered_words.txt
 packages/curate/profanity.txt
 packages/.venv/
 packages/logs/
