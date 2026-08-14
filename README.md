@@ -45,19 +45,19 @@ The curated collection of words is then assessed daily and a selection of 10 wor
 
 ## 🛠️ Tech Stack
 
-- Frontend: [Astro](https://astro.build/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), [Starwind UI](https://github.com/starwind-ui/starwind-ui), [FlexSearch](https://github.com/nextapps-de/flexsearch), [Lucide Icons](https://lucide.dev/), [@fontsource](https://fontsource.org/), [astro-seo](https://github.com/jonasmerlin/astro-seo)
+- Frontend: [Astro](https://astro.build/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), [Starwind UI](https://github.com/starwind-ui/starwind-ui), [FlexSearch](https://github.com/nextapps-de/flexsearch), [Lucide Icons](https://lucide.dev/), [@fontsource](https://fontsource.org/), [astro-seo](https://github.com/jonasmerlin/astro-seo).
 
-- Data & AI Engine: [Python](https://www.python.org/), [uv](https://docs.astral.sh/uv/), [poethepoet](https://github.com/nat-n/poethepoet), [Google GenAI SDK](https://ai.google.dev/gemini-api/docs) (Gemini), [Beanie](https://beanie-odm.dev/), [PyMongo](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/), [orjson](https://github.com/ijl/orjson), [loguru](https://github.com/Delgan/loguru), [python-dotenv](https://github.com/theskumar/python-dotenv)
+- Data & AI Engine: [Python](https://www.python.org/), [uv](https://docs.astral.sh/uv/), [poethepoet](https://github.com/nat-n/poethepoet), [Google GenAI SDK](https://ai.google.dev/gemini-api/docs) (Gemini), [Beanie](https://beanie-odm.dev/), [PyMongo](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/), [orjson](https://github.com/ijl/orjson), [loguru](https://github.com/Delgan/loguru), [python-dotenv](https://github.com/theskumar/python-dotenv).
 
-- Validation: [Pydantic](https://docs.pydantic.dev/), [msgspec](https://github.com/msgspec/msgspec), [zod](https://zod.dev/)
+- Validation: [Pydantic](https://docs.pydantic.dev/), [msgspec](https://github.com/msgspec/msgspec), [zod](https://zod.dev/).
 
-- Database & Hosting: [MongoDB Atlas](https://www.mongodb.com/atlas), [Cloudflare Pages](https://pages.cloudflare.com/)
+- Database & Hosting: [MongoDB Atlas](https://www.mongodb.com/atlas), [Cloudflare Pages](https://pages.cloudflare.com/).
 
-- Linting & Formatting: [oxlint](https://oxc.rs/docs/guide/usage/linter), [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Biome](https://biomejs.dev/), [Prettier](https://prettier.io/), [prettier-plugin-astro](https://github.com/withastro/prettier-plugin-astro), [Ruff](https://docs.astral.sh/ruff/)
+- Linting & Formatting: [oxlint](https://oxc.rs/docs/guide/usage/linter), [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Biome](https://biomejs.dev/), [Prettier](https://prettier.io/), [prettier-plugin-astro](https://github.com/withastro/prettier-plugin-astro), [Ruff](https://docs.astral.sh/ruff/).
 
-- Dev Tools: [pnpm](https://pnpm.io/), [Knip](https://github.com/webpro-nl/knip), [lefthook](https://github.com/evilmartians/lefthook), [commitlint](https://commitlint.js.org/), [semantic-release](https://github.com/semantic-release/semantic-release)
+- Dev Tools: [pnpm](https://pnpm.io/), [Knip](https://github.com/webpro-nl/knip), [lefthook](https://github.com/evilmartians/lefthook), [commitlint](https://commitlint.js.org/), [semantic-release](https://github.com/semantic-release/semantic-release).
 
-- AI Tools: [Google AI Studio](https://aistudio.google.com/), Spec-driven development using [OpenSpec](https://github.com/opencode/openspec)
+- AI Tools: [Google AI Studio](https://aistudio.google.com/), Spec-driven development using [OpenSpec](https://openspec.dev/).
 
 ## 📝 Prerequisites
 
