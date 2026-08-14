@@ -423,3 +423,13 @@ parsing
 phonetics
 pragmatics
 tenses
+archaic
+retract
+colloquial
+respite
+dismayed
+unfettered
+fathom
+antipathy
+decorum
+tenacious
