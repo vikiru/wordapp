@@ -21,6 +21,6 @@ jobs:
         with:
           version: 10
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile # Install from frozen lockfile
-      - name: Lint files
-        run: pnpm lint
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Lint files (oxlint, biome, python)
+        run: pnpm lint:oxlint && pnpm lint:biome && pnpm lint:python

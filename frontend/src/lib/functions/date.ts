@@ -23,7 +23,10 @@ export const formatMonthLabel = (monthKey: string) =>
   });
 
 export const shortDate = (iso: string) => {
-  const [year, month, day] = iso.split('-') as [string, string, string];
+  const parts = iso.split('-');
+  const year = parts[0] || '0000';
+  const month = parts[1] || '00';
+  const day = parts[2] || '00';
   return `${month}.${day}.${year.slice(2)}`;
 };
 export const formatShortDate = (iso: string) =>

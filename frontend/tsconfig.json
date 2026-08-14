@@ -6,7 +6,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "lib": ["ES2015", "DOM"],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "noUncheckedIndexedAccess": true,
     "strict": true,
     "noEmit": true,

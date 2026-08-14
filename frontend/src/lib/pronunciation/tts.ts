@@ -19,8 +19,8 @@ export const RATE_OPTIONS = [0.5, 0.75, 0.9, 1, 1.25] as const;
 
 export const isSupported = () =>
   typeof window !== 'undefined' &&
-  typeof window.speechSynthesis?.speak === 'function' &&
-  typeof window.speechSynthesis?.getVoices === 'function';
+  typeof window.speechSynthesis.speak === 'function' &&
+  typeof window.speechSynthesis.getVoices === 'function';
 
 export const hasVoices = (): boolean => isSupported() && loadVoices().length > 0;
 

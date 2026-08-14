@@ -15,7 +15,7 @@ export const webSiteJsonLd = (): WithContext<WebSite> => ({
   inLanguage: 'en',
 });
 
-export const breadcrumbJsonLd = (crumbs: Array<{ name: string; path: string }>): WithContext<BreadcrumbList> => ({
+export const breadcrumbJsonLd = (crumbs: { name: string; path: string }[]): WithContext<BreadcrumbList> => ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: crumbs.map((crumb, index) => ({
@@ -30,7 +30,7 @@ export const wordPageJsonLd = (
   word: string,
   path: string,
   definition: string,
-): Array<WithContext<DefinedTerm | BreadcrumbList>> => [
+): WithContext<DefinedTerm | BreadcrumbList>[] => [
   {
     '@context': 'https://schema.org',
     '@type': 'DefinedTerm',
