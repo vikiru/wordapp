@@ -19,7 +19,7 @@
 
 **Wordapp** is an AI-powered Word of the Day web app which presents a curated collection of high quality words that have a certain flair and elegance, potentially allowing someone to enrich their grammar.
 
-Starting from an initial word set ([english-words](https://github.com/mwiens91/english-words-py) / web-2) of around 235,970 words, words are filtered by various conditions such as a [Zipf-frequency window](https://en.wikipedia.org/wiki/Zipf%27s_law) (roughly how often the word is used: excluding both rare and overly common words), [WordNet synset](https://en.wikipedia.org/wiki/WordNet#Structure) validity (part of speech, hypernyms, taxonomy), word length, and suffix/derivation rules, while excluding profanity, named individuals and places, clinical or technical jargon, culturally-specific terms, and an explicit blocklist (archaic, low-flair, and occupation/politics/religion/currency words). A small curated whitelist bypasses the filters. 
+Starting from an initial word set ([english-words](https://github.com/mwiens91/english-words-py) / web-2) of around 235,970 words, words are filtered by various conditions such as a [Zipf-frequency window](https://en.wikipedia.org/wiki/Zipf%27s_law) (roughly how often the word is used: excluding both rare and overly common words), [WordNet synset](https://en.wikipedia.org/wiki/WordNet#Structure) validity (part of speech, hyponyms, hypernyms, taxonomy), word length, and suffix/derivation rules, while excluding profanity, named individuals and places, clinical or technical jargon, culturally-specific terms, and an explicit blocklist (archaic, low-flair, and occupation/politics/religion/currency words). A small curated whitelist bypasses the filters. 
 
 The curated collection of words is then assessed daily and a selection of 10 words is chosen at random, passed onto Gemini AI which will generate word metadata according to a given [prompt](packages/generate/src/generate/prompts/prompt.py) and finally, this metadata is saved to a database so it can be fetched later by the front end as a pre-build step.
 
@@ -39,7 +39,8 @@ The curated collection of words is then assessed daily and a selection of 10 wor
 - **Curated collection of words** that can be adapted and improved at any time.
 - **Random word generation**: 10 new words a day, powered by Gemini AI.
 - **RSS feeds**: two feeds, `/feed.xml` (today's words) and `/all_words.xml` (the full collection).
-- **Glossary** of all words present.
+- **Pronunciation playback**: listen to each word using your browser's text-to-speech voices (if available).
+- **Glossary** of all words present, with alphabetical browsing, filtering, and full-text search.
 - **Archive** of words, showing when they were generated.
 - **Words of the day**: a set of daily words with one main word of the day, selected randomly / based on some conditions.
 
@@ -63,9 +64,9 @@ The curated collection of words is then assessed daily and a selection of 10 wor
 
 Ensure that the following prerequisites are installed on your system by following the [Setup Instructions](#-setup-instructions):
 
-- [Node.js](https://nodejs.org/) [≥ 22.12]
-- [pnpm](https://pnpm.io/)
-- [Python](https://www.python.org/) [3.13]
+- [Node.js](https://nodejs.org/) `>= 22.12`.
+- [pnpm](https://pnpm.io/) `>= 11`.
+- [Python](https://www.python.org/) `3.13`.
 - [uv](https://docs.astral.sh/uv/) (Python environment/package manager)
 - Google Gemini API Key (via [Google AI Studio](https://aistudio.google.com/))
 - A [MongoDB Atlas](https://www.mongodb.com/atlas) cluster (persistence/export pipeline)
@@ -91,16 +92,25 @@ pnpm install
 cd packages
 uv sync
 cp .env.sample .env
+cd ..
 ```
 
-4. Add your API keys to `packages/.env`.
+4. Set up the required Google Gemini and MongoDB Atlas credentials.
+
+   - Create a project in [Google AI Studio](https://aistudio.google.com/) and obtain a Gemini API key.
+   - Create a [MongoDB Atlas](https://www.mongodb.com/atlas) cluster and obtain its connection URI.
+
+5. Add the credentials to `packages/.env`.
 
 ```bash
+# Google Gemini
 GEMINI_API_KEY=
+
+# MongoDB Atlas
 MONGODB_URI=
 ```
 
-5. Download the [Open English WordNet](https://en-word.net/) corpus.
+6. Download the [Open English WordNet](https://en-word.net/) corpus.
 
    Open English WordNet is derived from Princeton WordNet by the Open English Wordnet Community and released under the [Creative Commons Attribution (CC-BY) 4.0 License](https://creativecommons.org/licenses/by/4.0/).
 
@@ -108,7 +118,7 @@ MONGODB_URI=
 uv run poe download-wordnet
 ```
 
-6. Run the data pipeline stages in order.
+7. Run the data pipeline stages in order.
 
    - Extract and filter candidate words from WordNet (one-time).
 
@@ -134,13 +144,13 @@ uv run poe download-wordnet
    uv run poe fetch
    ```
 
-7. Run the frontend prebuild steps (validate the data and build the search index).
+8. Run the frontend prebuild steps (validate the data and build the search index).
 
 ```bash
 pnpm --filter frontend prebuild
 ```
 
-8. Start the development server from the repository root.
+9. Start the development server from the repository root.
 
 ```bash
 pnpm dev
@@ -191,13 +201,19 @@ pnpm lint
 pnpm format
 ```
 
-1. Run TypeScript type checks.
+6. Run TypeScript type checks.
 
 ```bash
 pnpm typecheck
 ```
 
-7. Check unused dependencies and files with [Knip](https://github.com/webpro-nl/knip).
+7. Run Astro checks directly.
+
+```bash
+pnpm lint:astro
+```
+
+8. Check unused dependencies and files with [Knip](https://github.com/webpro-nl/knip).
 
 ```bash
 pnpm unused
