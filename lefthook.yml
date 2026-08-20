@@ -1,54 +1,61 @@
 pre-commit:
-  parallel: true
+  parallel: false
   jobs:
-    - name: 'Lint TS/JS with oxlint + Biome'
-      glob: 'frontend/**/*.{ts,tsx,js,jsx,mjs,cjs}'
-      exclude:
-        - 'frontend/src/components/starwind/**'
-        - 'frontend/src/lib/utils/starwind/**'
-      run: 'pnpm oxlint --fix {staged_files} && pnpm biome check {staged_files}'
-    - name: 'Lint Astro with astro check'
+    - name: Format Astro files
       glob: 'frontend/**/*.astro'
-      run: 'pnpm --filter frontend astro-check'
-    - name: 'Lint CSS/JSON with Biome'
-      glob: 'frontend/**/*.{css,json,jsonc}'
-      exclude:
-        - 'frontend/node_modules/**'
-        - 'frontend/dist/**'
-        - 'frontend/.astro/**'
-        - 'frontend/src/data/**'
-      run: 'pnpm biome check {staged_files}'
-    - name: 'Lint Python with Ruff'
-      root: packages
-      glob: '**/*.py'
-      run: 'uv run ruff check --fix {staged_files}'
+      run: 'pnpm prettier --write {staged_files}'
+      stage_fixed: true
 
-pre-push:
-  parallel: true
-  jobs:
-    - name: 'Format .astro with Prettier'
-      glob: 'frontend/**/*.astro'
-      run: 'pnpm prettier --write {push_files}'
-    - name: 'Format TS/JS with oxfmt'
+    - name: Format frontend source files
       glob: 'frontend/**/*.{ts,tsx,js,jsx,mjs,cjs}'
       exclude:
         - 'frontend/src/components/starwind/**'
         - 'frontend/src/lib/utils/starwind/**'
-      run: 'pnpm oxfmt --write --ignore-path .gitignore {push_files}'
-    - name: 'Format CSS/JSON with Biome'
+      run: 'pnpm oxfmt --write --ignore-path .gitignore {staged_files}'
+      stage_fixed: true
+
+    - name: Format frontend CSS and JSON
       glob: 'frontend/**/*.{css,json,jsonc}'
       exclude:
         - 'frontend/node_modules/**'
         - 'frontend/dist/**'
         - 'frontend/.astro/**'
         - 'frontend/src/data/**'
-      run: 'pnpm biome format --write {push_files}'
-    - name: 'Format Python with Ruff'
+      run: 'pnpm biome format --write {staged_files}'
+      stage_fixed: true
+
+    - name: Format Python files
       root: packages
       glob: '**/*.py'
-      run: 'uv run ruff format {push_files}'
+      run: 'uv run ruff format {staged_files}'
+      stage_fixed: true
+
+    - name: Validate frontend files
+      glob: 'frontend/**/*.{ts,tsx,js,jsx,mjs,cjs,astro,css,json,jsonc}'
+      exclude:
+        - 'frontend/src/components/starwind/**'
+        - 'frontend/src/lib/utils/starwind/**'
+        - 'frontend/src/data/**'
+      run: 'pnpm lint'
+
+    - name: Validate Python files
+      root: packages
+      glob: '**/*.py'
+      run: 'uv run ruff check {staged_files}'
 
 commit-msg:
   jobs:
-    - name: 'Validate commit message'
+    - name: Validate commit message
       run: 'pnpm exec commitlint --edit $1'
+
+pre-push:
+  parallel: false
+  jobs:
+    - name: Frontend type and Astro verification
+      glob: 'frontend/**/*.{ts,tsx,js,jsx,mjs,cjs,astro}'
+      run: 'pnpm typecheck && pnpm lint:astro'
+
+    - name: Python type verification
+      root: packages
+      glob: '**/*.py'
+      run: 'uv run pyrefly check && uv run ty check'

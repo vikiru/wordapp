@@ -12,7 +12,7 @@
     "lint:biome": "biome check",
     "format": "pnpm prettier --write \"**/*.astro\" && pnpm oxfmt --write . && pnpm biome format --write .",
     "typecheck": "tsc --noEmit",
-    "prebuild": "tsx src/lib/validation/validate-data.ts && tsx src/lib/search/build-index.ts",
+    "prebuild": "node --import tsx src/lib/validation/validate-data.ts && node --import tsx src/features/search/build-index.ts",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
