@@ -8,8 +8,8 @@
       "!frontend/dist",
       "!frontend/.astro",
       "!frontend/src/data",
-      "!frontend/src/components/starwind",
-      "!frontend/src/lib/utils/starwind"
+      "!frontend/src/shared/components/ui/starwind",
+      "!frontend/src/shared/components/ui/starwind"
     ]
   },
   "formatter": {

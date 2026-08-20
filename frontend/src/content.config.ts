@@ -2,7 +2,7 @@ import { file } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { defineCollection } from 'astro:content';
 
-import { GeneratedWordSchema } from '@/types/word';
+import { GeneratedWordSchema } from '@/lib/validation/schemas/word';
 
 const words = defineCollection({
   loader: file('src/data/words.json'),

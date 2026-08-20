@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "src/components/starwind", "src/lib/utils/starwind"],
+  "exclude": ["dist", "src/shared/components/ui/starwind", "src/shared/components/ui/starwind"],
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]

@@ -1,0 +1,54 @@
+---
+import type { GeneratedWord } from '@/types/word';
+import { slugify } from '@/lib/slugify';
+import { Badge } from '@/shared/components/ui/starwind/badge';
+import { Button } from '@/shared/components/ui/starwind/button';
+import { ArrowUpRight } from '@lucide/astro';
+import { shortDate } from '@/lib/functions/date';
+import { capitalize } from '@/lib/functions/string';
+import { formatIpa } from '@/lib/functions/pronunciation';
+
+interface Props {
+  word: GeneratedWord;
+  isPast?: boolean;
+}
+const { word, isPast = false } = Astro.props;
+const slug = slugify(word.word);
+const ipa = formatIpa(word.pronunciation.ipa);
+---
+
+<section
+  class="relative overflow-hidden rounded-lg border border-border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-glow motion-reduce:transition-none md:p-10"
+>
+  <a
+    href={`/words/${slug}`}
+    aria-label={`View ${word.word}`}
+    class="absolute inset-0 z-0 rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-outline/50"></a>
+  <div class="flex flex-col gap-5">
+    <div class="flex flex-wrap items-center gap-3">
+      {
+        isPast ? (
+          <Badge variant="outline">Past word of the day</Badge>
+        ) : (
+          <Badge variant="primary">Word of the day</Badge>
+        )
+      }
+      <span class="font-mono text-small text-muted-foreground">{shortDate(word.generation_date)}</span>
+    </div>
+    <h2 class="text-h2">{word.word}</h2>
+    <div class="flex flex-wrap gap-2">
+      {word.pos_tags.map((pos) => <Badge variant="secondary">{capitalize(pos)}</Badge>)}
+      {
+        ipa && (
+          <Badge variant="outline" class="font-ipa">
+            {ipa}
+          </Badge>
+        )
+      }
+    </div>
+    <p class="max-w-2xl font-serif text-xl leading-relaxed text-muted-foreground">{word.senses[0]?.definition}</p>
+    <div class="relative flex flex-wrap gap-3">
+      <Button href={`/words/${slug}`} variant="primary">View word <ArrowUpRight size={16} /></Button>
+    </div>
+  </div>
+</section>

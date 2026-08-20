@@ -3,17 +3,17 @@ import { getCollection } from 'astro:content';
 import { slugify } from '@/lib/slugify';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { wordPageJsonLd } from '@/lib/seo/jsonld';
-import { Card, CardContent } from '@/components/starwind/card';
-import WordHeader from '@/components/sections/word-header/WordHeader.astro';
-import Senses from '@/components/sections/senses/Senses.astro';
-import Synonyms from '@/components/sections/synonyms/Synonyms.astro';
-import Antonyms from '@/components/sections/antonyms/Antonyms.astro';
-import WordFamily from '@/components/sections/word-family/WordFamily.astro';
-import Inflections from '@/components/sections/inflections/Inflections.astro';
-import Etymology from '@/components/sections/etymology/Etymology.astro';
-import CommonMistakes from '@/components/sections/common-mistakes/CommonMistakes.astro';
-import Facts from '@/components/sections/facts/Facts.astro';
-import Breadcrumbs from '@/components/breadcrumbs/Breadcrumbs.astro';
+import { Card, CardContent } from '@/shared/components/ui/starwind/card';
+import WordHeader from '@/components/word-details/WordHeader.astro';
+import Senses from '@/components/word-details/Senses.astro';
+import Synonyms from '@/components/word-details/Synonyms.astro';
+import Antonyms from '@/components/word-details/Antonyms.astro';
+import WordFamily from '@/components/word-details/WordFamily.astro';
+import Inflections from '@/components/word-details/Inflections.astro';
+import Etymology from '@/components/word-details/Etymology.astro';
+import CommonMistakes from '@/components/word-details/CommonMistakes.astro';
+import Facts from '@/components/word-details/Facts.astro';
+import Breadcrumbs from '@/shared/components/Breadcrumbs.astro';
 
 export async function getStaticPaths() {
   const words = await getCollection('words');
@@ -29,16 +29,18 @@ export async function getStaticPaths() {
     .map((w) => ({ params: { slug: slugify(w.word) } }));
 }
 const slug = Astro.params.slug;
-const data = [
-  ...(await getCollection('words')).map((w) => w.data),
-  ...(await getCollection('archive')).flatMap((day) => day.data),
-].find((w) => slugify(w.word) === slug);
+const [words, archive] = await Promise.all([getCollection('words'), getCollection('archive')]);
+const data = [...words.map((entry) => entry.data), ...archive.flatMap((entry) => entry.data)].find(
+  (word) => slugify(word.word) === slug
+);
 ---
 
 <BaseLayout
   wide
   title={data?.word ?? 'Word'}
-  description={data?.senses[0]?.definition ?? 'Word details'}
+  description={data
+    ? `${data.word}: ${data.senses[0]?.definition ?? 'word definition'}.`
+    : 'Explore Wordapp word definitions.'}
   jsonLd={data ? wordPageJsonLd(data.word, Astro.url.pathname, data.senses[0]?.definition ?? '') : []}
 >
   {

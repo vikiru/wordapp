@@ -6,7 +6,12 @@ import { readFileSync } from 'node:fs';
 
 import type { ZodType } from 'zod';
 
-import { ArchiveFileSchema, WordsFileSchema, WordsTodayFileSchema, WotdFileSchema } from '@/types/data-files';
+import {
+  ArchiveFileSchema,
+  WordsFileSchema,
+  WordsTodayFileSchema,
+  WotdFileSchema,
+} from '@/lib/validation/schemas/data-files';
 
 const DATA_DIR = new URL('../../data/', import.meta.url);
 

@@ -1,0 +1,58 @@
+---
+import { Badge } from '@/shared/components/ui/starwind/badge';
+import { capitalize } from '@/lib/functions/string';
+
+interface Props {
+  word: string;
+  pos: string[];
+  definition: string;
+  date: string;
+  href: string;
+  ipa?: string;
+  corner?: 'date' | 'ipa';
+  dataId?: string;
+  dataPos?: string;
+}
+
+const { word, pos, definition, date, href, ipa, corner = 'date', dataId, dataPos } = Astro.props;
+---
+
+<a
+  href={href}
+  data-id={dataId}
+  data-pos={dataPos}
+  class="group flex flex-col gap-2 rounded-lg border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-glow motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-outline/50"
+>
+  <div class="flex items-start justify-between gap-3">
+    <div class="flex flex-col gap-1">
+      <h3
+        class="font-heading text-2xl text-foreground transition-colors group-hover:text-primary motion-reduce:transition-none"
+      >
+        {word}
+      </h3>
+      {
+        pos.length > 0 && (
+          <div class="flex flex-wrap gap-1.5">
+            {pos.map((p) => (
+              <span class="text-small uppercase tracking-widest text-primary">{capitalize(p)}</span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+    {
+      corner === 'ipa' && ipa ? (
+        <Badge variant="outline" class="font-ipa">
+          {ipa}
+        </Badge>
+      ) : (
+        <span class="font-mono text-small text-muted-foreground">{date}</span>
+      )
+    }
+  </div>
+  <p
+    class="font-serif leading-relaxed text-muted-foreground transition-colors line-clamp-3 group-hover:text-foreground motion-reduce:transition-none"
+  >
+    {definition}
+  </p>
+</a>

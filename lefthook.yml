@@ -9,8 +9,8 @@ pre-commit:
     - name: Format frontend source files
       glob: 'frontend/**/*.{ts,tsx,js,jsx,mjs,cjs}'
       exclude:
-        - 'frontend/src/components/starwind/**'
-        - 'frontend/src/lib/utils/starwind/**'
+        - 'frontend/src/shared/components/ui/starwind/**'
+        - 'frontend/src/shared/components/ui/starwind/**'
       run: 'pnpm oxfmt --write --ignore-path .gitignore {staged_files}'
       stage_fixed: true
 
@@ -33,8 +33,8 @@ pre-commit:
     - name: Validate frontend files
       glob: 'frontend/**/*.{ts,tsx,js,jsx,mjs,cjs,astro,css,json,jsonc}'
       exclude:
-        - 'frontend/src/components/starwind/**'
-        - 'frontend/src/lib/utils/starwind/**'
+        - 'frontend/src/shared/components/ui/starwind/**'
+        - 'frontend/src/shared/components/ui/starwind/**'
         - 'frontend/src/data/**'
       run: 'pnpm lint'
 

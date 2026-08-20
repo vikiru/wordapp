@@ -16,8 +16,8 @@
     "preserveWhitespace": false
   },
   "ignorePatterns": [
-    "frontend/src/components/starwind",
-    "frontend/src/lib/utils/starwind",
+    "frontend/src/shared/components/ui/starwind",
+    "frontend/src/shared/components/ui/starwind",
     "frontend/node_modules",
     "frontend/dist",
     "frontend/.astro",

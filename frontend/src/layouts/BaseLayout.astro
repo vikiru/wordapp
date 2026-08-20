@@ -1,8 +1,8 @@
 ---
 import { SEO } from 'astro-seo';
 import type { BreadcrumbList, DefinedTerm, ItemList, WebSite, WithContext } from 'schema-dts';
-import Navbar from '@/components/layout/navbar/Navbar.astro';
-import Footer from '@/components/layout/footer/Footer.astro';
+import Navbar from '@/shared/components/layout/navbar/Navbar.astro';
+import Footer from '@/shared/components/layout/footer/Footer.astro';
 import '@/styles/globals.css';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 const { title, description, jsonLd = [], wide = false } = Astro.props;
 const site = import.meta.env.SITE;
 const canonical = new URL(Astro.url.pathname, site).href;
-const image = new URL('/og.png', site).href;
+const pageTitle = `${title} | Wordapp`;
 ---
 
 <html lang="en" class="scroll-smooth">
@@ -36,27 +36,13 @@ const image = new URL('/og.png', site).href;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate" type="application/rss+xml" title="Wordapp RSS" href="/feed.xml" />
     <SEO
-      title={title}
+      title={pageTitle}
       description={description}
       canonical={canonical}
-      openGraph={{
-        basic: {
-          title,
-          type: 'website',
-          url: canonical,
-          image,
-        },
-        optional: {
-          description,
-          locale: 'en_US',
-          siteName: 'Wordapp',
-        },
-      }}
       twitter={{
         card: 'summary',
-        title,
+        title: pageTitle,
         description,
-        image,
       }}
     />
     {jsonLd.map((data) => <script is:inline type="application/ld+json" set:html={JSON.stringify(data)} />)}

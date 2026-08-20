@@ -5,10 +5,10 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { formatShortDate } from '@/lib/functions/date';
 import { formatIpa } from '@/lib/functions/pronunciation';
 import { dayListJsonLd, breadcrumbJsonLd } from '@/lib/seo/jsonld';
-import WordOfDay from '@/components/sections/word-of-day/WordOfDay.astro';
-import ArchiveDayHeader from '@/components/sections/archive-day-header/ArchiveDayHeader.astro';
-import WordCard from '@/components/sections/word-card/WordCard.astro';
-import Breadcrumbs from '@/components/breadcrumbs/Breadcrumbs.astro';
+import WordOfDay from '@/shared/components/WordOfDay.astro';
+import ArchiveDayHeader from '@/components/archive/ArchiveDayHeader.astro';
+import WordCard from '@/shared/components/WordCard.astro';
+import Breadcrumbs from '@/shared/components/Breadcrumbs.astro';
 
 export async function getStaticPaths() {
   const archive = await getCollection('archive');
@@ -20,8 +20,10 @@ const wotd = day?.data.find((w) => w.is_wotd) ?? day?.data.find((w) => w.past_wo
 ---
 
 <BaseLayout
-  title={date ? `Archive - ${formatShortDate(date)}` : 'Archive'}
-  description={date ? `Words generated on ${formatShortDate(date)}` : 'Daily generation archive'}
+  title={date ? `Archive — ${formatShortDate(date)}` : 'Archive'}
+  description={date
+    ? `Explore the words Wordapp generated on ${formatShortDate(date)}.`
+    : 'Explore Wordapp’s daily word generation archive.'}
   jsonLd={day
     ? [
         dayListJsonLd(

@@ -6,15 +6,6 @@ export const formatDate = (isoDate: string) =>
     timeZone: 'UTC',
   });
 
-export const formatWeekdayDate = (iso: string) =>
-  new Date(`${iso}T00:00:00Z`).toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
-
 export const formatMonthLabel = (monthKey: string) =>
   new Date(`${monthKey}-01T00:00:00Z`).toLocaleDateString('en-US', {
     year: 'numeric',
