@@ -1,8 +1,8 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ArchiveHeader from '@/components/sections/archive-header/ArchiveHeader.astro';
-import ArchiveListing from '@/components/sections/archive-listing/ArchiveListing.astro';
+import ArchiveHeader from '@/components/archive/ArchiveHeader.astro';
+import ArchiveListing from '@/components/archive/ArchiveListing.astro';
 import { breadcrumbJsonLd } from '@/lib/seo/jsonld';
 import { clampPage, ARCHIVE_CARDS_PER_PAGE } from '@/lib/functions/pagination';
 
@@ -23,8 +23,8 @@ const pageHref = (n: number) => (n === 1 ? '/archive/' : `/archive/page/${n}`);
 ---
 
 <BaseLayout
-  title="Archive"
-  description="Daily generation archive"
+  title={`Archive — Page ${current}`}
+  description={`Explore page ${current} of Wordapp’s daily word generation archive.`}
   jsonLd={[
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },

@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import { slugify } from '@/lib/slugify';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { breadcrumbJsonLd } from '@/lib/seo/jsonld';
-import { Input } from '@/components/starwind/input';
+import { Input } from '@/shared/components/ui/starwind/input';
 import { ArrowUpRight, Search } from '@lucide/astro';
 
 const capitalize = (value: string) => (value ? value.charAt(0).toUpperCase() + value.slice(1) : '');
@@ -32,7 +32,7 @@ const today = (await getCollection('words_today')).toSorted((a, b) => a.data.wor
 
 <BaseLayout
   title="Glossary"
-  description="Browse every word the site has generated"
+  description="Browse every word Wordapp has generated, with definitions, pronunciation, and etymology."
   jsonLd={[
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
@@ -203,7 +203,7 @@ const today = (await getCollection('words_today')).toSorted((a, b) => a.data.wor
   </div>
 </BaseLayout>
 <script>
-  import { searchIndexClient as index } from '@/lib/search/client';
+  import { searchIndexClient as index } from '@/features/search/client';
 
   const input = document.querySelector<HTMLInputElement>('#glossary-search');
   const cards = [...document.querySelectorAll<HTMLElement>('[data-id]')];

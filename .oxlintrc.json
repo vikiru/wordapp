@@ -44,7 +44,7 @@
     "dist",
     ".astro",
     "packages",
-    "frontend/src/components/starwind",
-    "frontend/src/lib/utils/starwind"
+    "frontend/src/shared/components/ui/starwind",
+    "frontend/src/shared/components/ui/starwind"
   ]
 }

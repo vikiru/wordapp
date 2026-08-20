@@ -1,0 +1,26 @@
+---
+import type { WordRelation } from '@/types/word';
+import { Item, ItemDescription, ItemTitle } from '@/shared/components/ui/starwind/item';
+import SectionHeader from '@/components/word-details/SectionHeader.astro';
+import { capitalize } from '@/lib/functions/string';
+
+interface Props {
+  antonyms: WordRelation[];
+}
+
+const { antonyms } = Astro.props;
+---
+
+<section class="flex flex-col gap-3">
+  <SectionHeader title="Antonyms" help="Words with opposite or contrasting meanings." />
+  <ul class="flex flex-col gap-2">
+    {
+      antonyms.map((ant) => (
+        <Item as="li" variant="outline">
+          <ItemTitle>{ant.word}</ItemTitle>
+          <ItemDescription>{ant.differentiator ?? capitalize(ant.part_of_speech)}</ItemDescription>
+        </Item>
+      ))
+    }
+  </ul>
+</section>

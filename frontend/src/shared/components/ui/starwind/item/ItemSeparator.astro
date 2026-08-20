@@ -1,0 +1,13 @@
+---
+import type { ComponentProps } from 'astro/types';
+
+import { Separator } from '@/shared/components/ui/starwind/separator';
+
+import { itemSeparator } from './variants';
+
+type Props = ComponentProps<typeof Separator>;
+
+const { class: className, orientation = 'horizontal', ...rest } = Astro.props;
+---
+
+<Separator orientation={orientation} class={itemSeparator({ class: className })} {...rest} data-slot="item-separator" />

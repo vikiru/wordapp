@@ -1,0 +1,34 @@
+---
+import type { Etymology } from '@/types/word';
+import { Badge } from '@/shared/components/ui/starwind/badge';
+import SectionHeader from '@/components/word-details/SectionHeader.astro';
+
+interface Props {
+  entries: Etymology[];
+}
+
+const { entries } = Astro.props;
+---
+
+<section class="flex flex-col gap-3">
+  <SectionHeader title="Etymology" help="The word's origin and how it entered English." />
+  <ol class="flex flex-col gap-4">
+    {
+      entries.map((ety, i) => (
+        <li class="flex flex-col gap-1.5">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+            {entries.length > 1 && (
+              <span class="font-mono text-small text-primary" aria-hidden="true">
+                {i + 1}
+              </span>
+            )}
+            {ety.origin_language && <Badge variant="outline">{ety.origin_language}</Badge>}
+            {ety.original_word && <span class="font-serif italic">{ety.original_word}</span>}
+            {ety.first_recorded && <span class="text-muted-foreground">{ety.first_recorded}</span>}
+          </div>
+          {ety.explanation && <p class="font-serif leading-relaxed">{ety.explanation}</p>}
+        </li>
+      ))
+    }
+  </ol>
+</section>

@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Badge } from '@/shared/components/ui/starwind/badge';
+import { ArrowUpRight } from '@lucide/astro';
+import { slugify } from '@/lib/slugify';
+import { formatShortDate } from '@/lib/functions/date';
+
+interface Props {
+  day: CollectionEntry<'archive'>;
+}
+
+const { day } = Astro.props;
+const label = formatShortDate(day.id);
+---
+
+<article
+  class="group relative flex flex-col gap-4 rounded-lg border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-glow motion-reduce:transition-none motion-reduce:transform-none"
+>
+  <a
+    href={`/archive/${day.id}/`}
+    aria-label={`Open archive for ${label}`}
+    class="absolute inset-0 z-0 rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-outline/50"></a>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h3
+      class="inline-flex items-center gap-2 font-heading text-2xl text-foreground transition-colors group-hover:text-primary motion-reduce:transition-none"
+    >
+      {label}
+      <ArrowUpRight
+        class="size-5 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary motion-reduce:transition-none motion-reduce:transform-none"
+        aria-hidden="true"
+      />
+    </h3>
+    <Badge>{`${day.data.length} ${day.data.length === 1 ? 'word' : 'words'}`}</Badge>
+  </div>
+  <div class="relative z-10 flex flex-wrap gap-2">
+    {
+      day.data.map((w) => (
+        <a
+          href={`/words/${slugify(w.word)}`}
+          class="inline-flex items-center rounded-full border border-border px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-outline/50"
+        >
+          {w.word}
+        </a>
+      ))
+    }
+  </div>
+</article>

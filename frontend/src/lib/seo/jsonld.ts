@@ -4,7 +4,7 @@ import { slugify } from '@/lib/slugify';
 
 const site = import.meta.env.SITE.replace(/\/$/, '');
 
-export const absolute = (path: string) => `${site}${path}`;
+const absolute = (path: string) => `${site}${path}`;
 
 export const webSiteJsonLd = (): WithContext<WebSite> => ({
   '@context': 'https://schema.org',
@@ -47,7 +47,7 @@ export const wordPageJsonLd = (
         '@type': 'ListItem',
         position: 2,
         name: 'Glossary',
-        item: absolute('/glossary'),
+        item: absolute('/glossary/'),
       },
       { '@type': 'ListItem', position: 3, name: word, item: absolute(path) },
     ],
