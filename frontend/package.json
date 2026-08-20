@@ -11,6 +11,7 @@
     "lint:oxlint": "oxlint",
     "lint:biome": "biome check",
     "format": "pnpm prettier --write \"**/*.astro\" && pnpm oxfmt --write . && pnpm biome format --write .",
+    "format:check": "pnpm prettier --check \"**/*.astro\" && pnpm oxfmt --check . && pnpm biome format .",
     "typecheck": "tsc --noEmit",
     "prebuild": "node --import tsx src/lib/validation/validate-data.ts && node --import tsx src/features/search/build-index.ts",
     "build": "astro check && astro build",

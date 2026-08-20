@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "ignoreDependencies": ["@typescript/native-preview", "lint-staged", "tsx"],
+  "ignoreDependencies": ["@typescript/native", "lint-staged", "tsx"],
   "ignoreBinaries": ["uv"],
   "workspaces": {
     "frontend": {
