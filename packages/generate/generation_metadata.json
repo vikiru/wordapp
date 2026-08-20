@@ -1,8 +1,8 @@
 {
-  "last_generation_date": "2026-08-18",
+  "last_generation_date": "2026-08-20",
   "model": "gemini-3.1-flash-lite",
-  "total_generated_words": 475,
+  "total_generated_words": 485,
   "total_curated_words": 498,
   "words_generated_this_run": 10,
-  "remaining_words": 23
+  "remaining_words": 13
 }
