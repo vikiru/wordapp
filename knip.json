@@ -1,8 +1,13 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreDependencies": ["@typescript/native-preview", "lint-staged", "tsx"],
+  "ignoreBinaries": ["uv"],
   "workspaces": {
     "frontend": {
-      "entry": ["src/pages/**/*.astro", "src/types/**"],
+      "entry": [
+        "src/pages/**/*.astro",
+        "src/types/**"
+      ],
       "project": [
         "**/*.{js,mjs,cjs,ts,jsx,tsx,astro}",
         "!node_modules/**",
@@ -12,6 +17,14 @@
         "!src/lib/utils/starwind/**"
       ],
       "ignoreDependencies": [
+        "@fontsource-variable/inter",
+        "@fontsource-variable/newsreader",
+        "@fontsource/charis-sil",
+        "@fontsource/crimson-text",
+        "@fontsource/fragment-mono",
+        "@fontsource/pinyon-script",
+        "lodash",
+        "@types/lodash",
         "@tabler/icons",
         "@tailwindcss/forms",
         "embla-carousel",
@@ -19,7 +32,6 @@
         "tailwind-variants",
         "tailwindcss",
         "tw-animate-css",
-        "prettier",
         "prettier-plugin-astro"
       ]
     }
