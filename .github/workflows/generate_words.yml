@@ -1,4 +1,5 @@
 name: Generate Words
+permissions: {}
 on:
   workflow_dispatch:
     inputs:
@@ -22,7 +23,9 @@ jobs:
         working-directory: packages
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@ae62891fec2bb8e7d6c99fc78c9fec3a63790f8d
