@@ -2,7 +2,7 @@
   "name": "wordapp",
   "version": "1.0.4",
   "private": true,
-  "description": "",
+  "description": "AI-powered Word of the Day web app, using Astro.js, Gemini AI, and MongoDB.",
   "keywords": [],
   "license": "MIT",
   "author": "Visakan Kirubakaran",
@@ -17,10 +17,10 @@
     "lint:biome": "pnpm biome check",
     "lint:astro": "pnpm --filter frontend astro-check",
     "lint:python": "uv --directory packages run --no-sync ruff check .",
-    "format": "pnpm format:frontend && pnpm format:python",
-    "format:frontend": "pnpm --filter frontend format",
-    "format:python": "uv --directory packages run --no-sync ruff format .",
+    "format": "pnpm --filter frontend format && uv --directory packages run --no-sync ruff format .",
+    "format:check": "pnpm --filter frontend format:check && uv --directory packages run --no-sync ruff format --check .",
     "typecheck": "pnpm --filter frontend typecheck",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm unused",
     "unused": "knip",
     "postinstall": "lefthook install"
   },
@@ -29,7 +29,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@semantic-release/git": "^10.0.1",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "knip": "^5.88.1",
     "lefthook": "^2.1.10",
     "lint-staged": "^15.5.2",
@@ -40,6 +40,6 @@
     "prettier-plugin-astro": "^0.14.1",
     "semantic-release": "^24.2.9",
     "tsx": "^4.23.12",
-    "typescript": "^5.9.3"
+    "typescript": "5.9.3"
   }
 }
