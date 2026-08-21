@@ -27,6 +27,7 @@ jobs:
         uses: astral-sh/setup-uv@ae62891fec2bb8e7d6c99fc78c9fec3a63790f8d
         with:
           enable-cache: false
+          python-version: '3.13'
 
       - name: Install deps (selective)
         run: uv sync generate data config
