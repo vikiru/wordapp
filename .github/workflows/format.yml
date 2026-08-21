@@ -5,6 +5,11 @@ on:
   push:
     branches:
       - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   format:
     runs-on: ubuntu-latest
@@ -23,16 +28,17 @@ jobs:
         uses: astral-sh/setup-uv@ae62891fec2bb8e7d6c99fc78c9fec3a63790f8d
         with:
           enable-cache: false
+          python-version: '3.13'
       - name: Install Python dev deps
         run: uv --directory packages sync --no-install-workspace
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: 'lts/*'
+          node-version: '22'
       - name: Setup pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.0.0
         with:
-          version: 10
+          version: 11.20.0
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Format files
@@ -53,6 +59,8 @@ jobs:
         run: echo "$CHANGES_EXIST"
       - name: Commit formatting changes via GitHub Actions, if changes exist
         if: steps.changes.outputs.changes_exist == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |-
           git commit -m "chore: format files via github actions"
-          git push
+          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${GITHUB_REF_NAME}"
