@@ -1,3 +1,4 @@
+minimumReleaseAge: 10080
 packages:
   - frontend
 allowBuilds:
@@ -17,5 +18,34 @@ minimumReleaseAgeExclude:
   - '@astrojs/compiler-binding@0.3.2'
   - '@astrojs/compiler-rs@0.3.2'
   - astro@7.1.6
+  - '@biomejs/biome@2.5.10'
+  - '@biomejs/cli-darwin-arm64@2.5.10'
+  - '@biomejs/cli-darwin-x64@2.5.10'
+  - '@biomejs/cli-linux-arm64-musl@2.5.10'
+  - '@biomejs/cli-linux-arm64@2.5.10'
+  - '@biomejs/cli-linux-x64-musl@2.5.10'
+  - '@biomejs/cli-linux-x64@2.5.10'
+  - '@biomejs/cli-win32-arm64@2.5.10'
+  - '@biomejs/cli-win32-x64@2.5.10'
+  - '@oxlint/binding-android-arm-eabi@1.79.0'
+  - '@oxlint/binding-android-arm64@1.79.0'
+  - '@oxlint/binding-darwin-arm64@1.79.0'
+  - '@oxlint/binding-darwin-x64@1.79.0'
+  - '@oxlint/binding-freebsd-x64@1.79.0'
+  - '@oxlint/binding-linux-arm-gnueabihf@1.79.0'
+  - '@oxlint/binding-linux-arm-musleabihf@1.79.0'
+  - '@oxlint/binding-linux-arm64-gnu@1.79.0'
+  - '@oxlint/binding-linux-arm64-musl@1.79.0'
+  - '@oxlint/binding-linux-ppc64-gnu@1.79.0'
+  - '@oxlint/binding-linux-riscv64-gnu@1.79.0'
+  - '@oxlint/binding-linux-riscv64-musl@1.79.0'
+  - '@oxlint/binding-linux-s390x-gnu@1.79.0'
+  - '@oxlint/binding-linux-x64-gnu@1.79.0'
+  - '@oxlint/binding-linux-x64-musl@1.79.0'
+  - '@oxlint/binding-openharmony-arm64@1.79.0'
+  - '@oxlint/binding-win32-arm64-msvc@1.79.0'
+  - '@oxlint/binding-win32-ia32-msvc@1.79.0'
+  - '@oxlint/binding-win32-x64-msvc@1.79.0'
+  - oxlint@1.79.0
 overrides:
   nanoid@<3.3.18: ^3.3.18

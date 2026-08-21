@@ -7,6 +7,7 @@ pre-commit:
         - 'frontend/src/components/starwind/**'
         - 'frontend/src/lib/utils/starwind/**'
       run: 'pnpm oxlint --fix {staged_files} && pnpm biome check {staged_files}'
+      stage_fixed: true
     - name: 'Lint Astro with astro check'
       glob: 'frontend/**/*.astro'
       run: 'pnpm --filter frontend astro-check'
@@ -21,7 +22,8 @@ pre-commit:
     - name: 'Lint Python with Ruff'
       root: packages
       glob: '**/*.py'
-      run: 'uv run ruff check --fix {staged_files}'
+      run: 'uvx ruff check --fix {staged_files}'
+      stage_fixed: true
 
 pre-push:
   parallel: true
@@ -46,7 +48,7 @@ pre-push:
     - name: 'Format Python with Ruff'
       root: packages
       glob: '**/*.py'
-      run: 'uv run ruff format {push_files}'
+      run: 'uvx ruff format {push_files}'
 
 commit-msg:
   jobs:
