@@ -27,7 +27,7 @@ pre-commit:
     - name: Format Python files
       root: packages
       glob: '**/*.py'
-      run: 'uv run ruff format {staged_files}'
+      run: 'uvx ruff format {staged_files}'
       stage_fixed: true
 
     - name: Validate frontend files
@@ -41,7 +41,8 @@ pre-commit:
     - name: Validate Python files
       root: packages
       glob: '**/*.py'
-      run: 'uv run ruff check {staged_files}'
+      run: 'uvx ruff check --fix {staged_files}'
+      stage_fixed: true
 
 commit-msg:
   jobs:
