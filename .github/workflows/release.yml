@@ -1,11 +1,14 @@
 name: Release
 run-name: Automate release using semantic-release
 on:
-  workflow_run:
-    workflows:
-      - 'Format Files'
-    types:
-      - completed
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     name: Release
@@ -17,6 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
