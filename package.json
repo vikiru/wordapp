@@ -1,7 +1,7 @@
 {
   "name": "wordapp",
   "packageManager": "pnpm@11.20.0",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "description": "AI-powered Word of the Day web app, using Astro.js, Gemini AI, and MongoDB.",
   "keywords": [],
